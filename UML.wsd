@@ -4,10 +4,10 @@
 @startuml test
 
 Class SadConsole.Game{
-    + Instance : SadConsole.Game
+    + Instance : SadConsole.Game;
 
-    + {static} void Create()
-    + void Run()
+    + {static} void Create();
+    + void Run();
     + void Dispose();
 }
 
@@ -16,9 +16,9 @@ Class SadConsole.ScreenObject{
 }
 
 Class SplashScreen{
-    - timer : TimeSpan
+    - timer : TimeSpan;
 
-    + void Update()
+    + void Update();
 }
 
 Class Menu{
