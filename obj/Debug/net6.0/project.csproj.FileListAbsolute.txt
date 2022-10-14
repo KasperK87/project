@@ -1,0 +1,15 @@
+C:\Users\kkris\Documents\c#\project\bin\Debug\net6.0\project.exe
+C:\Users\kkris\Documents\c#\project\bin\Debug\net6.0\project.deps.json
+C:\Users\kkris\Documents\c#\project\bin\Debug\net6.0\project.runtimeconfig.json
+C:\Users\kkris\Documents\c#\project\bin\Debug\net6.0\project.dll
+C:\Users\kkris\Documents\c#\project\bin\Debug\net6.0\project.pdb
+C:\Users\kkris\Documents\c#\project\obj\Debug\net6.0\project.csproj.AssemblyReference.cache
+C:\Users\kkris\Documents\c#\project\obj\Debug\net6.0\project.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\kkris\Documents\c#\project\obj\Debug\net6.0\project.AssemblyInfoInputs.cache
+C:\Users\kkris\Documents\c#\project\obj\Debug\net6.0\project.AssemblyInfo.cs
+C:\Users\kkris\Documents\c#\project\obj\Debug\net6.0\project.csproj.CoreCompileInputs.cache
+C:\Users\kkris\Documents\c#\project\obj\Debug\net6.0\project.dll
+C:\Users\kkris\Documents\c#\project\obj\Debug\net6.0\refint\project.dll
+C:\Users\kkris\Documents\c#\project\obj\Debug\net6.0\project.pdb
+C:\Users\kkris\Documents\c#\project\obj\Debug\net6.0\project.genruntimeconfig.cache
+C:\Users\kkris\Documents\c#\project\obj\Debug\net6.0\ref\project.dll
