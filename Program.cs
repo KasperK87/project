@@ -23,8 +23,5 @@ namespace Setup{
             Game.Instance.StartingConsole.Fill(new Rectangle(3, 3, 23, 3), Color.Violet, Color.Black, 0, Mirror.None);
             Game.Instance.StartingConsole.Print(4, 4, "Hello from SadConsole");
         }
-    }
-    // See https://aka.ms/new-console-template for more information   
-
-
+    }  
 }

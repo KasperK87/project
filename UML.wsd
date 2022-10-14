@@ -1,0 +1,17 @@
+'how to use:
+'   CTRL+P -> "> PlantUML preview" 
+
+@startuml test
+
+Class Game{
+    - currentScreen : Console
+    - currentController : ???
+    - currentPlayer : ???
+
+    - void update()
+    - void draw()
+}
+
+
+
+@enduml
