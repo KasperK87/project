@@ -47,6 +47,10 @@
             "SadConsole": {
               "target": "Package",
               "version": "[9.2.2, )"
+            },
+            "SadConsole.Host.MonoGame": {
+              "target": "Package",
+              "version": "[9.2.2, )"
             }
           },
           "imports": [

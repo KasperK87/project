@@ -1,12 +1,15 @@
 {
   "version": 2,
-  "dgSpecHash": "AV9Sq/ldusVbDkc3Gp26/oPD5g2EWiyDtq9SSulqNZ6ZWbz+hWwo6FupCh6ARoddU7J9uFKOACoTaHBrLySgdg==",
+  "dgSpecHash": "KQwTbVxVd43F8HAY96U3zRw/r4+ZJ3N8kGmFH0kFCPfwaBy8RDNQszg8QdmNAUhvr5aASuGKPy9I4odxm1HCzg==",
   "success": true,
   "projectFilePath": "C:\\Users\\kkris\\Documents\\c#\\project\\project.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\kkris\\.nuget\\packages\\monogame.framework.desktopgl\\3.8.0.1641\\monogame.framework.desktopgl.3.8.0.1641.nupkg.sha512",
     "C:\\Users\\kkris\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
     "C:\\Users\\kkris\\.nuget\\packages\\sadconsole\\9.2.2\\sadconsole.9.2.2.nupkg.sha512",
-    "C:\\Users\\kkris\\.nuget\\packages\\thesadrogue.primitives\\1.1.1\\thesadrogue.primitives.1.1.1.nupkg.sha512"
+    "C:\\Users\\kkris\\.nuget\\packages\\sadconsole.host.monogame\\9.2.2\\sadconsole.host.monogame.9.2.2.nupkg.sha512",
+    "C:\\Users\\kkris\\.nuget\\packages\\thesadrogue.primitives\\1.1.1\\thesadrogue.primitives.1.1.1.nupkg.sha512",
+    "C:\\Users\\kkris\\.nuget\\packages\\thesadrogue.primitives.monogame\\1.0.0\\thesadrogue.primitives.monogame.1.0.0.nupkg.sha512"
   ],
   "logs": []
 }
