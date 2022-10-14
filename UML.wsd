@@ -3,15 +3,23 @@
 
 @startuml test
 
-Class Game{
-    - currentScreen : Console
-    - currentController : ???
-    - currentPlayer : ???
+Class SadConsole.Game{
+    + Instance : SadConsole.Game
 
-    - void update()
-    - void draw()
+    + {static} void Create()
+    + void Run()
+    + void Dispose();
+
 }
 
+Class Game{
+    
+
+    + {static} void Setup()
+    - void Init()
+}
+
+SadConsole.Game <|-- Game
 
 
 @enduml
