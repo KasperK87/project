@@ -9,17 +9,33 @@ Class SadConsole.Game{
     + {static} void Create()
     + void Run()
     + void Dispose();
+}
+
+Class SadConsole.ScreenObject{
+
+}
+
+Class SplashScreen{
+    - timer : TimeSpan
+
+    + void Update()
+}
+
+Class Menu{
 
 }
 
 Class Game{
-    
-
     + {static} void Setup()
-    - void Init()
+    - {static} void Init()
+    - {static} void Update()
 }
 
+SadConsole.Game "1" o-- "1" SadConsole.ScreenObject : aggregation
+
 SadConsole.Game <|-- Game
+SadConsole.ScreenObject <|-- SplashScreen
+SadConsole.ScreenObject <|-- Menu
 
 
 @enduml
