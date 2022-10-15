@@ -1,6 +1,4 @@
-﻿using SadRogue.Primitives;
-using Console = SadConsole.Console;
-using ResidentSurvivor;
+﻿using ResidentSurvivor;
 
 namespace Setup{
     class Program{
@@ -12,6 +10,11 @@ namespace Setup{
 
             // Start the game.
             Game.Instance.Run();
+
+            //
+            // Code here will not run until the game window closes.
+            //
+
             Game.Instance.Dispose();
         }
     }  
