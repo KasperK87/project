@@ -14,7 +14,7 @@ namespace ResidentSurvivor
             Instance.OnStart = Init;
 
             // Hook the update event that happens each frame so we can trap keys and respond.
-        SadConsole.Game.Instance.FrameUpdate += Update;
+            SadConsole.Game.Instance.FrameUpdate += Update;
        }
 
        private static void Init(){
@@ -44,6 +44,29 @@ namespace ResidentSurvivor
         {
             // Called each logic update
             // As an example, we'll use the F5 key to make the game full screen
+            if (SadConsole.Game.Instance.Keyboard.IsKeyReleased(SadConsole.Input.Keys.F5)){
+                SadConsole.Game.Instance.ToggleFullScreen();
+            }
+            
+        }
+    }
+
+    
+     public class UIManager : ScreenObject{
+     // Creates/Holds/Destroys all consoles used in the game
+     // and makes consoles easily addressable from a central place.
+        public Console mapConsole;
+
+        public UIManager()
+        {
+            // must be set to true
+            // or will not call each child's Draw method
+            IsVisible = true;
+            IsFocused = true;
+
+            // The UIManager becomes the only
+            // screen that SadConsole processes
+            Parent = SadConsole.Game.Instance.Screen;
         }
     }
 
