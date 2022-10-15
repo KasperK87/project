@@ -15,6 +15,12 @@ Class SadConsole.ScreenObject{
 
 }
 
+Class SadConsole.UI.Window{
+
+}
+
+Class SadConsole.Console
+
 Class UIManager{
     + mapConsole : ScreenObject;
 }
@@ -36,11 +42,13 @@ Class Game{
 }
 
 SadConsole.Game "1" o-- "1" SadConsole.ScreenObject : aggregation
+'Game "0-1" o-- "1" SplashScreen
+'Game "1" o-- "1" Menu
 
 SadConsole.Game <|-- Game
 SadConsole.ScreenObject <|-- UIManager
-SadConsole.ScreenObject <|-- SplashScreen
-SadConsole.ScreenObject <|-- Menu
+SadConsole.Console <|-- SplashScreen
+SadConsole.UI.Window <|-- Menu
 
 
 @enduml
