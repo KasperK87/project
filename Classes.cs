@@ -6,6 +6,8 @@ using Console = SadConsole.Console;
 namespace ResidentSurvivor
 {
     class Game : SadConsole.Game{
+        // Managers
+       public static UIManager UIManager;
        private Game(){
             //gameInstance is a singleton use setup(width, height)
        } 
@@ -20,7 +22,13 @@ namespace ResidentSurvivor
 
        private static void Init(){
             //ScreenObject container = new ScreenObject();
-            Game.Instance.Screen = new SplashScreen();
+            //Game.Instance.Screen = new SplashScreen();
+
+            UIManager = new UIManager();
+
+            Game.Instance.Screen = UIManager;
+            
+            //Instantiate the UIManager
             Game.Instance.DestroyDefaultStartingConsole();
 
             /*
@@ -70,23 +78,31 @@ namespace ResidentSurvivor
             IsVisible = true;
             IsFocused = true;
 
+            Console splashScreen = new SplashScreen(20,20); 
+            //splashScreen.Position = new Point(0,0);
+            //splashScreen.DefaultBackground = Color.AnsiCyan;
+
+            this.Children.Add(splashScreen);
+
             // The UIManager becomes the only
             // screen that SadConsole processes
-            Parent = SadConsole.Game.Instance.Screen;
+            //Parent = SadConsole.Game.Instance.Screen;
+        } // Creates all child consoles to be managed
+        public void CreateConsoles()
+        {
+            //mapConsole = new SadConsole.ScrollingConsole(GameLoop.World.CurrentMap.Width, GameLoop.World.CurrentMap.Height, Global.FontDefault, new Rectangle(0, 0, GameLoop.GameWidth, GameLoop.GameHeight), GameLoop.World.CurrentMap.Tiles);
         }
     }
 
-    class SplashScreen : ScreenObject{
+    class SplashScreen : Console{
         private TimeSpan timer;
-        private Console splash;
-        public SplashScreen(){
+
+        public SplashScreen(int w, int h) : base( w, h){
             timer = TimeSpan.Zero;
 
-            splash = new Console(20,20);
-            splash.Position = new Point(0,0);
-            splash.DefaultBackground = Color.AnsiCyan;
+            Position = new Point(0,0);
+            DefaultBackground = Color.AnsiCyan;
 
-            this.Children.Add(splash);
         }
         public override void Update(TimeSpan delta)
         {
@@ -95,7 +111,8 @@ namespace ResidentSurvivor
             timer += delta;
 
             if(timer >= TimeSpan.FromSeconds(3)){
-                Game.Instance.Screen = new Menu();
+                Game.Instance.Screen.Children.Add(new Menu(22,22));
+                Game.Instance.Screen.Children.Remove(this);
             }
         }
 
@@ -103,41 +120,36 @@ namespace ResidentSurvivor
         {
             base.Render(delta);
 
-            splash.Print(1, 1, "Resident Survivor");
+            this.Print(1, 1, "Resident Survivor");
         }
     }
 
-    class Menu : ScreenObject{
+    class Menu : SadConsole.UI.Window{
         private Console menuConsole;
-        private SadConsole.UI.Window menuWindow;
-        public Menu(){
 
-            menuConsole = new Console(20,20);
+        public Menu(int w, int h) : base(w,h){
 
-            menuWindow = new SadConsole.UI.Window(22,22);
-            menuWindow.View = new Rectangle(0, 0, 22, 22);
-            menuWindow.CanDrag = true;
-            menuWindow.Title = "MENU";
+            menuConsole = new Console(w-2,h-2);
+
+            this.View = new Rectangle(0, 0, 22, 22);
+            this.CanDrag = true;
+            this.Title = "MENU";
 
             SadConsole.UI.Controls.Button closeButton = new SadConsole.UI.Controls.Button(3, 1);
 
             //Add the close button to the Window's list of UI elements
-            menuWindow.Controls.Add(closeButton);
+            this.Controls.Add(closeButton);
             closeButton.Position = new Point(0, 0);
             closeButton.Text = "[X]";
-
-
 
             menuConsole.Position = new Point(1,1);
             menuConsole.DefaultBackground = Color.Red;
 
-            menuConsole.View = new Rectangle(0, 0, 20, 20);
+            //menuConsole.View = new Rectangle(0, 0, 20, 20);
 
-            menuWindow.Children.Add(menuConsole);            
+            this.Children.Add(menuConsole);            
 
-            this.Children.Add(menuWindow);
-
-            menuWindow.Show();
+            this.Show();
         }
 
         public override void Render(TimeSpan delta)
