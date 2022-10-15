@@ -1,4 +1,5 @@
 using SadConsole;
+using SadConsole.UI;
 using SadRogue.Primitives;
 using Console = SadConsole.Console;
 
@@ -72,10 +73,11 @@ namespace ResidentSurvivor
 
     class SplashScreen : ScreenObject{
         private TimeSpan timer;
+        private Console splash;
         public SplashScreen(){
             timer = TimeSpan.Zero;
 
-            Console splash = new Console(20,20);
+            splash = new Console(20,20);
             splash.Position = new Point(0,0);
             splash.DefaultBackground = Color.AnsiCyan;
 
@@ -91,16 +93,53 @@ namespace ResidentSurvivor
                 Game.Instance.Screen = new Menu();
             }
         }
+
+        public override void Render(TimeSpan delta)
+        {
+            base.Render(delta);
+
+            splash.Print(1, 1, "Resident Survivor");
+        }
     }
 
     class Menu : ScreenObject{
+        private Console menuConsole;
+        private SadConsole.UI.Window menuWindow;
         public Menu(){
 
-            Console splash = new Console(20,20);
-            splash.Position = new Point(0,0);
-            splash.DefaultBackground = Color.Red;
+            menuConsole = new Console(20,20);
 
-            this.Children.Add(splash);
+            menuWindow = new SadConsole.UI.Window(22,22);
+            menuWindow.View = new Rectangle(0, 0, 22, 22);
+            menuWindow.CanDrag = true;
+            menuWindow.Title = "MENU";
+
+            SadConsole.UI.Controls.Button closeButton = new SadConsole.UI.Controls.Button(3, 1);
+
+            //Add the close button to the Window's list of UI elements
+            menuWindow.Controls.Add(closeButton);
+            closeButton.Position = new Point(0, 0);
+            closeButton.Text = "[X]";
+
+
+
+            menuConsole.Position = new Point(1,1);
+            menuConsole.DefaultBackground = Color.Red;
+
+            menuConsole.View = new Rectangle(0, 0, 20, 20);
+
+            menuWindow.Children.Add(menuConsole);            
+
+            this.Children.Add(menuWindow);
+
+            menuWindow.Show();
+        }
+
+        public override void Render(TimeSpan delta)
+        {
+            base.Render(delta);
+
+            menuConsole.Print(1, 1, "MENU");
         }
     }
 

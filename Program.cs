@@ -6,7 +6,7 @@ namespace Setup{
             System.Console.WriteLine("Hello, World!");
 
             // Setup the engine and create the main window.
-            Game.Setup(80,20);
+            Game.Setup(120,40);
 
             // Start the game.
             Game.Instance.Run();
