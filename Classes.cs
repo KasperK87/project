@@ -142,6 +142,12 @@ namespace ResidentSurvivor
             closeButton.Position = new Point(0, 0);
             closeButton.Text = "[X]";
 
+            //using a lambda for better readability
+            closeButton.Click += (x, y) => {
+                this.Parent.Children.Remove(this);
+                //this.Hide();
+            };
+
             menuConsole.Position = new Point(1,1);
             menuConsole.DefaultBackground = Color.Red;
 
