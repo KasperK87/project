@@ -48,6 +48,11 @@ namespace ResidentSurvivor
             if (SadConsole.Game.Instance.Keyboard.IsKeyReleased(SadConsole.Input.Keys.F5)){
                 SadConsole.Game.Instance.ToggleFullScreen();
             }
+
+            if (SadConsole.Game.Instance.Keyboard.IsKeyReleased(SadConsole.Input.Keys.Escape)){
+                //SadConsole.Game.Instance.Dispose();
+                SadConsole.Game.Instance.MonoGameInstance.Exit();
+            }
             
         }
     }
