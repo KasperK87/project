@@ -7,49 +7,26 @@ namespace ResidentSurvivor
 {
     class Game : SadConsole.Game{
         // Managers
-       public static UIManager UIManager;
+       public static UIManager? UIManager;
        private Game(){
             //gameInstance is a singleton use setup(width, height)
        } 
 
        public static void Setup(int w, int h){
             Create(w, h);
-            Instance.OnStart = Init;
+            Instance.OnStart = () => {
+                UIManager = new UIManager();
+
+                Game.Instance.Screen = UIManager;
+                Game.Instance.DestroyDefaultStartingConsole();
+            };
 
             // Hook the update event that happens each frame so we can trap keys and respond.
             SadConsole.Game.Instance.FrameUpdate += Update;
        }
 
-       private static void Init(){
-            //ScreenObject container = new ScreenObject();
-            //Game.Instance.Screen = new SplashScreen();
-
-            UIManager = new UIManager();
-
-            Game.Instance.Screen = UIManager;
-            
-            //Instantiate the UIManager
-            Game.Instance.DestroyDefaultStartingConsole();
-
-            /*
-            // First console
-            Console console1 = new Console(60, 14);
-            console1.Position = new Point(3, 2);
-            console1.DefaultBackground = Color.AnsiCyan;
-            console1.Clear();
-            console1.Print(1, 1, "Type on me!");
-            console1.Cursor.Position = new Point(1, 2);
-            console1.Cursor.IsEnabled = true;
-            console1.Cursor.IsVisible = true;
-            console1.Cursor.MouseClickReposition = true;
-            console1.IsFocused = true;
-
-            container.Children.Add(console1);
-            */
-       }
-
        // allowing some game logic during frame updates
-        private static void Update(object sender, GameHost host)
+        private static void Update(object? sender, GameHost? host)
         {
             // Called each logic update
             // As an example, we'll use the F5 key to make the game full screen
@@ -69,7 +46,7 @@ namespace ResidentSurvivor
      public class UIManager : ScreenObject{
      // Creates/Holds/Destroys all consoles used in the game
      // and makes consoles easily addressable from a central place.
-        public Console mapConsole;
+        public Console? mapConsole;
 
         public UIManager()
         {
@@ -79,8 +56,6 @@ namespace ResidentSurvivor
             IsFocused = true;
 
             Console splashScreen = new SplashScreen(20,20); 
-            //splashScreen.Position = new Point(0,0);
-            //splashScreen.DefaultBackground = Color.AnsiCyan;
 
             this.Children.Add(splashScreen);
 
