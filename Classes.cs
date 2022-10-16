@@ -205,11 +205,13 @@ namespace ResidentSurvivor
 
         public override void Update(TimeSpan delta){
             ProcessKeyboard(SadConsole.Game.Instance.GetKeyboardState());
+
+            DungeonMap.UpdatePlayerFieldOfView(player);
         }
 
         public override void Render(TimeSpan delta){
             base.Render(delta);
-            
+
             DungeonMap.Draw(this);
 
         }

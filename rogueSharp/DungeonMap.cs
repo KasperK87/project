@@ -23,19 +23,18 @@ namespace RogueSharpSadConsoleSamples.Core
         }
         */
 
-        /*
-        public void UpdatePlayerFieldOfView(){
-         Player player = RogueGame.Player;
-         ComputeFov( player.X, player.Y, player.Awareness, true );
-         foreach ( Cell cell in GetAllCells() )
-         {
-            if ( IsInFov( cell.X, cell.Y ) )
+        
+        public void UpdatePlayerFieldOfView(SadConsole.Entities.Entity player){
+            ComputeFov(player.Position.X, player.Position.Y, 10, true );
+            foreach ( Cell cell in GetAllCells() )
             {
-               SetCellProperties( cell.X, cell.Y, cell.IsTransparent, cell.IsWalkable, true );
+                if ( IsInFov( cell.X, cell.Y ) )
+                {
+                    SetCellProperties( cell.X, cell.Y, cell.IsTransparent, cell.IsWalkable, true );
+                }
             }
-         }
-      }
-      */
+        }
+      
 
         /*
       public void SetIsWalkable( int x, int y, bool isWalkable )
@@ -58,7 +57,7 @@ namespace RogueSharpSadConsoleSamples.Core
       {
          if ( !cell.IsExplored )
          {
-            //return;
+            return;
          }
 
          if ( IsInFov( cell.X, cell.Y ) )
