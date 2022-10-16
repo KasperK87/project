@@ -37,7 +37,6 @@ Class Menu{
 
 Class Game{
     + {static} void Setup()
-    - {static} void Init()
     - {static} void Update()
 }
 

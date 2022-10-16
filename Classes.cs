@@ -42,7 +42,6 @@ namespace ResidentSurvivor
         }
     }
 
-    
      public class UIManager : ScreenObject{
      // Creates/Holds/Destroys all consoles used in the game
      // and makes consoles easily addressable from a central place.
@@ -55,7 +54,7 @@ namespace ResidentSurvivor
             IsVisible = true;
             IsFocused = true;
 
-            Console splashScreen = new SplashScreen(20,20); 
+            Console splashScreen = new SplashScreen(120,40); 
 
             this.Children.Add(splashScreen);
 
@@ -71,12 +70,17 @@ namespace ResidentSurvivor
 
     class SplashScreen : Console{
         private TimeSpan timer;
+        private SadConsole.Readers.TheDrawFont[] fonts;
+        private SadConsole.Readers.TheDrawFont _selectedFont;
 
         public SplashScreen(int w, int h) : base( w, h){
             timer = TimeSpan.Zero;
 
+            fonts = SadConsole.Readers.TheDrawFont.ReadFonts("./fonts/TheDraw/ABBADON.TDF").ToArray();
+            _selectedFont = fonts[0];
+
             Position = new Point(0,0);
-            DefaultBackground = Color.AnsiCyan;
+            DefaultBackground = Color.Black;
 
         }
         public override void Update(TimeSpan delta)
@@ -94,8 +98,9 @@ namespace ResidentSurvivor
         public override void Render(TimeSpan delta)
         {
             base.Render(delta);
-
-            this.Print(1, 1, "Resident Survivor");
+            Surface.PrintTheDraw(0, 4, "Resident", _selectedFont);
+            Surface.PrintTheDraw(0, 16, "Survivor", _selectedFont);
+            //this.Print(1, 1, "Resident Survivor");
         }
     }
 

@@ -3,8 +3,6 @@
 namespace Setup{
     class Program{
         static void Main(string[] args){
-            System.Console.WriteLine("Hello, World!");
-
             // Setup the engine and create the main window.
             Game.Setup(120,40);
 
