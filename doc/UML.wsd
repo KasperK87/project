@@ -31,6 +31,10 @@ Class SplashScreen{
     + void Update();
 }
 
+Class World{
+    
+}
+
 Class Menu{
 
 }

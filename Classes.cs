@@ -139,7 +139,7 @@ namespace ResidentSurvivor
             startButton.Click += (x, y) => {
                 World newWorld = new World(118,38);
                 newWorld.Position = new Point(1,1);
-                newWorld.DefaultBackground = Color.Beige;
+                newWorld.DefaultBackground = Color.Black;
                 Game.Instance.Screen.Children.Add(newWorld);
                 
             };
@@ -177,6 +177,10 @@ namespace ResidentSurvivor
             CreatePlayer();
 
             entityManager.Add(player);
+
+            // Setup this console to accept keyboard input.
+            //UseKeyboard = true;
+            IsVisible = true;
         }
 
         // Create a player using SadConsole's Entity class
@@ -185,6 +189,67 @@ namespace ResidentSurvivor
             player = new SadConsole.Entities.Entity(
                 Color.White, Color.Black, 1, 100);
             player.Position = new Point(5,5);
+        }
+
+        public override void Update(TimeSpan delta){
+            ProcessKeyboard(SadConsole.Game.Instance.GetKeyboardState());
+        }
+    
+        public bool ProcessKeyboard(SadConsole.Input.IKeyboardState info)
+        {
+            // Forward the keyboard data to the entity to handle the movement code.
+            // We could detect if the users hit ESC and popup a menu or something.
+            // By not setting the entity as the active object, twe let this
+            // "game level" (the console we're hosting the entity on) determine if
+            // the keyboard data should be sent to the entity.
+
+            // Process logic for moving the entity.
+            bool keyHit = false;
+            Point oldPosition = player.Position;
+            Point newPosition = (0, 0);
+
+            // Process UP/DOWN movements
+            if (info.IsKeyDown(SadConsole.Input.Keys.Up))
+            {
+                newPosition = player.Position + (0, -1);
+                keyHit = true;
+            }
+            else if (info.IsKeyDown(SadConsole.Input.Keys.Down))
+            {
+                newPosition = player.Position + (0, 1);
+                keyHit = true;
+            }
+
+            // Process LEFT/RIGHT movements
+            if (info.IsKeyDown(SadConsole.Input.Keys.Left))
+            {
+                newPosition = player.Position + (-1, 0);
+                keyHit = true;
+            }
+            else if (info.IsKeyDown(SadConsole.Input.Keys.Right))
+            {
+                newPosition = player.Position + (1, 0);
+                keyHit = true;
+            }
+
+            // If a movement key was pressed
+            if (keyHit)
+            {
+                // Check if the new position is valid
+                if (Surface.Area.Contains(newPosition))
+                {
+                    // Entity moved. Let's draw a trail of where they moved from.
+                    Surface.SetGlyph(player.Position.X, player.Position.Y, 250);
+                    player.Position = newPosition;
+
+                    return true;
+                }
+            }
+
+            // You could have multiple entities in the game for example, and change
+            // which entity gets keyboard commands.
+
+            return false;
         }
     }
 
