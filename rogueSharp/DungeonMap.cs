@@ -24,14 +24,14 @@ namespace RogueSharpSadConsoleSamples.Core
         */
 
         
-        public void UpdatePlayerFieldOfView(SadConsole.Entities.Entity player){
-            ComputeFov(player.Position.X, player.Position.Y, 10, true );
-            foreach ( Cell cell in GetAllCells() )
+        public void UpdatePlayerFieldOfView(SadConsole.Entities.Entity player, RogueSharp.IMap map){
+            map.ComputeFov(player.Position.X, player.Position.Y, 10, true );
+            foreach ( Cell cell in map.GetAllCells() )
             {
-                if ( IsInFov( cell.X, cell.Y ) )
-                {
-                    SetCellProperties( cell.X, cell.Y, cell.IsTransparent, cell.IsWalkable, true );
-                }
+                //if ( IsInFov( cell.X, cell.Y ) )
+                  //{
+                    map.SetCellProperties( cell.X, cell.Y, cell.IsTransparent, cell.IsWalkable, true );
+                //}
             }
         }
       
@@ -44,33 +44,33 @@ namespace RogueSharpSadConsoleSamples.Core
       }
       */
 
-      public void Draw( Console mapConsole)
+      public void Draw( Console mapConsole, RogueSharp.IMap map)
       {
          //mapConsole.Clear();
-         foreach ( Cell cell in GetAllCells() )
+         foreach ( Cell cell in map.GetAllCells() )
          {
-            SetConsoleSymbolForCell( mapConsole, cell );
+            SetConsoleSymbolForCell( mapConsole, cell, map );
          }
       }
 
-      private void SetConsoleSymbolForCell(SadConsole.Console map, Cell cell )
+      private void SetConsoleSymbolForCell(SadConsole.Console map, Cell cell, RogueSharp.IMap _map )
       {
          if ( !cell.IsExplored )
          {
             return;
          }
 
-         if ( IsInFov( cell.X, cell.Y ) )
+         if (_map.IsInFov( cell.X, cell.Y ) )
          {
             if ( cell.IsWalkable )
             {
-                map.SetBackground(cell.X, cell.Y, SadRogue.Primitives.Color.White);
+                map.SetBackground(cell.X, cell.Y, SadRogue.Primitives.Color.Blue);
                 
                //console.CellData.SetCharacter( cell.X, cell.Y, '.', Colors.FloorFov, Colors.FloorBackgroundFov );
             }
             else
             {
-                map.SetBackground(cell.X, cell.Y, SadRogue.Primitives.Color.Gray);
+                map.SetBackground(cell.X, cell.Y, SadRogue.Primitives.Color.Red);
                //console.CellData.SetCharacter( cell.X, cell.Y, '#', Colors.WallFov, Colors.WallBackgroundFov );
             }
          }
@@ -83,7 +83,7 @@ namespace RogueSharpSadConsoleSamples.Core
             }
             else
             {
-                map.SetBackground(cell.X, cell.Y, SadRogue.Primitives.Color.Gray);
+                map.SetBackground(cell.X, cell.Y, SadRogue.Primitives.Color.Brown);
                //console.CellData.SetCharacter( cell.X, cell.Y, '#', Colors.Wall, Colors.WallBackground );
             }
          }
