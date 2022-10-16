@@ -4848,23 +4848,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\kkris\\.nuget\\packages\\": {},
+    "C:\\Users\\kakr\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "c:\\Users\\kkris\\Documents\\c#\\project\\project.csproj",
+      "projectUniqueName": "C:\\Users\\kakr\\OneDrive - IBA Erhvervsakademi Kolding\\Dokumenter\\vscode\\projekt\\project.csproj",
       "projectName": "project",
-      "projectPath": "c:\\Users\\kkris\\Documents\\c#\\project\\project.csproj",
-      "packagesPath": "C:\\Users\\kkris\\.nuget\\packages\\",
-      "outputPath": "c:\\Users\\kkris\\Documents\\c#\\project\\obj\\",
+      "projectPath": "C:\\Users\\kakr\\OneDrive - IBA Erhvervsakademi Kolding\\Dokumenter\\vscode\\projekt\\project.csproj",
+      "packagesPath": "C:\\Users\\kakr\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\kakr\\OneDrive - IBA Erhvervsakademi Kolding\\Dokumenter\\vscode\\projekt\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\kkris\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\kakr\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -4873,6 +4873,7 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
