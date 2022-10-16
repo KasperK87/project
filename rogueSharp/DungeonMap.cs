@@ -24,14 +24,14 @@ namespace RogueSharpSadConsoleSamples.Core
         */
 
         
-        public void UpdatePlayerFieldOfView(SadConsole.Entities.Entity player, RogueSharp.IMap map){
-            map.ComputeFov(player.Position.X, player.Position.Y, 10, true );
-            foreach ( Cell cell in map.GetAllCells() )
+        public void UpdatePlayerFieldOfView(SadConsole.Entities.Entity player){
+            ComputeFov(player.Position.X, player.Position.Y, 10, true );
+            foreach ( Cell cell in GetAllCells() )
             {
-                //if ( IsInFov( cell.X, cell.Y ) )
-                  //{
-                    map.SetCellProperties( cell.X, cell.Y, cell.IsTransparent, cell.IsWalkable, true );
-                //}
+                if ( IsInFov( cell.X, cell.Y ) )
+               {
+                    SetCellProperties( cell.X, cell.Y, cell.IsTransparent, cell.IsWalkable, true );
+               }
             }
         }
       
@@ -44,23 +44,23 @@ namespace RogueSharpSadConsoleSamples.Core
       }
       */
 
-      public void Draw( Console mapConsole, RogueSharp.IMap map)
+      public void Draw( Console mapConsole)
       {
          //mapConsole.Clear();
-         foreach ( Cell cell in map.GetAllCells() )
+         foreach ( Cell cell in GetAllCells() )
          {
-            SetConsoleSymbolForCell( mapConsole, cell, map );
+            SetConsoleSymbolForCell( mapConsole, cell);
          }
       }
 
-      private void SetConsoleSymbolForCell(SadConsole.Console map, Cell cell, RogueSharp.IMap _map )
+      private void SetConsoleSymbolForCell(SadConsole.Console map, Cell cell)
       {
          if ( !cell.IsExplored )
          {
             return;
          }
 
-         if (_map.IsInFov( cell.X, cell.Y ) )
+         if (IsInFov( cell.X, cell.Y ) )
          {
             if ( cell.IsWalkable )
             {

@@ -201,13 +201,13 @@ namespace ResidentSurvivor
             IsVisible = true;
 
             //create dungeon
-            DungeonMap = mapGenerator.CreateMap();
+            //DungeonMap = mapGenerator.CreateMap();
             int seed = (int) DateTime.UtcNow.Ticks;
             Random = new RogueSharp.Random.DotNetRandom( seed );
 
-            RogueSharp.MapCreation.IMapCreationStrategy<RogueSharp.Map> mapCreationStrategy =
-                new RogueSharp.MapCreation.RandomRoomsMapCreationStrategy<RogueSharp.Map>( 50, 30, 100, 7, 3 );
-             _map = RogueSharp.Map.Create( mapCreationStrategy );
+            RogueSharp.MapCreation.IMapCreationStrategy<RogueSharpSadConsoleSamples.Core.DungeonMap> mapCreationStrategy =
+                new RogueSharp.MapCreation.RandomRoomsMapCreationStrategy<RogueSharpSadConsoleSamples.Core.DungeonMap>( 50, 30, 100, 7, 3 );
+            DungeonMap = mapCreationStrategy.CreateMap();
 
             
             //DungeonMap = new RogueSharp.MapCreation.RandomRoomsMapCreationStrategy(120, 40, 20, 30, 15, Random);
@@ -226,13 +226,13 @@ namespace ResidentSurvivor
 
             ProcessKeyboard(SadConsole.Game.Instance.GetKeyboardState());
               
-            DungeonMap.UpdatePlayerFieldOfView(player, _map);
+            DungeonMap.UpdatePlayerFieldOfView(player);
         }
 
         public override void Render(TimeSpan delta){
             base.Render(delta);
 
-            DungeonMap.Draw(this, _map);
+            DungeonMap.Draw(this);
 
         }
     
