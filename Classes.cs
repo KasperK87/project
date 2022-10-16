@@ -98,29 +98,33 @@ namespace ResidentSurvivor
         public override void Render(TimeSpan delta)
         {
             base.Render(delta);
-            Surface.PrintTheDraw(0, 4, "Resident", _selectedFont);
-            Surface.PrintTheDraw(0, 16, "Survivor", _selectedFont);
+            int offcentering = 15;
+            Surface.PrintTheDraw(2+offcentering, this.Height/2-10, "Resident", _selectedFont);
+            Surface.PrintTheDraw(this.Width-80-offcentering, this.Height/2, "Survivor", _selectedFont);
             //this.Print(1, 1, "Resident Survivor");
         }
     }
 
     class Menu : SadConsole.UI.Window{
-        private Console menuConsole;
-
+        //private Console menuConsole;
+        
         public Menu(int w, int h) : base(w,h){
 
-            menuConsole = new Console(w-2,h-2);
+            //menuConsole = new Console(w-2,h-2);
+            //menuConsole.Position = new Point(1,1);
+            //menuConsole.DefaultBackground = Color.Red;
 
             this.View = new Rectangle(0, 0, 22, 22);
             this.CanDrag = true;
             this.Title = "MENU";
+            //this.Children.Add(menuConsole);    
 
+            
+            //Add close button to the Window's list of UI elements
             SadConsole.UI.Controls.Button closeButton = new SadConsole.UI.Controls.Button(3, 1);
-
-            //Add the close button to the Window's list of UI elements
-            this.Controls.Add(closeButton);
             closeButton.Position = new Point(0, 0);
             closeButton.Text = "[X]";
+            this.Controls.Add(closeButton);
 
             //using a lambda for better readability
             closeButton.Click += (x, y) => {
@@ -128,12 +132,27 @@ namespace ResidentSurvivor
                 //this.Hide();
             };
 
-            menuConsole.Position = new Point(1,1);
-            menuConsole.DefaultBackground = Color.Red;
+            //adding a start button
+            SadConsole.UI.Controls.Button startButton = new SadConsole.UI.Controls.Button(7,1);
+            startButton.Position = new Point(7,10);
+            startButton.Text = "START";
+            startButton.Click += (x, y) => {
+                World newWorld = new World(118,38);
+                newWorld.Position = new Point(1,1);
+                newWorld.DefaultBackground = Color.Beige;
+                Game.Instance.Screen.Children.Add(newWorld);
+                
+            };
+            this.Controls.Add(startButton);
 
-            //menuConsole.View = new Rectangle(0, 0, 20, 20);
+            //WHY NOT WORKING?
+            this.DefaultBackground = Color.Red;
+            this.DefaultForeground = Color.Orange;
 
-            this.Children.Add(menuConsole);            
+            //WORK AROUND
+            for (int i = 0; i < this.Width; i++)
+                for (int j = 0; j < this.Height; j++)
+                    this.SetBackground(i,j, Color.Red);
 
             this.Show();
         }
@@ -142,7 +161,30 @@ namespace ResidentSurvivor
         {
             base.Render(delta);
 
-            menuConsole.Print(1, 1, "MENU");
+            //menuConsole.Print(1, 1, "MENU");
+        }
+    }
+
+    class World : Console {
+        private static SadConsole.Entities.Entity player;
+
+        private SadConsole.Entities.Renderer entityManager;
+        public World(int w, int h) : base( w, h){
+            entityManager = new SadConsole.Entities.Renderer();
+
+            SadComponents.Add(entityManager);
+
+            CreatePlayer();
+
+            entityManager.Add(player);
+        }
+
+        // Create a player using SadConsole's Entity class
+        private static void CreatePlayer()
+        {
+            player = new SadConsole.Entities.Entity(
+                Color.White, Color.Black, 1, 100);
+            player.Position = new Point(5,5);
         }
     }
 
