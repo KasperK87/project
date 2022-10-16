@@ -101,6 +101,7 @@ namespace ResidentSurvivor
             int offcentering = 15;
             Surface.PrintTheDraw(2+offcentering, this.Height/2-10, "Resident", _selectedFont);
             Surface.PrintTheDraw(this.Width-80-offcentering, this.Height/2, "Survivor", _selectedFont);
+
             //this.Print(1, 1, "Resident Survivor");
         }
     }
@@ -168,6 +169,14 @@ namespace ResidentSurvivor
     class World : Console {
         private static SadConsole.Entities.Entity player;
 
+        public RogueSharpSadConsoleSamples.Core.DungeonMap DungeonMap;
+
+
+        //int width, int height, int maxRooms, int roomMaxSize, int roomMinSize, int level
+        RogueSharpSadConsoleSamples.Systems.MapGenerator
+            mapGenerator = new RogueSharpSadConsoleSamples.Systems.MapGenerator(
+                120,40, 10, 10, 5, 1);
+
         private SadConsole.Entities.Renderer entityManager;
         public World(int w, int h) : base( w, h){
             entityManager = new SadConsole.Entities.Renderer();
@@ -181,6 +190,9 @@ namespace ResidentSurvivor
             // Setup this console to accept keyboard input.
             //UseKeyboard = true;
             IsVisible = true;
+
+            //create dungeon
+            DungeonMap = mapGenerator.CreateMap();
         }
 
         // Create a player using SadConsole's Entity class
@@ -193,6 +205,13 @@ namespace ResidentSurvivor
 
         public override void Update(TimeSpan delta){
             ProcessKeyboard(SadConsole.Game.Instance.GetKeyboardState());
+        }
+
+        public override void Render(TimeSpan delta){
+            base.Render(delta);
+            
+            DungeonMap.Draw(this);
+
         }
     
         public bool ProcessKeyboard(SadConsole.Input.IKeyboardState info)
