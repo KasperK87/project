@@ -66,7 +66,7 @@ namespace ResidentSurvivor{
         private static void CreatePlayer(int x, int y)
         {
             player = new SadConsole.Entities.Entity(
-                Color.Pink, Color.Transparent, 1, 100);
+                Color.White, Color.Transparent, 1, 100);
 
             player.Position = new Point(x,y);
         }
@@ -77,6 +77,10 @@ namespace ResidentSurvivor{
             ProcessKeyboard(SadConsole.Game.Instance.GetKeyboardState());
               
             DungeonMap.UpdatePlayerFieldOfView(player);
+
+            //View.WithCenter(player.Position);
+            
+            this.View = new Rectangle(player.Position.X-20, player.Position.Y-10, 40, 20);
         }
 
         public override void Render(TimeSpan delta){
@@ -141,7 +145,7 @@ namespace ResidentSurvivor{
                         Surface.GetBackground(newPosition.X, newPosition.Y) == Color.Blue)
                 {
                     // Entity moved. Let's draw a trail of where they moved from.
-                    Surface.SetGlyph(player.Position.X, player.Position.Y, 250);
+                    //Surface.SetGlyph(player.Position.X, player.Position.Y, 250);
                     player.Position = newPosition;
 
                     preKeyDown = keyHit;
