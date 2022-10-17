@@ -10,7 +10,6 @@ namespace ResidentSurvivor{
         public RogueSharpSadConsoleSamples.Core.DungeonMap DungeonMap;
 
         private RogueSharp.IMap _map;
-
         private TimeSpan timer;
         private bool preKeyDown; 
         public static RogueSharp.Random.IRandom Random { get; private set; }
@@ -51,6 +50,12 @@ namespace ResidentSurvivor{
                     break;
                 }
 
+            var fontMaster = SadConsole.Game.Instance.LoadFont("./fonts/_test.font");
+            //var normalSizedFont = fontMaster.GetFont(SadConsole.Font.FontSizes.One);
+            //var normalFont = fontMaster
+
+            this.Font = fontMaster;
+
             entityManager.Add(player);
 
             
@@ -61,7 +66,7 @@ namespace ResidentSurvivor{
         private static void CreatePlayer(int x, int y)
         {
             player = new SadConsole.Entities.Entity(
-                Color.White, Color.Transparent, 1, 100);
+                Color.Pink, Color.Transparent, 1, 100);
 
             player.Position = new Point(x,y);
         }

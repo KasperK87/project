@@ -25,7 +25,8 @@ namespace ResidentSurvivor
             
             //TODO: Implement as singleton (maybe)
             newWorld = new World(80,29);
-            newWorld.Position = new Point(40,1);
+            //newWorld.Position = new Point(40,1);
+            newWorld.Position = new Point(20,1);
             newWorld.DefaultBackground = Color.Black;
            
             this.Children.Add(newWorld);

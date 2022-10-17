@@ -1,0 +1,10 @@
+{
+  "Name": "Monsters",
+  "FilePath": "Monsters.png",
+  "GlyphHeight": 24,
+  "GlyphPadding": 1,
+  "GlyphWidth": 16,
+  "SolidGlyphIndex": 494,
+  "Columns": 19,
+  "IsSadExtended": false
+}
