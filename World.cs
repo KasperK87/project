@@ -42,7 +42,7 @@ namespace ResidentSurvivor{
             Random = new RogueSharp.Random.DotNetRandom( seed );
 
             RogueSharp.MapCreation.IMapCreationStrategy<RogueSharpSadConsoleSamples.Core.DungeonMap> mapCreationStrategy =
-                new RogueSharp.MapCreation.RandomRoomsMapCreationStrategy<RogueSharpSadConsoleSamples.Core.DungeonMap>( 50, 30, 100, 7, 3 );
+                new RogueSharp.MapCreation.RandomRoomsMapCreationStrategy<RogueSharpSadConsoleSamples.Core.DungeonMap>( 80, 29, 100, 7, 3 );
             DungeonMap = mapCreationStrategy.CreateMap();
 
             foreach ( RogueSharp.Cell cell in DungeonMap.GetAllCells() )

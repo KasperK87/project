@@ -5,18 +5,29 @@ using Console = SadConsole.Console;
 
 namespace ResidentSurvivor
 {
+    public enum ProcessState
+    {
+        Inactive,
+        Active,
+        Paused,
+        Terminated
+    }
+
     class Game : SadConsole.Game{
         // Managers
        public static UIManager? UIManager;
+
        private Game(){
             //gameInstance is a singleton use setup(width, height)
        } 
 
        public static void Setup(int w, int h){
+
+        
+
             Create(w, h);
             Instance.OnStart = () => {
                 UIManager = new UIManager();
-
                 Game.Instance.Screen = UIManager;
                 Game.Instance.DestroyDefaultStartingConsole();
             };
@@ -37,8 +48,7 @@ namespace ResidentSurvivor
             if (SadConsole.Game.Instance.Keyboard.IsKeyReleased(SadConsole.Input.Keys.Escape)){
                 //SadConsole.Game.Instance.Dispose();
                 SadConsole.Game.Instance.MonoGameInstance.Exit();
-            }
-            
+            }      
         }
     }
 }

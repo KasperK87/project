@@ -8,14 +8,41 @@ namespace ResidentSurvivor
      public class UIManager : ScreenObject{
      // Creates/Holds/Destroys all consoles used in the game
      // and makes consoles easily addressable from a central place.
-        public Console? mapConsole;
+
+        public ProcessState currentState;
+        public Console? newWorld;
+        public Console? menu;
 
         public UIManager()
         {
+            currentState = ProcessState.Inactive;
+
             // must be set to true
             // or will not call each child's Draw method
             IsVisible = true;
             IsFocused = true;
+
+            
+            //TODO: Implement as singleton (maybe)
+            newWorld = new World(80,29);
+            newWorld.Position = new Point(40,1);
+            newWorld.DefaultBackground = Color.Black;
+           
+            this.Children.Add(newWorld);
+
+            Console statusScreen = new Console(40, 29){
+                DefaultBackground = Color.AnsiCyan,
+                Position = new Point(1,1),
+            };
+
+            this.Children.Add(statusScreen);
+
+            Console massageScreen = new Console(120, 10){
+                DefaultBackground = Color.AnsiRed,
+                Position = new Point(1,31),
+            };
+
+            this.Children.Add(massageScreen);
 
             Console splashScreen = new SplashScreen(120,40); 
 
@@ -24,10 +51,16 @@ namespace ResidentSurvivor
             // The UIManager becomes the only
             // screen that SadConsole processes
             //Parent = SadConsole.Game.Instance.Screen;
-        } // Creates all child consoles to be managed
-        public void CreateConsoles()
+        }
+        public override void Update(TimeSpan timeElapsed)
         {
-            //mapConsole = new SadConsole.ScrollingConsole(GameLoop.World.CurrentMap.Width, GameLoop.World.CurrentMap.Height, Global.FontDefault, new Rectangle(0, 0, GameLoop.GameWidth, GameLoop.GameHeight), GameLoop.World.CurrentMap.Tiles);
+            if (currentState == ProcessState.Active){
+
+            } else if (currentState == ProcessState.Paused){
+               
+            }
+
+            base.Update(timeElapsed);
         }
     }
 
@@ -56,7 +89,7 @@ namespace ResidentSurvivor
 
             if(timer >= TimeSpan.FromSeconds(3)){
                 Menu menu = new Menu(120,40);
-                
+
                 Game.Instance.Screen.Children.Add(menu);
 
                 Game.Instance.Screen.Children.Remove(this);
@@ -103,11 +136,15 @@ namespace ResidentSurvivor
             startButton.Position = new Point(w/2-6,h/2+2);
             startButton.Text = "START";
             startButton.Click += (x, y) => {
-                World newWorld = new World(118,38);
+                
+                //created in UIManegar appears when we hide menu;
+                /*
+                World newWorld = new World(80,29);
                 newWorld.Position = new Point(1,1);
                 newWorld.DefaultBackground = Color.Black;
                 Game.Instance.Screen.Children.Add(newWorld);  
-                
+                */
+
                 //hides the menu
                 this.Hide();
             };
