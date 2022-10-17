@@ -93,14 +93,14 @@ namespace ResidentSurvivor
             this.Title = "MAIN MENU";
 
             //adding a start button
-            SadConsole.UI.Controls.Button startButton = new SadConsole.UI.Controls.Button(7,3);
+            SadConsole.UI.Controls.Button startButton = new SadConsole.UI.Controls.Button(13,3);
             //startButton.Theme = new SadConsole.UI.Themes.ButtonTheme('[',']');
             startButton.Theme = new SadConsole.UI.Themes.ButtonLinesTheme();
             
             //NOT VALID WHY?
             //startButton.SetThemeColors((SadConsole.UI.Colors.ColorNames.Orange);
             
-            startButton.Position = new Point(w/2-3,h/2+2);
+            startButton.Position = new Point(w/2-6,h/2+2);
             startButton.Text = "START";
             startButton.Click += (x, y) => {
                 World newWorld = new World(118,38);

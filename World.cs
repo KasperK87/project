@@ -30,9 +30,7 @@ namespace ResidentSurvivor{
 
             SadComponents.Add(entityManager);
 
-            CreatePlayer();
-
-            entityManager.Add(player);
+            
 
             // Setup this console to accept keyboard input.
             //UseKeyboard = true;
@@ -47,16 +45,25 @@ namespace ResidentSurvivor{
                 new RogueSharp.MapCreation.RandomRoomsMapCreationStrategy<RogueSharpSadConsoleSamples.Core.DungeonMap>( 50, 30, 100, 7, 3 );
             DungeonMap = mapCreationStrategy.CreateMap();
 
+            foreach ( RogueSharp.Cell cell in DungeonMap.GetAllCells() )
+                if (cell.IsWalkable){
+                    CreatePlayer(cell.X, cell.Y);
+                    break;
+                }
+
+            entityManager.Add(player);
+
             
             //DungeonMap = new RogueSharp.MapCreation.RandomRoomsMapCreationStrategy(120, 40, 20, 30, 15, Random);
         }
 
         // Create a player using SadConsole's Entity class
-        private static void CreatePlayer()
+        private static void CreatePlayer(int x, int y)
         {
             player = new SadConsole.Entities.Entity(
-                Color.White, Color.Black, 1, 100);
-            player.Position = new Point(5,5);
+                Color.White, Color.Transparent, 1, 100);
+
+            player.Position = new Point(x,y);
         }
 
         public override void Update(TimeSpan delta){
@@ -123,7 +130,10 @@ namespace ResidentSurvivor{
             if ((keyHit && !preKeyDown) || run)
             {
                 // Check if the new position is valid
-                if (Surface.Area.Contains(newPosition))
+                // DIRTY CHECK ON DRAW SURFACE FOR COLLICTION CHECK, NEED 
+                // REFACTORING
+                if (Surface.Area.Contains(newPosition) &&
+                        Surface.GetBackground(newPosition.X, newPosition.Y) == Color.Blue)
                 {
                     // Entity moved. Let's draw a trail of where they moved from.
                     Surface.SetGlyph(player.Position.X, player.Position.Y, 250);

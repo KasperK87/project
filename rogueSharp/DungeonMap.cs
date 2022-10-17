@@ -78,7 +78,7 @@ namespace RogueSharpSadConsoleSamples.Core
          {
             if ( cell.IsWalkable )
             {
-                map.SetBackground(cell.X, cell.Y, SadRogue.Primitives.Color.White);
+                map.SetBackground(cell.X, cell.Y, SadRogue.Primitives.Color.Gray);
                //console.CellData.SetCharacter( cell.X, cell.Y, '.', Colors.Floor, Colors.FloorBackground );
             }
             else
