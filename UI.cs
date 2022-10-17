@@ -89,35 +89,27 @@ namespace ResidentSurvivor
             _selectedFont = fonts[0];
 
             //this.View = new Rectangle(0, 0, 22, 22);
-           //this.CanDrag = true;
+            //this.CanDrag = true;
             this.Title = "MAIN MENU";
-            
-            //this.Children.Add(menuConsole);    
-            /*
-            //Add close button to the Window's list of UI elements
-            SadConsole.UI.Controls.Button closeButton = new SadConsole.UI.Controls.Button(3, 1);
-            closeButton.Position = new Point(0, 0);
-            closeButton.Text = "[X]";
-            this.Controls.Add(closeButton);
-
-            //using a lambda for better readability
-            closeButton.Click += (x, y) => {
-                this.Parent.Children.Remove(this);
-                //this.Hide();
-            };
-            */
 
             //adding a start button
-            SadConsole.UI.Controls.Button startButton = new SadConsole.UI.Controls.Button(7,1);
-            startButton.Theme = new SadConsole.UI.Themes.ButtonTheme();
-            //startButton.SetThemeColors();
-            startButton.Position = new Point(7,10);
+            SadConsole.UI.Controls.Button startButton = new SadConsole.UI.Controls.Button(7,3);
+            //startButton.Theme = new SadConsole.UI.Themes.ButtonTheme('[',']');
+            startButton.Theme = new SadConsole.UI.Themes.ButtonLinesTheme();
+            
+            //NOT VALID WHY?
+            //startButton.SetThemeColors((SadConsole.UI.Colors.ColorNames.Orange);
+            
+            startButton.Position = new Point(w/2-3,h/2+2);
             startButton.Text = "START";
             startButton.Click += (x, y) => {
                 World newWorld = new World(118,38);
                 newWorld.Position = new Point(1,1);
                 newWorld.DefaultBackground = Color.Black;
                 Game.Instance.Screen.Children.Add(newWorld);  
+                
+                //hides the menu
+                this.Hide();
             };
             
             this.Controls.Add(startButton);
@@ -145,9 +137,6 @@ namespace ResidentSurvivor
             int offcentering = 15;
             Surface.PrintTheDraw(2+offcentering, this.Height/2-19, "Resident", _selectedFont);
             Surface.PrintTheDraw(this.Width-80-offcentering, this.Height/2-9, "Survivor", _selectedFont);
-
-
-            //menuConsole.Print(1, 1, "MENU");
         }
     }
 }

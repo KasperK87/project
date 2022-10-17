@@ -1,3 +1,10 @@
+
+#remove everything and add them again
+#respecting .gitignore
+
+# git rm -rf --cached .
+# git add .
+
 .vscode/
 bin/
 obj/
