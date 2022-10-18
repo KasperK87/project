@@ -14,12 +14,7 @@
   </ItemGroup>
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
       <Message Importance="High" Text="Moving fonts" />
-      <Move SourceFiles="@(FilesToMove)" DestinationFolder="dest">
-       <Output 
-          TaskParameter="DestinationFiles"
-          ItemName="FilesWritten"/>
-     </Move>
-     <Message Text="@(FilesWritten)"/>
+      <Copy SourceFiles="@(FilesToMove)" DestinationFolder="bin\Debug\net6.0\fonts" />
   </Target>
 
 </Project>
