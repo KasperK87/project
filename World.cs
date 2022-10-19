@@ -9,6 +9,8 @@ namespace ResidentSurvivor{
 
         public RogueSharpSadConsoleSamples.Core.DungeonMap DungeonMap;
 
+        private Point mouseLoc;
+
         private RogueSharp.IMap _map;
         private TimeSpan timer;
         private bool preKeyDown; 
@@ -23,6 +25,8 @@ namespace ResidentSurvivor{
         private SadConsole.Entities.Renderer entityManager;
         public World(int w, int h) : base( w, h){
             entityManager = new SadConsole.Entities.Renderer();
+
+            mouseLoc = new Point(0,0);
 
             timer = TimeSpan.Zero;
             preKeyDown = false;
@@ -86,8 +90,11 @@ namespace ResidentSurvivor{
         public override void Render(TimeSpan delta){
             base.Render(delta);
 
+            this.Clear();
+
             DungeonMap.Draw(this);
 
+            this.SetBackground(mouseLoc.X, mouseLoc.Y, Color.Yellow);
         }
     
         public bool ProcessKeyboard(SadConsole.Input.IKeyboardState info)
@@ -158,6 +165,13 @@ namespace ResidentSurvivor{
 
         
             preKeyDown = keyHit;
+            return false;
+        }
+    
+        public override bool ProcessMouse(SadConsole.Input.MouseScreenObjectState info){
+
+            mouseLoc = info.CellPosition;
+
             return false;
         }
     }
