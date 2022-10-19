@@ -36,8 +36,9 @@ namespace ResidentSurvivor{
             
 
             // Setup this console to accept keyboard input.
-            //UseKeyboard = true;
+            UseKeyboard = true;
             IsVisible = true;
+            UseMouse = true;
 
             //create dungeon
             //DungeonMap = mapGenerator.CreateMap();
@@ -76,9 +77,8 @@ namespace ResidentSurvivor{
         }
 
         public override void Update(TimeSpan delta){
+            this.IsFocused = true;
             timer += delta;
-
-            ProcessKeyboard(SadConsole.Game.Instance.GetKeyboardState());
               
             DungeonMap.UpdatePlayerFieldOfView(player);
 
@@ -97,7 +97,7 @@ namespace ResidentSurvivor{
             this.SetBackground(mouseLoc.X, mouseLoc.Y, Color.Yellow);
         }
     
-        public bool ProcessKeyboard(SadConsole.Input.IKeyboardState info)
+        public override bool ProcessKeyboard(SadConsole.Input.Keyboard info)
         {
             // Forward the keyboard data to the entity to handle the movement code.
             // We could detect if the users hit ESC and popup a menu or something.
