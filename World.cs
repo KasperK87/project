@@ -5,16 +5,15 @@ using Console = SadConsole.Console;
 
 namespace ResidentSurvivor{
     class World : Console {
-        private static SadConsole.Entities.Entity player;
+        private static SadConsole.Entities.Entity? player;
 
         public RogueSharpSadConsoleSamples.Core.DungeonMap DungeonMap;
 
         private Point mouseLoc;
 
-        private RogueSharp.IMap _map;
         private TimeSpan timer;
         private bool preKeyDown; 
-        public static RogueSharp.Random.IRandom Random { get; private set; }
+        public static RogueSharp.Random.IRandom? Random { get; private set; }
 
 
         //int width, int height, int maxRooms, int roomMaxSize, int roomMinSize, int level
@@ -94,6 +93,10 @@ namespace ResidentSurvivor{
 
             DungeonMap.Draw(this);
 
+            pathXtoY();
+            drawPath();
+
+            this.SetBackground(player.Position.X, player.Position.Y, Color.Black);
             this.SetBackground(mouseLoc.X, mouseLoc.Y, Color.Yellow);
         }
     
@@ -173,6 +176,39 @@ namespace ResidentSurvivor{
             mouseLoc = info.CellPosition;
 
             return false;
+        }
+
+        //pathfinder method
+        //PROOF OF CONCEPTs
+        //private IEnumerable<RogueSharp.Cell> _cells;
+        private RogueSharp.Path _cells;
+        public void pathXtoY(){
+            if (player != null){
+            RogueSharp.PathFinder _pathFinder;
+            _pathFinder = new RogueSharp.PathFinder( DungeonMap );
+
+            try {
+            _cells = _pathFinder.ShortestPath( DungeonMap.GetCell
+                (player.Position.X, player.Position.Y),
+                DungeonMap.GetCell( mouseLoc.X, mouseLoc.Y ) );
+            } catch { 
+                
+            }
+            }
+
+        }
+
+        private void drawPath(){
+            if ( _cells != null)
+            {
+                foreach ( RogueSharp.Cell cell in _cells.Steps)
+                {
+                    if ( cell != null )
+                    {
+                        this.SetBackground(cell.X, cell.Y, Color.LightYellow);
+                    }
+                }
+            }
         }
     }
 }
