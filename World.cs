@@ -5,12 +5,9 @@ using Console = SadConsole.Console;
 
 namespace ResidentSurvivor{
     class World : Console {
-        private static SadConsole.Entities.Entity? player;
-
+        private static GameObject player;
         public RogueSharpSadConsoleSamples.Core.DungeonMap DungeonMap;
-
         private Point mouseLoc;
-
         private TimeSpan timer;
         private bool preKeyDown; 
         public static RogueSharp.Random.IRandom? Random { get; private set; }
@@ -69,7 +66,7 @@ namespace ResidentSurvivor{
         // Create a player using SadConsole's Entity class
         private static void CreatePlayer(int x, int y)
         {
-            player = new SadConsole.Entities.Entity(
+            player = new GameObject(
                 Color.White, Color.Transparent, 1, 100);
 
             player.Position = new Point(x,y);
@@ -80,6 +77,10 @@ namespace ResidentSurvivor{
             timer += delta;
               
             DungeonMap.UpdatePlayerFieldOfView(player);
+
+
+            //updates all entities (GameObject player)
+            entityManager.Update(this, delta);
 
             //View.WithCenter(player.Position);
             

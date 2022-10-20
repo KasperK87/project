@@ -51,6 +51,7 @@ SadConsole.Game "1" o-- "1" SadConsole.ScreenObject : aggregation
 SadConsole.Game <|-- Game
 SadConsole.ScreenObject <|-- UIManager
 SadConsole.Console <|-- SplashScreen
+SadConsole.Console <|-- World
 SadConsole.UI.Window <|-- Menu
 
 
