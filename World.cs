@@ -4,7 +4,8 @@ using SadRogue.Primitives;
 using Console = SadConsole.Console;
 
 namespace ResidentSurvivor{
-    class World : Console {
+    public class World : Console {
+        public UInt64 turn;
         private static GameObject player;
         public RogueSharpSadConsoleSamples.Core.DungeonMap DungeonMap;
         private Point mouseLoc;
@@ -20,6 +21,9 @@ namespace ResidentSurvivor{
 
         private SadConsole.Entities.Renderer entityManager;
         public World(int w, int h) : base( w, h){
+            //sets current turn:
+            turn = 0;
+
             entityManager = new SadConsole.Entities.Renderer();
 
             mouseLoc = new Point(0,0);
@@ -160,6 +164,7 @@ namespace ResidentSurvivor{
                     player.Position = newPosition;
 
                     preKeyDown = keyHit;
+                    turn++;
                     return true;
                 }
             }

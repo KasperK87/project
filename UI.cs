@@ -10,12 +10,14 @@ namespace ResidentSurvivor
      // and makes consoles easily addressable from a central place.
 
         public ProcessState currentState;
-        public Console? newWorld;
+        public World newWorld;
         public Console? menu;
+        public Console statusScreen;
+        public Console massageScreen;
 
         public UIManager()
         {
-            currentState = ProcessState.Inactive;
+            currentState = ProcessState.Active;
 
             // must be set to true
             // or will not call each child's Draw method
@@ -32,14 +34,14 @@ namespace ResidentSurvivor
            
             this.Children.Add(newWorld);
 
-            Console statusScreen = new Console(40, 29){
+            statusScreen = new Console(40, 29){
                 DefaultBackground = Color.AnsiCyan,
                 Position = new Point(1,1),
             };
 
             this.Children.Add(statusScreen);
 
-            Console massageScreen = new Console(120, 10){
+            massageScreen = new Console(120, 10){
                 DefaultBackground = Color.AnsiRed,
                 Position = new Point(1,31),
             };
@@ -57,6 +59,8 @@ namespace ResidentSurvivor
         public override void Update(TimeSpan timeElapsed)
         {
             if (currentState == ProcessState.Active){
+                
+                statusScreen.Print(1,1, "Current turn: " + newWorld.turn.ToString());
 
             } else if (currentState == ProcessState.Paused){
                
