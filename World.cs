@@ -7,6 +7,7 @@ namespace ResidentSurvivor{
     public class World : Console {
         public UInt64 turn;
         private static GameObject player;
+        private bool followingPath;
         public RogueSharpSadConsoleSamples.Core.DungeonMap DungeonMap;
         private Point mouseLoc;
         private TimeSpan timer;
@@ -54,6 +55,8 @@ namespace ResidentSurvivor{
                     CreatePlayer(cell.X, cell.Y);
                     break;
                 }
+            
+            followingPath = false;
 
             var fontMaster = SadConsole.Game.Instance.LoadFont("./fonts/_test.font");
             //var normalSizedFont = fontMaster.GetFont(SadConsole.Font.FontSizes.One);
@@ -82,9 +85,12 @@ namespace ResidentSurvivor{
               
             DungeonMap.UpdatePlayerFieldOfView(player);
 
+            if (followingPath) followPath();
 
             //updates all entities (GameObject player)
             entityManager.Update(this, delta);
+
+            
 
             //View.WithCenter(player.Position);
             
@@ -146,7 +152,7 @@ namespace ResidentSurvivor{
 
             if(preKeyDown && keyHit && timer >= TimeSpan.FromMilliseconds(500)){
                 run = true;
-            } else if (!preKeyDown && !keyHit) {
+            } else if (!preKeyDown && !keyHit && !followingPath) {
                 timer = TimeSpan.Zero;
             }
 
@@ -164,6 +170,7 @@ namespace ResidentSurvivor{
                     player.Position = newPosition;
 
                     preKeyDown = keyHit;
+                    followingPath = false;
                     turn++;
                     return true;
                 }
@@ -172,14 +179,19 @@ namespace ResidentSurvivor{
             // You could have multiple entities in the game for example, and change
             // which entity gets keyboard commands.
 
-        
             preKeyDown = keyHit;
             return false;
         }
     
         public override bool ProcessMouse(SadConsole.Input.MouseScreenObjectState info){
 
-            mouseLoc = info.CellPosition;
+            if (!followingPath){
+                mouseLoc = info.CellPosition;
+
+                if (info.Mouse.LeftClicked){
+                    followingPath = true;
+                }
+            }
 
             return false;
         }
@@ -213,6 +225,20 @@ namespace ResidentSurvivor{
                     {
                         this.SetBackground(cell.X, cell.Y, Color.LightYellow);
                     }
+                }
+            }
+        }
+    
+        private void followPath(){
+            if ( _cells != null && timer >= TimeSpan.FromMilliseconds(100))
+            {
+                timer = TimeSpan.Zero;
+                try {
+                    _cells.StepForward();
+                    player.Position = new SadRogue.Primitives.Point(_cells.CurrentStep.X, _cells.CurrentStep.Y);
+                    turn++;
+                } catch (RogueSharp.NoMoreStepsException) {
+                    followingPath = false;
                 }
             }
         }
