@@ -151,8 +151,8 @@ namespace ResidentSurvivor{
                 // Check if the new position is valid
                 // DIRTY CHECK ON DRAW SURFACE FOR COLLICTION CHECK, NEED 
                 // REFACTORING
-                if (Surface.Area.Contains(newPosition) &&
-                        Surface.GetBackground(newPosition.X, newPosition.Y) == Color.Blue)
+                if (Surface.Area.Contains(newPosition) && DungeonMap.GetCell(newPosition.X, newPosition.Y).IsWalkable)
+                        //Surface.GetBackground(newPosition.X, newPosition.Y) == Color.Blue)
                 {
                     // Entity moved. Let's draw a trail of where they moved from.
                     //Surface.SetGlyph(player.Position.X, player.Position.Y, 250);
