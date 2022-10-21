@@ -64,6 +64,9 @@ namespace ResidentSurvivor{
  
                 entityManager.Add(player);
 
+                //doesn't work, call from update loop instead 
+                //entityManager.DoEntityUpdate = true;
+
             
 
             
@@ -118,7 +121,6 @@ namespace ResidentSurvivor{
 
             drawPath();
 
-            this.SetBackground(player.Position.X, player.Position.Y, Color.Black);
             this.SetBackground(mouseLoc.X, mouseLoc.Y, Color.Yellow);
         }
     
