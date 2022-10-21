@@ -32,10 +32,6 @@ namespace ResidentSurvivor{
             timer = TimeSpan.Zero;
             preKeyDown = false;
 
-            SadComponents.Add(entityManager);
-
-            
-
             // Setup this console to accept keyboard input.
             UseKeyboard = true;
             IsVisible = true;
@@ -50,11 +46,26 @@ namespace ResidentSurvivor{
                 new RogueSharp.MapCreation.RandomRoomsMapCreationStrategy<RogueSharpSadConsoleSamples.Core.DungeonMap>( 80, 29, 100, 7, 3 );
             DungeonMap = mapCreationStrategy.CreateMap();
 
+            //create player & populate dungeon
+            SadComponents.Add(entityManager);
             foreach ( RogueSharp.Cell cell in DungeonMap.GetAllCells() )
                 if (cell.IsWalkable){
                     CreatePlayer(cell.X, cell.Y);
-                    break;
+                    //break;
+
+                    if (Random.Next(100) == 0){
+                        Rat rat = new Rat(
+                            Color.White, Color.Transparent, 100, 99);
+
+                        rat.Position = new Point(cell.X,cell.Y);
+                        entityManager.Add(rat);
+                    }
                 }
+ 
+                entityManager.Add(player);
+
+            
+
             
             followingPath = false;
 
@@ -64,7 +75,7 @@ namespace ResidentSurvivor{
 
             this.Font = fontMaster;
 
-            entityManager.Add(player);
+            
 
             
             //DungeonMap = new RogueSharp.MapCreation.RandomRoomsMapCreationStrategy(120, 40, 20, 30, 15, Random);

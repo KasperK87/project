@@ -1,9 +1,9 @@
 //gameObejct extends entity, and is based on a component patten
 namespace ResidentSurvivor {
     class GameObject : SadConsole.Entities.Entity {
-        int currHP;
-        int maxHP;
-        int speed;
+        protected int currHP;
+        protected int maxHP;
+        protected int speed;
         
 
         public GameObject(SadRogue.Primitives.Color c1,SadRogue.Primitives.Color c2, int SetGlyph, int zIndex):
