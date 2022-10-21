@@ -20,8 +20,13 @@ namespace ResidentSurvivor {
         }
 
         public override void Update(TimeSpan delta){
-            //this.Appearance.Glyph = 100;
-            
+            if (!Game.UIManager.newWorld.DungeonMap.IsInFov(this.Position.X, this.Position.Y)){
+                //this.Appearance.Glyph = 0;
+                this.Appearance.Foreground = SadRogue.Primitives.Color.Transparent;
+            } else {
+                this.Appearance.Foreground = SadRogue.Primitives.Color.White;
+            }
+    
             //This allows us to use the render function,
             //but it shouldn't be needed
             //this.Render(delta);
