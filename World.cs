@@ -88,7 +88,7 @@ namespace ResidentSurvivor{
         private static void CreatePlayer(int x, int y)
         {
             player = new GameObject(
-                Color.White, Color.Transparent, 1, 100);
+                Color.White, Color.Blue, 1, 100);
 
             player.Position = new Point(x,y);
         }
@@ -249,6 +249,7 @@ namespace ResidentSurvivor{
                         this.SetBackground(cell.X, cell.Y, Color.LightYellow);
                     }
                 }
+                this.SetBackground(_cells.Start.X, _cells.Start.Y, Color.Blue);
             }
         }
     
