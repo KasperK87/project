@@ -33,10 +33,16 @@ namespace ResidentSurvivor{
 
         private void followPath(){
             if ( _cells != null)
-            {
+            { 
                 try {
                     _cells.StepForward();
-                    this.Position = new SadRogue.Primitives.Point(_cells.CurrentStep.X, _cells.CurrentStep.Y);                  
+                    //check is there is a monster
+                    SadConsole.Entities.Entity? monster = Game.UIManager.newWorld.GetMonsterAt(_cells.CurrentStep.X, _cells.CurrentStep.Y);
+                    if (monster == null){
+                        this.Position = new SadRogue.Primitives.Point(_cells.CurrentStep.X, _cells.CurrentStep.Y);     
+                    } else {
+                        System.Console.WriteLine("Monster Attack!!!");
+                    }             
                 } catch (RogueSharp.NoMoreStepsException) {
                     _cells = null;
                     followingPath = false;

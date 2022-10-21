@@ -67,9 +67,6 @@ namespace ResidentSurvivor{
                 //doesn't work, call from update loop instead 
                 //entityManager.DoEntityUpdate = true;
 
-            
-
-            
             followingPath = false;
 
             var fontMaster = SadConsole.Game.Instance.LoadFont("./fonts/_test.font");
@@ -77,11 +74,6 @@ namespace ResidentSurvivor{
             //var normalFont = fontMaster
 
             this.Font = fontMaster;
-
-            
-
-            
-            //DungeonMap = new RogueSharp.MapCreation.RandomRoomsMapCreationStrategy(120, 40, 20, 30, 15, Random);
         }
 
         // Create a player using SadConsole's Entity class
@@ -138,26 +130,54 @@ namespace ResidentSurvivor{
             Point newPosition = (0, 0);
 
             // Process UP/DOWN movements
-            if (info.IsKeyDown(SadConsole.Input.Keys.Up))
+            if (info.IsKeyDown(SadConsole.Input.Keys.Up) || info.IsKeyDown(SadConsole.Input.Keys.NumPad8))
             {
                 newPosition = player.Position + (0, -1);
                 keyHit = true;
             }
-            else if (info.IsKeyDown(SadConsole.Input.Keys.Down))
+            else if (info.IsKeyDown(SadConsole.Input.Keys.Down) || info.IsKeyDown(SadConsole.Input.Keys.NumPad2))
             {
                 newPosition = player.Position + (0, 1);
                 keyHit = true;
             }
 
             // Process LEFT/RIGHT movements
-            if (info.IsKeyDown(SadConsole.Input.Keys.Left))
+            if (info.IsKeyDown(SadConsole.Input.Keys.Left) ||info.IsKeyDown(SadConsole.Input.Keys.NumPad4))
             {
                 newPosition = player.Position + (-1, 0);
                 keyHit = true;
             }
-            else if (info.IsKeyDown(SadConsole.Input.Keys.Right))
+            else if (info.IsKeyDown(SadConsole.Input.Keys.Right) || info.IsKeyDown(SadConsole.Input.Keys.NumPad6))
             {
                 newPosition = player.Position + (1, 0);
+                keyHit = true;
+            }
+
+            //diagonal movement
+            if (info.IsKeyDown(SadConsole.Input.Keys.NumPad7))
+            {
+                newPosition = player.Position + (-1, -1);
+                keyHit = true;
+            }
+            else if (info.IsKeyDown(SadConsole.Input.Keys.NumPad9))
+            {
+                newPosition = player.Position + (1, -1);
+                keyHit = true;
+            } else if (info.IsKeyDown(SadConsole.Input.Keys.NumPad1))
+            {
+                newPosition = player.Position + (-1, 1);
+                keyHit = true;
+            }
+            else if (info.IsKeyDown(SadConsole.Input.Keys.NumPad3))
+            {
+                newPosition = player.Position + (1, 1);
+                keyHit = true;
+            }
+
+            //Do nothing
+            if (info.IsKeyDown(SadConsole.Input.Keys.NumPad5))
+            {
+                newPosition = player.Position + (0, 0);
                 keyHit = true;
             }
 
@@ -165,21 +185,21 @@ namespace ResidentSurvivor{
                 run = true;
             } else if (!preKeyDown && !keyHit && !followingPath) {
                 timer = TimeSpan.Zero;
-            }
+            } 
 
             // If a movement key was pressed
             if ((keyHit && !preKeyDown && !followingPath) || run)
             {
                 // Check if the new position is valid
-                // DIRTY CHECK ON DRAW SURFACE FOR COLLICTION CHECK, NEED 
-                // REFACTORING
-                if (Surface.Area.Contains(newPosition) && DungeonMap.GetCell(newPosition.X, newPosition.Y).IsWalkable)
-                        //Surface.GetBackground(newPosition.X, newPosition.Y) == Color.Blue)
-                {
-                    // Entity moved. Let's draw a trail of where they moved from.
-                    //Surface.SetGlyph(player.Position.X, player.Position.Y, 250);
-                    player.Position = newPosition;
-                    pathXtoY(mouseLoc.X, mouseLoc.Y);
+                if (Surface.Area.Contains(newPosition) && DungeonMap.GetCell(newPosition.X, newPosition.Y).IsWalkable){
+                    //check is there is a monster
+                    SadConsole.Entities.Entity? monster = Game.UIManager.newWorld.GetMonsterAt(newPosition.X, newPosition.Y);
+                    if (monster == null || player.Position == newPosition){
+                        player.Position = newPosition;
+                        pathXtoY(mouseLoc.X, mouseLoc.Y);
+                    } else {
+                        System.Console.WriteLine("Player Attack");
+                    }
                     preKeyDown = keyHit;
                     turn++;
                     return true;
@@ -246,7 +266,7 @@ namespace ResidentSurvivor{
             return _pathFinder.ShortestPath( DungeonMap.GetCell
                 (origX, origY),
                 DungeonMap.GetCell( player.Position.X, player.Position.Y) );
-            } catch { 
+            } catch (RogueSharp.NoMoreStepsException) { 
                 return null;
             }
             
@@ -281,5 +301,10 @@ namespace ResidentSurvivor{
                 }
             }
         }
+        public SadConsole.Entities.Entity? GetMonsterAt( int x, int y ){
+            return entityManager.Entities.FirstOrDefault( m => m.Position.X == x && 
+                    m.Position.Y == y );
+        }
     }
+
 }
