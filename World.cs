@@ -157,7 +157,7 @@ namespace ResidentSurvivor{
             }
 
             // If a movement key was pressed
-            if ((keyHit && !preKeyDown) || run)
+            if ((keyHit && !preKeyDown && !followingPath) || run)
             {
                 // Check if the new position is valid
                 // DIRTY CHECK ON DRAW SURFACE FOR COLLICTION CHECK, NEED 
@@ -170,11 +170,13 @@ namespace ResidentSurvivor{
                     player.Position = newPosition;
 
                     preKeyDown = keyHit;
-                    followingPath = false;
                     turn++;
                     return true;
                 }
             }
+
+            if (keyHit) followingPath = false;
+
 
             // You could have multiple entities in the game for example, and change
             // which entity gets keyboard commands.
@@ -187,11 +189,12 @@ namespace ResidentSurvivor{
 
             if (!followingPath){
                 mouseLoc = info.CellPosition;
-
-                if (info.Mouse.LeftClicked){
-                    followingPath = true;
-                }
             }
+
+            if (info.Mouse.LeftClicked){
+                followingPath = !followingPath;
+            }
+            
 
             return false;
         }
