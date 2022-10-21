@@ -95,6 +95,7 @@ namespace ResidentSurvivor{
             //View.WithCenter(player.Position);
             
             this.View = new Rectangle(player.Position.X-20, player.Position.Y-10, 40, 20);
+            pathXtoY(mouseLoc.X, mouseLoc.Y);
         }
 
         public override void Render(TimeSpan delta){
@@ -104,7 +105,6 @@ namespace ResidentSurvivor{
 
             DungeonMap.Draw(this);
 
-            pathXtoY();
             drawPath();
 
             this.SetBackground(player.Position.X, player.Position.Y, Color.Black);
@@ -168,14 +168,17 @@ namespace ResidentSurvivor{
                     // Entity moved. Let's draw a trail of where they moved from.
                     //Surface.SetGlyph(player.Position.X, player.Position.Y, 250);
                     player.Position = newPosition;
-
+                    pathXtoY(mouseLoc.X, mouseLoc.Y);
                     preKeyDown = keyHit;
                     turn++;
                     return true;
                 }
             }
 
-            if (keyHit) followingPath = false;
+            if (keyHit) {
+                followingPath = false;
+                _cells = null;
+            }
 
 
             // You could have multiple entities in the game for example, and change
@@ -187,6 +190,8 @@ namespace ResidentSurvivor{
     
         public override bool ProcessMouse(SadConsole.Input.MouseScreenObjectState info){
 
+            //if(mouseLoc != info.CellPosition) pathXtoY();
+            
             if (!followingPath){
                 mouseLoc = info.CellPosition;
             }
@@ -203,7 +208,9 @@ namespace ResidentSurvivor{
         //PROOF OF CONCEPTs
         //private IEnumerable<RogueSharp.Cell> _cells;
         private RogueSharp.Path _cells;
-        public void pathXtoY(){
+        //should be renamed to better reflex use:
+        //player move to point
+        public void pathXtoY(int destX, int destY){
             if (player != null){
             RogueSharp.PathFinder _pathFinder;
             _pathFinder = new RogueSharp.PathFinder( DungeonMap );
@@ -211,7 +218,7 @@ namespace ResidentSurvivor{
             try {
             _cells = _pathFinder.ShortestPath( DungeonMap.GetCell
                 (player.Position.X, player.Position.Y),
-                DungeonMap.GetCell( mouseLoc.X, mouseLoc.Y ) );
+                DungeonMap.GetCell( destX, destY ) );
             } catch { 
                 
             }
@@ -238,9 +245,11 @@ namespace ResidentSurvivor{
                 timer = TimeSpan.Zero;
                 try {
                     _cells.StepForward();
-                    player.Position = new SadRogue.Primitives.Point(_cells.CurrentStep.X, _cells.CurrentStep.Y);
+                    player.Position = new SadRogue.Primitives.Point(_cells.CurrentStep.X, _cells.CurrentStep.Y);                  
+                    pathXtoY(_cells.End.X, _cells.End.Y);
                     turn++;
                 } catch (RogueSharp.NoMoreStepsException) {
+                    _cells = null;
                     followingPath = false;
                 }
             }
