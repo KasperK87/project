@@ -104,8 +104,6 @@ namespace ResidentSurvivor{
             //updates all entities (GameObject player)
             entityManager.Update(this, delta);
 
-            
-
             //View.WithCenter(player.Position);
             
             this.View = new Rectangle(player.Position.X-20, player.Position.Y-10, 40, 20);
@@ -237,6 +235,21 @@ namespace ResidentSurvivor{
             }
             }
 
+        }
+
+        //gives the path to the player from a point
+         public RogueSharp.Path pathToPlayerFrom(int origX, int origY){
+            RogueSharp.PathFinder _pathFinder;
+            _pathFinder = new RogueSharp.PathFinder( DungeonMap );
+
+            try {
+            return _pathFinder.ShortestPath( DungeonMap.GetCell
+                (origX, origY),
+                DungeonMap.GetCell( player.Position.X, player.Position.Y) );
+            } catch { 
+                return null;
+            }
+            
         }
 
         private void drawPath(){
