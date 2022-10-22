@@ -85,6 +85,10 @@ namespace ResidentSurvivor{
             player.Position = new Point(x,y);
         }
 
+        public GameObject getPlayer(){
+            return player;
+        }
+
         public override void Update(TimeSpan delta){
             this.IsFocused = true;
             timer += delta;
@@ -301,8 +305,10 @@ namespace ResidentSurvivor{
                 }
             }
         }
-        public SadConsole.Entities.Entity? GetMonsterAt( int x, int y ){
-            return entityManager.Entities.FirstOrDefault( m => m.Position.X == x && 
+
+        //This is not optimal, might be very buggy
+        public GameObject? GetMonsterAt( int x, int y ){
+            return (GameObject?)entityManager.Entities.FirstOrDefault( m => m.Position.X == x && 
                     m.Position.Y == y );
         }
     }

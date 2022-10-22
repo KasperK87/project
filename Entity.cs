@@ -1,18 +1,23 @@
 //gameObejct extends entity, and is based on a component patten
 namespace ResidentSurvivor {
-    class GameObject : SadConsole.Entities.Entity {
-        protected int currHP;
-        protected int maxHP;
+    public class GameObject : SadConsole.Entities.Entity {
+        public int currHP;
+        public int maxHP;
         protected int speed;
+
+        protected int damage;
         
 
         public GameObject(SadRogue.Primitives.Color c1,SadRogue.Primitives.Color c2, int SetGlyph, int zIndex):
             base(c1, c2, SetGlyph, zIndex){
-              //IComponent_updater pig = new IComponent_updater();
-              //this.ComponentsUpdate.Add(pig);
+              this.maxHP = 10;
+              this.currHP = 10;
+              this.speed = 1;
+              this.damage = 3;
             }
         
         //Render override is not running, but glyph is still being rendered?
+        //renderer appearnly does this behind the scenes
         public override void Render(TimeSpan delta){
             //this.ComponentsRender[0].Render(this, delta);
             //System.Console.WriteLine("pig!");
@@ -33,6 +38,10 @@ namespace ResidentSurvivor {
             
             base.Update(delta);
 
+        }
+
+        public void Attack(GameObject target){
+            target.currHP -= damage;
         }
     }
 

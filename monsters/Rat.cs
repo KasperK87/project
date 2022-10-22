@@ -12,6 +12,7 @@ namespace ResidentSurvivor{
               this.maxHP = 1;
               this.currHP = 1;
               this.speed = 1;
+              this.damage = 1;
 
               followingPath = false;
         }
@@ -37,11 +38,12 @@ namespace ResidentSurvivor{
                 try {
                     _cells.StepForward();
                     //check is there is a monster
-                    SadConsole.Entities.Entity? monster = Game.UIManager.newWorld.GetMonsterAt(_cells.CurrentStep.X, _cells.CurrentStep.Y);
+                    GameObject? monster = Game.UIManager.newWorld.GetMonsterAt(_cells.CurrentStep.X, _cells.CurrentStep.Y);
                     if (monster == null){
                         this.Position = new SadRogue.Primitives.Point(_cells.CurrentStep.X, _cells.CurrentStep.Y);     
                     } else {
-                        System.Console.WriteLine("Monster Attack!!!");
+                        //System.Console.WriteLine("Monster Attack!!!");
+                        Attack(monster);
                     }             
                 } catch (RogueSharp.NoMoreStepsException) {
                     _cells = null;
