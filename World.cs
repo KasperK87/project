@@ -20,7 +20,7 @@ namespace ResidentSurvivor{
             mapGenerator = new RogueSharpSadConsoleSamples.Systems.MapGenerator(
                 120,40, 10, 10, 5, 1);
 
-        private SadConsole.Entities.Renderer entityManager;
+        public SadConsole.Entities.Renderer entityManager;
         public World(int w, int h) : base( w, h){
             //sets current turn:
             turn = 0;
@@ -197,12 +197,13 @@ namespace ResidentSurvivor{
                 // Check if the new position is valid
                 if (Surface.Area.Contains(newPosition) && DungeonMap.GetCell(newPosition.X, newPosition.Y).IsWalkable){
                     //check is there is a monster
-                    SadConsole.Entities.Entity? monster = Game.UIManager.newWorld.GetMonsterAt(newPosition.X, newPosition.Y);
+                    GameObject? monster = Game.UIManager.newWorld.GetMonsterAt(newPosition.X, newPosition.Y);
                     if (monster == null || player.Position == newPosition){
                         player.Position = newPosition;
                         pathXtoY(mouseLoc.X, mouseLoc.Y);
                     } else {
                         System.Console.WriteLine("Player Attack");
+                        player.Attack(monster);
                     }
                     preKeyDown = keyHit;
                     turn++;

@@ -19,7 +19,12 @@ namespace ResidentSurvivor{
 
         public override void Update(TimeSpan delta){
 
-            if (this.turn < Game.UIManager.newWorld.turn){
+            if (currHP < 1){
+                //this.Appearance.Foreground = SadRogue.Primitives.Color.Transparent;  
+                Game.UIManager.newWorld.entityManager.Remove(this);
+            }
+
+            if (this.turn < Game.UIManager.newWorld.turn && currHP > 0){
                 followPath();
                 this.turn = Game.UIManager.newWorld.turn;
             }

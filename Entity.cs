@@ -35,8 +35,10 @@ namespace ResidentSurvivor {
             //This allows us to use the render function,
             //but it shouldn't be needed
             //this.Render(delta);
-            
-            base.Update(delta);
+
+            if (currHP < 1){
+                this.Appearance.Foreground = SadRogue.Primitives.Color.Transparent;   
+            }
 
         }
 
