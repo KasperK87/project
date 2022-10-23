@@ -21,6 +21,7 @@ namespace ResidentSurvivor{
                 120,40, 10, 10, 5, 1);
 
         public SadConsole.Entities.Renderer entityManager;
+
         public World(int w, int h) : base( w, h){
             //sets current turn:
             turn = 0;
@@ -45,6 +46,8 @@ namespace ResidentSurvivor{
             RogueSharp.MapCreation.IMapCreationStrategy<RogueSharpSadConsoleSamples.Core.DungeonMap> mapCreationStrategy =
                 new RogueSharp.MapCreation.RandomRoomsMapCreationStrategy<RogueSharpSadConsoleSamples.Core.DungeonMap>( 80, 29, 100, 7, 3 );
             DungeonMap = mapCreationStrategy.CreateMap();
+
+            
 
             //create player & populate dungeon
             SadComponents.Add(entityManager);
@@ -74,6 +77,8 @@ namespace ResidentSurvivor{
             //var normalFont = fontMaster
 
             this.Font = fontMaster;
+
+            //this.FontSize = new SadRogue.Primitives.Point(16,28);;
         }
 
         // Create a player using SadConsole's Entity class
