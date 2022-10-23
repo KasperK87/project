@@ -304,9 +304,14 @@ namespace ResidentSurvivor{
                 try {
                     //_cells.TryStepForward();
                     _cells.StepForward();
-                    player.Position = new SadRogue.Primitives.Point(_cells.CurrentStep.X, _cells.CurrentStep.Y);                  
-                    pathXtoY(_cells.End.X, _cells.End.Y);
-                    turn++;
+                    System.Console.WriteLine(_cells.CurrentStep.X +"," + _cells.CurrentStep.Y);
+                    if (GetMonsterAt(_cells.CurrentStep.X, _cells.CurrentStep.Y) != null){
+                        throw new RogueSharp.NoMoreStepsException();
+                    } else {
+                        player.Position = new SadRogue.Primitives.Point(_cells.CurrentStep.X, _cells.CurrentStep.Y);                  
+                        pathXtoY(_cells.End.X, _cells.End.Y);
+                        turn++;
+                    }
                 } catch (RogueSharp.NoMoreStepsException) {
                     _cells = null;
                     followingPath = false;
