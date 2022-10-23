@@ -48,6 +48,8 @@ namespace ResidentSurvivor
 
             this.Children.Add(massageScreen);
 
+            //Console splashScreen = new SplashScreen(120,40); 
+
             Console splashScreen = new SplashScreen(120,40); 
 
             this.Children.Add(splashScreen);

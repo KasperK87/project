@@ -79,7 +79,7 @@ namespace ResidentSurvivor{
 
             this.Font = fontMaster;
 
-            //this.FontSize = new SadRogue.Primitives.Point(16,28);;
+            this.FontSize = new SadRogue.Primitives.Point(16,24);;
         }
 
         // Create a player using SadConsole's Entity class
