@@ -10,7 +10,8 @@
     <PackageReference Include="SadConsole" Version="9.2.2" />
     <PackageReference Include="SadConsole.Host.MonoGame" Version="9.2.2" />
     <PackageReference Include="RogueSharp" Version="4.2.0" />
-    <FilesToMove Include="fonts\*.*"/>
+    <FilesToMove Include="fonts\*.*" />
+    <PackageReference Include="SadConsole.Extended" Version="9.2.1" />
   </ItemGroup>
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
       <Message Importance="High" Text="Moving fonts" />

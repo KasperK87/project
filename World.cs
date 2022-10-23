@@ -20,13 +20,14 @@ namespace ResidentSurvivor{
             mapGenerator = new RogueSharpSadConsoleSamples.Systems.MapGenerator(
                 120,40, 10, 10, 5, 1);
 
-        public SadConsole.Entities.Renderer entityManager;
+        public SadConsole.Entities.Manager entityManager;
+        
 
         public World(int w, int h) : base( w, h){
             //sets current turn:
             turn = 0;
 
-            entityManager = new SadConsole.Entities.Renderer();
+            entityManager = new SadConsole.Entities.Manager();
 
             mouseLoc = new Point(0,0);
 
@@ -301,6 +302,7 @@ namespace ResidentSurvivor{
             {
                 timer = TimeSpan.Zero;
                 try {
+                    //_cells.TryStepForward();
                     _cells.StepForward();
                     player.Position = new SadRogue.Primitives.Point(_cells.CurrentStep.X, _cells.CurrentStep.Y);                  
                     pathXtoY(_cells.End.X, _cells.End.Y);
@@ -314,8 +316,11 @@ namespace ResidentSurvivor{
 
         //This is not optimal, might be very buggy
         public GameObject? GetMonsterAt( int x, int y ){
+            return (GameObject?)entityManager.GetEntityAtPosition(new Point(x, y));
+            /*
             return (GameObject?)entityManager.Entities.FirstOrDefault( m => m.Position.X == x && 
                     m.Position.Y == y );
+            */
         }
     }
 
