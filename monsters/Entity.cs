@@ -19,7 +19,7 @@ namespace ResidentSurvivor {
               //his.SadComponents.Add(new IComponent_RenderPig());
               
               //crashes many places?!
-              this.SadComponents.Add(new SadConsole.Components.SmoothMove(new SadRogue.Primitives.Point(15,24)));
+              //this.SadComponents.Add(new SadConsole.Components.SmoothMove(new SadRogue.Primitives.Point(15,24)));
             }
         
         //Render override is not running, but glyph is still being rendered?
