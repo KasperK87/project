@@ -5,7 +5,7 @@ namespace ResidentSurvivor {
         public int maxHP;
         protected int speed;
 
-        protected int damage;
+        public int damage;
         
 
         public GameObject(SadRogue.Primitives.Color c1,SadRogue.Primitives.Color c2, int SetGlyph, int zIndex):
@@ -40,14 +40,19 @@ namespace ResidentSurvivor {
     
             //This allows us to use the render function,
             //but it shouldn't be needed
+            /*
             foreach (SadConsole.Components.IComponent obj in this.SadComponents){
                 obj.Update(this, delta);
-                obj.Render(this, delta);
+                //obj.Render(this, delta);
             }
+            */
 
             if (currHP < 1){
                 this.Appearance.Foreground = SadRogue.Primitives.Color.Transparent;   
             }
+
+            //hooks up the component render functions
+            base.Update(delta);
 
         }
 
@@ -64,7 +69,7 @@ namespace ResidentSurvivor {
             HP = 5;
         }
         public override void Update(SadConsole.IScreenObject parent, TimeSpan delta){
-            //System.Console.WriteLine("pig pig!");   
+            System.Console.WriteLine("pig pig!");   
         }
     }
 

@@ -62,6 +62,7 @@ namespace ResidentSurvivor{
                             Color.White, Color.Transparent, 100, 99);
 
                         rat.Position = new Point(cell.X,cell.Y);
+                        rat.SadComponents.Add(new IComponent_Hostile(rat));
                         entityManager.Add(rat);
                     }
                 }
@@ -79,7 +80,7 @@ namespace ResidentSurvivor{
 
             this.Font = fontMaster;
 
-            this.FontSize = new SadRogue.Primitives.Point(16,24);;
+            //this.FontSize = new SadRogue.Primitives.Point(16,24);;
         }
 
         // Create a player using SadConsole's Entity class
