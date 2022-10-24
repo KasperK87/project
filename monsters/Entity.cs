@@ -15,7 +15,7 @@ namespace ResidentSurvivor {
               this.speed = 1;
               this.damage = 3;
 
-              //this.SadComponents.Add(new IComponent_updater());
+              this.SadComponents.Add(new IComponent_updater());
               //his.SadComponents.Add(new IComponent_RenderPig());
               
               //crashes many places?!
@@ -58,8 +58,13 @@ namespace ResidentSurvivor {
 
     //this works, but can't set glyph
     class IComponent_updater : SadConsole.Components.UpdateComponent {
+        public int HP;
+
+        public IComponent_updater(){
+            HP = 5;
+        }
         public override void Update(SadConsole.IScreenObject parent, TimeSpan delta){
-            System.Console.WriteLine("pig pig!");   
+            //System.Console.WriteLine("pig pig!");   
         }
     }
 
