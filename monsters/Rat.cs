@@ -17,9 +17,6 @@ namespace ResidentSurvivor{
                 //this.Appearance.Foreground = SadRogue.Primitives.Color.Transparent;  
                 Game.UIManager.newWorld.entityManager.Remove(this);
             }
-
-            
-
             base.Update(delta);
         }
 

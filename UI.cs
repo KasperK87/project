@@ -65,8 +65,14 @@ namespace ResidentSurvivor
                 statusScreen.Print(1,1, "Current turn: " + newWorld.turn.ToString());
 
                 //Added clear space to remove numbers when the string gets shorter
+                statusScreen.Print(1,3, "HP: " + newWorld.getPlayer().currHP + "/" + newWorld.getPlayer().maxHP + "    ");
+
+                //basic test of components, this allows you to store attributes and
+                //use them at will
+                /*
                 IComponent_updater com = newWorld.getPlayer().GetSadComponent<IComponent_updater>();
                 statusScreen.Print(1,3, "HP: " + com.HP + "/" + newWorld.getPlayer().maxHP + "    ");
+                */
 
             } else if (currentState == ProcessState.Paused){
                

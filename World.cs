@@ -298,6 +298,7 @@ namespace ResidentSurvivor{
             }
         }
     
+        //should be moved into a player component
         private void followPath(){
             if ( _cells != null && timer >= TimeSpan.FromMilliseconds(100))
             {
@@ -322,6 +323,10 @@ namespace ResidentSurvivor{
 
         //This is not optimal, might be very buggy
         public GameObject? GetMonsterAt( int x, int y ){
+            //should crash if entity is not of class GameObject,
+            //could use a try catch block to fix.
+            //or remove gameobject class and make a 
+            //game object component 
             return (GameObject?)entityManager.GetEntityAtPosition(new Point(x, y));
             /*
             return (GameObject?)entityManager.Entities.FirstOrDefault( m => m.Position.X == x && 

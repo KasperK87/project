@@ -15,8 +15,8 @@ namespace ResidentSurvivor {
               this.speed = 1;
               this.damage = 3;
 
-              this.SadComponents.Add(new IComponent_updater());
-              //his.SadComponents.Add(new IComponent_RenderPig());
+              //this.SadComponents.Add(new IComponent_updater());
+              //this.SadComponents.Add(new IComponent_RenderPig());
               
               //crashes many places?!
               //this.SadComponents.Add(new SadConsole.Components.SmoothMove(new SadRogue.Primitives.Point(15,24)));
@@ -28,6 +28,8 @@ namespace ResidentSurvivor {
             //this.ComponentsRender[0].Render(this, delta);
             //System.Console.WriteLine("pig!");
             //this.Appearance.Glyph = 100;
+
+            base.Render(delta);
         }
 
         public override void Update(TimeSpan delta){
@@ -40,6 +42,7 @@ namespace ResidentSurvivor {
     
             //This allows us to use the render function,
             //but it shouldn't be needed
+            //for some reason render component are not called.
             /*
             foreach (SadConsole.Components.IComponent obj in this.SadComponents){
                 obj.Update(this, delta);
@@ -74,11 +77,15 @@ namespace ResidentSurvivor {
     }
 
     //this does not get rendered
-    class IComponent_RenderPig : SadConsole.Components.RenderComponent {
+    class IComponent_RenderPig : SadConsole.Components.LogicComponent {
 
         public IComponent_RenderPig(){
 
         }
+        public override void Update(SadConsole.IScreenObject parent, TimeSpan delta){
+            System.Console.WriteLine("pig pig!");   
+        }
+
         public override void Render(SadConsole.IScreenObject parent, TimeSpan delta){
             System.Console.WriteLine("pig!");
         }
