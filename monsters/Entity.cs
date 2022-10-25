@@ -4,9 +4,7 @@ namespace ResidentSurvivor {
         public int currHP;
         public int maxHP;
         protected int speed;
-
-        public int damage;
-        
+        public int damage; 
 
         public GameObject(SadRogue.Primitives.Color c1,SadRogue.Primitives.Color c2, int SetGlyph, int zIndex):
             base(c1, c2, SetGlyph, zIndex){
@@ -15,9 +13,6 @@ namespace ResidentSurvivor {
               this.speed = 1;
               this.damage = 3;
 
-              //this.SadComponents.Add(new IComponent_updater());
-              //this.SadComponents.Add(new IComponent_RenderPig());
-              
               //crashes many places?!
               //this.SadComponents.Add(new SadConsole.Components.SmoothMove(new SadRogue.Primitives.Point(15,24)));
             }
@@ -59,37 +54,10 @@ namespace ResidentSurvivor {
 
         }
 
-        public void Attack(GameObject target){
-            target.currHP -= damage;
+        public void Attack(SadConsole.Entities.Entity target){
+            target.GetSadComponent<IComponent_Entity>().currHP -= this.damage;
+            
         }
     }
-
-    //this works, but can't set glyph
-    class IComponent_updater : SadConsole.Components.UpdateComponent {
-        public int HP;
-
-        public IComponent_updater(){
-            HP = 5;
-        }
-        public override void Update(SadConsole.IScreenObject parent, TimeSpan delta){
-            System.Console.WriteLine("pig pig!");   
-        }
-    }
-
-    //this does not get rendered
-    class IComponent_RenderPig : SadConsole.Components.LogicComponent {
-
-        public IComponent_RenderPig(){
-
-        }
-        public override void Update(SadConsole.IScreenObject parent, TimeSpan delta){
-            System.Console.WriteLine("pig pig!");   
-        }
-
-        public override void Render(SadConsole.IScreenObject parent, TimeSpan delta){
-            System.Console.WriteLine("pig!");
-        }
-    }
-
 }
 

@@ -58,15 +58,20 @@ namespace ResidentSurvivor{
                     //break;
 
                     if (Random.Next(100) == 0){
-                        Rat rat = new Rat(
+                        SadConsole.Entities.Entity rat = new SadConsole.Entities.Entity(
                             Color.White, Color.Transparent, 100, 99);
 
                         rat.Position = new Point(cell.X,cell.Y);
-                        rat.SadComponents.Add(new IComponent_Hostile(rat));
+
+                        var entity = new IComponent_Entity(rat, 1, 1, 1, 1);
+
+                        rat.SadComponents.Add(entity);
+                        rat.SadComponents.Add(new IComponent_Hostile(rat, entity));
                         entityManager.Add(rat);
                     }
                 }
  
+                player.SadComponents.Add(new IComponent_Entity(player, 10, 10, 1, 1));
                 entityManager.Add(player);
 
                 //doesn't work, call from update loop instead 
@@ -204,7 +209,7 @@ namespace ResidentSurvivor{
                 // Check if the new position is valid
                 if (Surface.Area.Contains(newPosition) && DungeonMap.GetCell(newPosition.X, newPosition.Y).IsWalkable){
                     //check is there is a monster
-                    GameObject? monster = Game.UIManager.newWorld.GetMonsterAt(newPosition.X, newPosition.Y);
+                    var monster = Game.UIManager.newWorld.GetMonsterAt(newPosition.X, newPosition.Y);
                     if (monster == null || player.Position == newPosition){
                         player.Position = newPosition;
                         pathXtoY(mouseLoc.X, mouseLoc.Y);
@@ -322,12 +327,12 @@ namespace ResidentSurvivor{
         }
 
         //This is not optimal, might be very buggy
-        public GameObject? GetMonsterAt( int x, int y ){
+        public SadConsole.Entities.Entity GetMonsterAt( int x, int y ){
             //should crash if entity is not of class GameObject,
             //could use a try catch block to fix.
             //or remove gameobject class and make a 
             //game object component 
-            return (GameObject?)entityManager.GetEntityAtPosition(new Point(x, y));
+            return entityManager.GetEntityAtPosition(new Point(x, y));
             /*
             return (GameObject?)entityManager.Entities.FirstOrDefault( m => m.Position.X == x && 
                     m.Position.Y == y );

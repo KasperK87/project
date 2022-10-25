@@ -1,21 +1,23 @@
 namespace ResidentSurvivor{
     class IComponent_Hostile : SadConsole.Components.UpdateComponent {
-        GameObject parent;
+        SadConsole.Entities.Entity parent;
         private RogueSharp.Path? _cells;
         private bool followingPath;
         private UInt64 turn;
+        private IComponent_Entity entity;
 
 
 
-        public IComponent_Hostile(GameObject setParent){
+        public IComponent_Hostile(SadConsole.Entities.Entity setParent, IComponent_Entity setEntity){
             followingPath = false;
 
             this.parent = setParent;
+            this.entity = setEntity;
         }
 
         
         public override void Update(SadConsole.IScreenObject p, TimeSpan delta){
-            if (this.turn < Game.UIManager.newWorld.turn && parent.currHP > 0){
+            if (this.turn < Game.UIManager.newWorld.turn && entity.currHP > 0){
                 followPath();
                 this.turn = Game.UIManager.newWorld.turn;
             }
@@ -33,11 +35,11 @@ namespace ResidentSurvivor{
                 try {
                     _cells.StepForward();
                     //check is there is a monster
-                    GameObject? monster = Game.UIManager.newWorld.GetMonsterAt(_cells.CurrentStep.X, _cells.CurrentStep.Y);
+                    var monster = Game.UIManager.newWorld.GetMonsterAt(_cells.CurrentStep.X, _cells.CurrentStep.Y);
                     if (monster == null){
                         parent.Position = new SadRogue.Primitives.Point(_cells.CurrentStep.X, _cells.CurrentStep.Y);     
                     } else {
-                        //System.Console.WriteLine("Monster Attack!!!");
+                        System.Console.WriteLine("Monster Attack!!!");
                         Attack(monster);
                     }             
                 } catch (RogueSharp.NoMoreStepsException) {
@@ -47,8 +49,10 @@ namespace ResidentSurvivor{
             }
         }
 
-        public void Attack(GameObject target){
-            target.currHP -= parent.damage;
+        public void Attack(SadConsole.Entities.Entity target){
+            
+            target.GetSadComponent<IComponent_Entity>().currHP -= parent.GetSadComponent<IComponent_Entity>().damage; ;
+            //System.Console.WriteLine("Monster Attack!!!");
         }
     }
 }

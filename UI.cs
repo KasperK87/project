@@ -65,7 +65,8 @@ namespace ResidentSurvivor
                 statusScreen.Print(1,1, "Current turn: " + newWorld.turn.ToString());
 
                 //Added clear space to remove numbers when the string gets shorter
-                statusScreen.Print(1,3, "HP: " + newWorld.getPlayer().currHP + "/" + newWorld.getPlayer().maxHP + "    ");
+                statusScreen.Print(1,3, "HP: " + newWorld.getPlayer().GetSadComponent<IComponent_Entity>().currHP + "/" + 
+                    newWorld.getPlayer().GetSadComponent<IComponent_Entity>().maxHP  + "    ");
 
                 //basic test of components, this allows you to store attributes and
                 //use them at will
