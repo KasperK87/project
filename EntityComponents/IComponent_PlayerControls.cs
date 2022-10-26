@@ -88,22 +88,24 @@ namespace ResidentSurvivor{
                 if (Game.UIManager.newWorld.Surface.Area.Contains(newPosition) && Game.UIManager.newWorld.DungeonMap.GetCell(newPosition.X, newPosition.Y).IsWalkable){
                     //check is there is a monster
                     var monster = Game.UIManager.newWorld.GetMonsterAt(newPosition.X, newPosition.Y);
-                    if (monster == null || player.Position == newPosition){
-                        player.Position = newPosition;
-                        pathXtoY(mouseLoc.X, mouseLoc.Y);
+                    if (monster == null || parent.Position == newPosition){
+                        parent.Position = newPosition;
+                        //pathXtoY(mouseLoc.X, mouseLoc.Y);
                     } else {
                         System.Console.WriteLine("Player Attack");
-                        player.Attack(monster);
+                        parent.GetSadComponent<IComponent_Hostile>().Attack(monster);
                     }
                     preKeyDown = keyHit;
-                    turn++;
-                    return true;
+                    //World instance should control turn progression
+                    //turn++;
+                    flag = true;
                 }
             }
 
             if (keyHit) {
                 followingPath = false;
-                _cells = null;
+                //_cells should also be part of this instance 
+                //_cells = null;
             }
 
 

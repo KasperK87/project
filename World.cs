@@ -267,17 +267,15 @@ namespace ResidentSurvivor{
         //should be renamed to better reflex use:
         //player move to point
         public void pathXtoY(int destX, int destY){
-            if (player != null){
+            if (player != null && DungeonMap.GetCell(destX, destY).IsWalkable){
+              
             RogueSharp.PathFinder _pathFinder;
             _pathFinder = new RogueSharp.PathFinder( DungeonMap );
 
-            try {
             _cells = _pathFinder.ShortestPath( DungeonMap.GetCell
                 (player.Position.X, player.Position.Y),
                 DungeonMap.GetCell( destX, destY ) );
-            } catch { 
-                
-            }
+            
             }
 
         }
