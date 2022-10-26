@@ -7,10 +7,18 @@ namespace ResidentSurvivor{
     public class World : Console {
         public UInt64 turn;
         private static GameObject player;
+
+        //will be refactored away
         private bool followingPath;
         public RogueSharpSadConsoleSamples.Core.DungeonMap DungeonMap;
+
+        //will be refactored away
         private Point mouseLoc;
+
+        //will be refactored away
         private TimeSpan timer;
+
+        //will be refactored away
         private bool preKeyDown; 
         public static RogueSharp.Random.IRandom? Random { get; private set; }
 
