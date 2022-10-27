@@ -80,6 +80,8 @@ namespace ResidentSurvivor{
                 }
  
                 player.SadComponents.Add(new IComponent_Entity(player, 10, 10, 1, 1));
+                this.SadComponents.Add(new IComponent_PlayerControls(player));
+                
                 entityManager.Add(player);
 
                 //doesn't work, call from update loop instead 
@@ -138,6 +140,7 @@ namespace ResidentSurvivor{
             this.SetBackground(mouseLoc.X, mouseLoc.Y, Color.Yellow);
         }
     
+    /*
         public override bool ProcessKeyboard(SadConsole.Input.Keyboard info)
         {
             // Forward the keyboard data to the entity to handle the movement code.
@@ -242,8 +245,8 @@ namespace ResidentSurvivor{
 
             preKeyDown = keyHit;
             return false;
-        }
-    
+        }   
+*/
         public override bool ProcessMouse(SadConsole.Input.MouseScreenObjectState info){
 
             //if(mouseLoc != info.CellPosition) pathXtoY();
@@ -263,7 +266,7 @@ namespace ResidentSurvivor{
         //pathfinder method
         //PROOF OF CONCEPTs
         //private IEnumerable<RogueSharp.Cell> _cells;
-        private RogueSharp.Path _cells;
+        public RogueSharp.Path _cells{get; set;}
         //should be renamed to better reflex use:
         //player move to point
         public void pathXtoY(int destX, int destY){

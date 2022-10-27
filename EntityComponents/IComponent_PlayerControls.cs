@@ -11,6 +11,8 @@ namespace ResidentSurvivor{
 
         public IComponent_PlayerControls(SadConsole.Entities.Entity setParent){
             this.parent = setParent;
+            followingPath = false;
+
         }
 
         public override void ProcessMouse(SadConsole.IScreenObject obj, 
@@ -90,10 +92,11 @@ namespace ResidentSurvivor{
                     var monster = Game.UIManager.newWorld.GetMonsterAt(newPosition.X, newPosition.Y);
                     if (monster == null || parent.Position == newPosition){
                         parent.Position = newPosition;
-                        //pathXtoY(mouseLoc.X, mouseLoc.Y);
+                        Game.UIManager.newWorld.pathXtoY(mouseLoc.X, mouseLoc.Y);
                     } else {
                         System.Console.WriteLine("Player Attack");
-                        parent.GetSadComponent<IComponent_Hostile>().Attack(monster);
+                        
+                        monster.GetSadComponent<IComponent_Entity>().currHP -= parent.GetSadComponent<IComponent_Entity>().damage;
                     }
                     preKeyDown = keyHit;
                     //World instance should control turn progression
@@ -105,14 +108,14 @@ namespace ResidentSurvivor{
             if (keyHit) {
                 followingPath = false;
                 //_cells should also be part of this instance 
-                //_cells = null;
+                Game.UIManager.newWorld._cells = null;
             }
 
 
             // You could have multiple entities in the game for example, and change
             // which entity gets keyboard commands.
 
-            
+            preKeyDown = keyHit;
             flag = false;
         }
 
