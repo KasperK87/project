@@ -21,6 +21,7 @@ namespace ResidentSurvivor{
                 followPath();
                 this.turn = Game.UIManager.newWorld.turn;
             }
+            
             if (!Game.UIManager.newWorld.DungeonMap.IsInFov(parent.Position.X, parent.Position.Y)){
                 parent.Appearance.Foreground = SadRogue.Primitives.Color.Transparent;
             } else {
