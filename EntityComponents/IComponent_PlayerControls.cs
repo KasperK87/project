@@ -4,7 +4,7 @@ using SadRogue.Primitives;
 namespace ResidentSurvivor{
     class IComponent_PlayerControls : SadConsole.Components.InputConsoleComponent{
         public bool followingPath{get; private set;}
-        private Point mouseLoc;
+        private Point mouseLoc = new Point(0,0);
         private SadConsole.Entities.Entity parent;
         private bool preKeyDown; 
         private TimeSpan timer;

@@ -15,19 +15,19 @@ namespace ResidentSurvivor
 
     class Game : SadConsole.Game{
         // Managers
-       public static UIManager? UIManager;
+       public static UIManager UIManager = new UIManager();
 
        private Game(){
             //gameInstance is a singleton use setup(width, height)
+            UIManager = new UIManager();
        } 
 
        public static void Setup(int w, int h){
 
-        
-
             Create(w, h);
+            
             Instance.OnStart = () => {
-                UIManager = new UIManager();
+                //UIManager = new UIManager();
                 Game.Instance.Screen = UIManager;
                 Game.Instance.DestroyDefaultStartingConsole();
             };

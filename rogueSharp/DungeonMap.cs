@@ -24,7 +24,8 @@ namespace RogueSharpSadConsoleSamples.Core
         */
 
         
-        public void UpdatePlayerFieldOfView(SadConsole.Entities.Entity player){
+        public void UpdatePlayerFieldOfView(SadConsole.Entities.Entity? player){
+         if (player != null){
             ComputeFov(player.Position.X, player.Position.Y, 10, true );
             foreach ( Cell cell in GetAllCells() )
             {
@@ -33,6 +34,7 @@ namespace RogueSharpSadConsoleSamples.Core
                     SetCellProperties( cell.X, cell.Y, cell.IsTransparent, cell.IsWalkable, true );
                }
             }
+         }
         }
       
 

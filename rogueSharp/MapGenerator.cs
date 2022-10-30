@@ -19,7 +19,7 @@ namespace RogueSharpSadConsoleSamples.Systems
       private readonly DungeonMap _map;
       //private readonly EquipmentGenerator _equipmentGenerator;
 
-      public static IRandom Random { get; private set; }
+      public static IRandom? Random { get; private set; }
 
       public MapGenerator( int width, int height, int maxRooms, int roomMaxSize, int roomMinSize, int level )
       {
@@ -29,21 +29,22 @@ namespace RogueSharpSadConsoleSamples.Systems
          _roomMaxSize = roomMaxSize;
          _roomMinSize = roomMinSize;
          _level = level;
+         //create seed
+        int seed = (int) DateTime.UtcNow.Ticks;
+        Random = new DotNetRandom( seed );
          _map = new DungeonMap();
          //_equipmentGenerator = new EquipmentGenerator( level );
       }
 
       public DungeonMap CreateMap()
       {
-        //create seed
-        int seed = (int) DateTime.UtcNow.Ticks;
-        Random = new DotNetRandom( seed );
+        
 
          _map.Initialize( _width, _height );
 
          for ( int r = 0; r < _maxRooms; r++ )
          {
-            int roomWidth = Random.Next( _roomMinSize, _roomMaxSize );
+            int roomWidth = Random!.Next( _roomMinSize, _roomMaxSize );
             int roomHeight = Random.Next( _roomMinSize, _roomMaxSize );
             int roomXPosition = Random.Next( 0, _width - roomWidth - 1 );
             int roomYPosition = Random.Next( 0, _height - roomHeight - 1 );
@@ -73,7 +74,7 @@ namespace RogueSharpSadConsoleSamples.Systems
             int currentRoomCenterX = _map.Rooms[r].Center.X;
             int currentRoomCenterY = _map.Rooms[r].Center.Y;
 
-            if ( Random.Next( 0, 2 ) == 0 )
+            if ( Random!.Next( 0, 2 ) == 0 )
             {
                CreateHorizontalTunnel( previousRoomCenterX, currentRoomCenterX, previousRoomCenterY );
                CreateVerticalTunnel( previousRoomCenterY, currentRoomCenterY, currentRoomCenterX );

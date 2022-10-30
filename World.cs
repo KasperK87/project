@@ -6,7 +6,8 @@ using Console = SadConsole.Console;
 namespace ResidentSurvivor{
     public class World : Console {
         public UInt64 turn;
-        private static GameObject player;
+        private static GameObject player = new GameObject(
+                Color.White, Color.Blue, 1, 100);
 
         //will be refactored away
         private bool followingPath;
@@ -18,10 +19,7 @@ namespace ResidentSurvivor{
         //will be refactored away
         private TimeSpan timer;
 
-        //will be refactored away
-        private bool preKeyDown; 
         public static RogueSharp.Random.IRandom? Random { get; private set; }
-
 
         //int width, int height, int maxRooms, int roomMaxSize, int roomMinSize, int level
         RogueSharpSadConsoleSamples.Systems.MapGenerator
@@ -40,7 +38,6 @@ namespace ResidentSurvivor{
             mouseLoc = new Point(0,0);
 
             timer = TimeSpan.Zero;
-            preKeyDown = false;
 
             // Setup this console to accept keyboard input.
             UseKeyboard = true;
@@ -60,6 +57,11 @@ namespace ResidentSurvivor{
 
             //create player & populate dungeon
             SadComponents.Add(entityManager);
+
+            //creates player to remove annoying could be null warnings
+            player = new GameObject(
+                Color.White, Color.Blue, 1, 100);
+
             foreach ( RogueSharp.Cell cell in DungeonMap.GetAllCells() )
                 if (cell.IsWalkable){
                     CreatePlayer(cell.X, cell.Y);
@@ -266,7 +268,7 @@ namespace ResidentSurvivor{
         //pathfinder method
         //PROOF OF CONCEPTs
         //private IEnumerable<RogueSharp.Cell> _cells;
-        public RogueSharp.Path _cells{get; set;}
+        public RogueSharp.Path? _cells{get; set;}
         //should be renamed to better reflex use:
         //player move to point
         public void pathXtoY(int destX, int destY){
@@ -284,7 +286,7 @@ namespace ResidentSurvivor{
         }
 
         //gives the path to the player from a point
-         public RogueSharp.Path pathToPlayerFrom(int origX, int origY){
+         public RogueSharp.Path? pathToPlayerFrom(int origX, int origY){
             RogueSharp.PathFinder _pathFinder;
             _pathFinder = new RogueSharp.PathFinder( DungeonMap );
 
