@@ -17,7 +17,7 @@ namespace ResidentSurvivor{
         private Point mouseLoc;
 
         //will be refactored away
-        private TimeSpan timer;
+        public TimeSpan timer;
 
         public static RogueSharp.Random.IRandom? Random { get; private set; }
 
@@ -37,6 +37,7 @@ namespace ResidentSurvivor{
 
             mouseLoc = new Point(0,0);
 
+            //referenced in playerController
             timer = TimeSpan.Zero;
 
             // Setup this console to accept keyboard input.
