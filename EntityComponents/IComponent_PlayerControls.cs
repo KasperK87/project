@@ -7,12 +7,11 @@ namespace ResidentSurvivor{
         private Point mouseLoc = new Point(0,0);
         private SadConsole.Entities.Entity parent;
         private bool preKeyDown; 
-        private TimeSpan timer;
+        private TimeSpan timer = TimeSpan.Zero;
 
         public IComponent_PlayerControls(SadConsole.Entities.Entity setParent){
             this.parent = setParent;
             followingPath = false;
-
         }
 
         public override void ProcessMouse(SadConsole.IScreenObject obj, 
@@ -42,6 +41,7 @@ namespace ResidentSurvivor{
             {
                 newPosition = parent.Position + (0, -1);
                 keyHit = true;
+                System.Console.WriteLine("UP");
             } else if (info.IsKeyDown(SadConsole.Input.Keys.Down) || info.IsKeyDown(SadConsole.Input.Keys.NumPad2))
             {
                 newPosition = parent.Position + (0, 1);
@@ -77,12 +77,17 @@ namespace ResidentSurvivor{
                 keyHit = true;
             }
 
-            if(preKeyDown && keyHit && timer >= TimeSpan.FromMilliseconds(500)){
+            System.Console.WriteLine("KeyHit: " + keyHit);
+            System.Console.WriteLine("preKeydown: " + preKeyDown);
+            System.Console.WriteLine("timer " + this.timer.TotalMilliseconds);
+            
+            if(preKeyDown && keyHit && Game.UIManager.newWorld.timer >= TimeSpan.FromMilliseconds(500)){
                 run = true;
             } else if (!preKeyDown && !keyHit && !followingPath) {
-                timer = TimeSpan.Zero;
+                Game.UIManager.newWorld.timer = TimeSpan.Zero;
+                //System.Console.WriteLine("RESET TIMER");
             } 
-
+            
             // If a movement key was pressed
             if ((keyHit && !preKeyDown && !followingPath) || run)
             {
