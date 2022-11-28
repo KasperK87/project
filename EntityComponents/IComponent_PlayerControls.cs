@@ -101,6 +101,7 @@ namespace ResidentSurvivor{
                     preKeyDown = keyHit;
                     //World instance should control turn progression
                     //turn++;
+                    Game.UIManager.newWorld.turn++;
                     flag = true;
                 }
             }
