@@ -7,10 +7,14 @@ namespace ResidentSurvivor{
         private Point mouseLoc = new Point(0,0);
         private SadConsole.Entities.Entity parent;
         private bool preKeyDown; 
-        private TimeSpan timer = TimeSpan.Zero;
+
+        //used to determine if the player should be running
+        private TimeSpan timeStampRun = TimeSpan.Zero;
+        
 
         public IComponent_PlayerControls(SadConsole.Entities.Entity setParent){
             this.parent = setParent;
+            
             followingPath = false;
         }
 
@@ -69,6 +73,9 @@ namespace ResidentSurvivor{
             } else if (info.IsKeyDown(SadConsole.Input.Keys.NumPad3)){
                 newPosition = parent.Position + (1, 1);
                 keyHit = true;
+            } else if (info.IsKeyDown(SadConsole.Input.Keys.NumPad5)){
+                newPosition = parent.Position + (0, 0);
+                keyHit = true;
             }
 
             //do nothing
@@ -77,14 +84,14 @@ namespace ResidentSurvivor{
                 keyHit = true;
             }
 
-            System.Console.WriteLine("KeyHit: " + keyHit);
-            System.Console.WriteLine("preKeydown: " + preKeyDown);
-            System.Console.WriteLine("timer " + this.timer.TotalMilliseconds);
+            //System.Console.WriteLine("KeyHit: " + keyHit);
+            //System.Console.WriteLine("preKeydown: " + preKeyDown);
+            System.Console.WriteLine("timer " + Game.UIManager.newWorld.timer );
             
-            if(preKeyDown && keyHit && Game.UIManager.newWorld.timer >= TimeSpan.FromMilliseconds(500)){
+            if(preKeyDown && keyHit && Game.UIManager.newWorld.timer >= TimeSpan.FromMilliseconds(500)+timeStampRun){
                 run = true;
-            } else if (!preKeyDown && !keyHit && !followingPath) {
-                Game.UIManager.newWorld.timer = TimeSpan.Zero;
+            } else if (!preKeyDown && !keyHit && !followingPath){
+                timeStampRun = Game.UIManager.newWorld.timer;
                 //System.Console.WriteLine("RESET TIMER");
             } 
             
