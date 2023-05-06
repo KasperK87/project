@@ -1,0 +1,17 @@
+@startuml
+class World {
+    + {static} Random : RogueSharp.Random.IRandom? <<get>>
+    + World(w:int, h:int)
+    + getPlayer() : GameObject
+    + <<override>> Update(delta:TimeSpan) : void
+    + <<override>> Render(delta:TimeSpan) : void
+    + <<override>> ProcessMouse(info:SadConsole.Input.MouseScreenObjectState) : bool
+    + _cells : RogueSharp.Path? <<get>> <<set>>
+    + pathXtoY(destX:int, destY:int) : void
+    + pathToPlayerFrom(origX:int, origY:int) : RogueSharp.Path?
+    + GetMonsterAt(x:int, y:int) : SadConsole.Entities.Entity
+}
+Console <|-- World
+World --> "turn" UInt64
+World --> "timer" TimeSpan
+@enduml

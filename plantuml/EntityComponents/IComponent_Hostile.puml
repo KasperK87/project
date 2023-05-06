@@ -1,0 +1,7 @@
+@startuml
+class IComponent_Hostile {
+    + IComponent_Hostile(setParent:SadConsole.Entities.Entity, setEntity:IComponent_Entity)
+    + <<override>> Update(p:SadConsole.IScreenObject, delta:TimeSpan) : void
+    + Attack(target:SadConsole.Entities.Entity) : void
+}
+@enduml

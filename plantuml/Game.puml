@@ -1,0 +1,12 @@
+@startuml
+enum ProcessState {
+    Inactive,
+    Active,
+    Paused,
+    Terminated,
+}
+class Game {
+    + {static} Setup(w:int, h:int) : void
+}
+Game o-> "UIManager" UIManager
+@enduml

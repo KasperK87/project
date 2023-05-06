@@ -1,0 +1,17 @@
+@startuml
+!include .\\Game.puml
+!include .\\Program.puml
+!include .\\UI.puml
+!include .\\World.puml
+!include .\\EntityComponents\IComponent_Entity.puml
+!include .\\EntityComponents\IComponent_Hostile.puml
+!include .\\EntityComponents\IComponent_PlayerControls.puml
+!include .\\monsters\Entity.puml
+!include .\\rogueSharp\Actor.puml
+!include .\\rogueSharp\DungeonMap.puml
+!include .\\rogueSharp\MapGenerator.puml
+!include .\\rogueSharp\player.puml
+!include .\\obj\Debug\net6.0\.NETCoreApp,Version=v6.0.AssemblyAttributes.puml
+!include .\\obj\Debug\net6.0\project.AssemblyInfo.puml
+!include .\\obj\Debug\net6.0\project.GlobalUsings.g.puml
+@enduml

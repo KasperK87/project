@@ -1,0 +1,8 @@
+@startuml
+class IComponent_PlayerControls {
+    + followingPath : bool <<get>>
+    + IComponent_PlayerControls(setParent:SadConsole.Entities.Entity)
+    + <<override>> ProcessMouse(obj:SadConsole.IScreenObject, info:SadConsole.Input.MouseScreenObjectState, flag:bool) : void
+    + <<override>> ProcessKeyboard(obj:SadConsole.IScreenObject, info:SadConsole.Input.Keyboard, flag:bool) : void
+}
+@enduml

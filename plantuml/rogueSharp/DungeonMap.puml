@@ -1,0 +1,11 @@
+@startuml
+class DungeonMap {
+    + DungeonMap()
+    + UpdatePlayerFieldOfView(player:SadConsole.Entities.Entity?) : void
+    + Draw(mapConsole:Console) : void
+}
+class "List`1"<T> {
+}
+Map <|-- DungeonMap
+DungeonMap --> "Rooms<Rectangle>" "List`1"
+@enduml

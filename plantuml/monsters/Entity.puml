@@ -1,0 +1,11 @@
+@startuml
+class GameObject {
+    + currHP : int
+    + maxHP : int
+    + damage : int
+    + GameObject(c1:SadRogue.Primitives.Color, c2:SadRogue.Primitives.Color, SetGlyph:int, zIndex:int)
+    + <<override>> Render(delta:TimeSpan) : void
+    + <<override>> Update(delta:TimeSpan) : void
+    + Attack(target:SadConsole.Entities.Entity) : void
+}
+@enduml

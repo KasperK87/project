@@ -1,0 +1,7 @@
+@startuml
+class MapGenerator {
+    + {static} Random : IRandom? <<get>>
+    + MapGenerator(width:int, height:int, maxRooms:int, roomMaxSize:int, roomMinSize:int, level:int)
+    + CreateMap() : DungeonMap
+}
+@enduml

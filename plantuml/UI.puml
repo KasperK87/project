@@ -1,0 +1,22 @@
+@startuml
+class UIManager {
+    + menu : Console?
+    + UIManager()
+    + <<override>> Update(timeElapsed:TimeSpan) : void
+}
+class SplashScreen {
+    + SplashScreen(w:int, h:int)
+    + <<override>> Update(delta:TimeSpan) : void
+    + <<override>> Render(delta:TimeSpan) : void
+}
+class Menu {
+    + Menu(w:int, h:int)
+    + <<override>> Render(delta:TimeSpan) : void
+}
+ScreenObject <|-- UIManager
+UIManager --> "currentState" ProcessState
+UIManager --> "newWorld" World
+UIManager --> "statusScreen" Console
+UIManager --> "massageScreen" Console
+Console <|-- SplashScreen
+@enduml

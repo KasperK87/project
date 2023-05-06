@@ -1,0 +1,9 @@
+@startuml
+class IComponent_Entity {
+    + maxHP : int
+    + currHP : int <<get>> <<set>>
+    + damage : int <<get>> <<set>>
+    + IComponent_Entity(setParent:SadConsole.Entities.Entity, setMaxHP:int, setCurrHP:int, setSpeed:int, setDamage:int)
+    + <<override>> Update(p:SadConsole.IScreenObject, delta:TimeSpan) : void
+}
+@enduml
