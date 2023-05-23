@@ -1,4 +1,8 @@
 namespace ResidentSurvivor{
+    
+    //IComponent_Entity is a component that can be added to any entity
+    //it will give the entity a health, speed, and damage
+    //it will also remove the entity from the world when it dies
     class IComponent_Entity : SadConsole.Components.UpdateComponent{
         SadConsole.Entities.Entity parent;
 

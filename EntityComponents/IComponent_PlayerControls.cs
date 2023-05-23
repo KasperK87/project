@@ -2,6 +2,9 @@ using SadConsole;
 using SadRogue.Primitives;
 
 namespace ResidentSurvivor{
+
+    //IComponent_PlayerControls is a component that can be added to any entity
+    //it will give the entity player controls
     class IComponent_PlayerControls : SadConsole.Components.InputConsoleComponent{
         public bool followingPath{get; private set;}
         private Point mouseLoc = new Point(0,0);

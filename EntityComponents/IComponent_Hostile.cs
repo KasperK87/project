@@ -1,4 +1,8 @@
 namespace ResidentSurvivor{
+
+    //IComponent_Entity is a component that can be added to any entity
+    //it will make the entity hostile to the player
+    //moving towards the player and attacking when in range
     class IComponent_Hostile : SadConsole.Components.UpdateComponent {
         SadConsole.Entities.Entity parent;
         private RogueSharp.Path? _cells;
