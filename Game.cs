@@ -14,7 +14,7 @@ namespace ResidentSurvivor
     }
 
     class Game : SadConsole.Game{
-        // Managers
+        // Managers (see UI.cs)
        public static UIManager UIManager = new UIManager();
 
        private Game(){
@@ -37,6 +37,7 @@ namespace ResidentSurvivor
        }
 
        // allowing some game logic during frame updates
+       // quit game with escape key, and f5 to toggle fullscreen
         private static void Update(object? sender, GameHost? host)
         {
             // Called each logic update

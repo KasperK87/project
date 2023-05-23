@@ -32,6 +32,7 @@ namespace ResidentSurvivor
             newWorld.DefaultBackground = Color.Black;
             newWorld.View = new Rectangle(0, 0, 20, 15);
            
+            //this is the main game screen
             this.Children.Add(newWorld);
 
             statusScreen = new Console(40, 29){
@@ -47,8 +48,6 @@ namespace ResidentSurvivor
             };
 
             this.Children.Add(massageScreen);
-
-            //Console splashScreen = new SplashScreen(120,40); 
 
             Console splashScreen = new SplashScreen(120,40); 
 
@@ -156,7 +155,12 @@ namespace ResidentSurvivor
             startButton.Text = "START";
             startButton.Click += (x, y) => {
                 
-                //created in UIManegar appears when we hide menu;
+                // World is created in UIManeger 
+                // and will appears when we hide 
+                // this menu;
+
+                // This code is needed if we change 
+                // how world is created
                 /*
                 World newWorld = new World(80,29);
                 newWorld.Position = new Point(1,1);

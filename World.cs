@@ -82,13 +82,13 @@ namespace ResidentSurvivor{
                     }
                 }
  
-                player.SadComponents.Add(new IComponent_Entity(player, 10, 10, 1, 1));
-                this.SadComponents.Add(new IComponent_PlayerControls(player));
-                
-                entityManager.Add(player);
+            player.SadComponents.Add(new IComponent_Entity(player, 10, 10, 1, 1));
+            this.SadComponents.Add(new IComponent_PlayerControls(player));
+            
+            entityManager.Add(player);
 
-                //doesn't work, call from update loop instead 
-                //entityManager.DoEntityUpdate = true;
+            //doesn't work, call from update loop instead 
+            //entityManager.DoEntityUpdate = true;
 
             followingPath = false;
 
