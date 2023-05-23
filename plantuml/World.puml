@@ -1,4 +1,4 @@
-@startuml
+@startuml World
 class World {
     + {static} Random : RogueSharp.Random.IRandom? <<get>>
     + World(w:int, h:int)
