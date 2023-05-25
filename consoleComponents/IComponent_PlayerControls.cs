@@ -21,12 +21,6 @@ namespace ResidentSurvivor{
             followingPath = false;
         }
 
-        public override void ProcessMouse(SadConsole.IScreenObject obj, 
-            SadConsole.Input.MouseScreenObjectState info, out bool flag){
-
-            flag = true;
-        }
-
         public void ProcessMouse(SadConsole.Input.MouseScreenObjectState info){
             
             //System.Console.WriteLine(info.Mouse.LeftClicked);
@@ -36,35 +30,33 @@ namespace ResidentSurvivor{
             }
 
             mouseLoc = info.CellPosition;
+
+            if (followingPath) followPath();
         }
 
         //will be implemented when refactered
-        
-        /*
-        private void followPath(RogueSharp.Path _cells){
-            if ( _cells != null && timer >= TimeSpan.FromMilliseconds(100))
+        private void followPath(){
+            if ( console._cells != null && timeStampRun >= TimeSpan.FromMilliseconds(100))
             {
-                timer = TimeSpan.Zero;
+                timeStampRun = TimeSpan.Zero;
                 try {
                     //_cells.TryStepForward();
-                    _cells.StepForward();
-                    System.Console.WriteLine(_cells.CurrentStep.X +"," + _cells.CurrentStep.Y);
-                    if (GetMonsterAt(_cells.CurrentStep.X, _cells.CurrentStep.Y) != null){
+                    console._cells.StepForward();
+                    System.Console.WriteLine(console._cells.CurrentStep.X +"," + console._cells.CurrentStep.Y);
+                    if (console.GetMonsterAt(console._cells.CurrentStep.X, console._cells.CurrentStep.Y) != null){
                         throw new RogueSharp.NoMoreStepsException();
                     } else {
-                        player.Position = new SadRogue.Primitives.Point(_cells.CurrentStep.X, _cells.CurrentStep.Y);                  
-                        pathXtoY(_cells.End.X, _cells.End.Y);
-                        turn++;
+                        parent.Position = new SadRogue.Primitives.Point(console._cells.CurrentStep.X, console._cells.CurrentStep.Y);                  
+                        console.pathXtoY(console._cells.End.X, console._cells.End.Y);
+                        console.turn++;
                     }
                 } catch (RogueSharp.NoMoreStepsException) {
-                    _cells = null;
+                    console._cells = null;
                     followingPath = false;
                 }
             }
         }
-        */
         
-
         public override void ProcessKeyboard(SadConsole.IScreenObject obj, 
             SadConsole.Input.Keyboard info, out bool flag){
 
@@ -174,5 +166,11 @@ namespace ResidentSurvivor{
             flag = false;
         }
 
+    public override void ProcessMouse(SadConsole.IScreenObject obj, 
+            SadConsole.Input.MouseScreenObjectState info, out bool flag){
+
+            flag = true;
+        }
+    
     }
 }

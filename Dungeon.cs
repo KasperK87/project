@@ -116,7 +116,7 @@ namespace ResidentSurvivor{
             DungeonMap.UpdatePlayerFieldOfView(player);
 
             //removed as the level shouldn't know if the player is following a path
-            if (GetSadComponent<IComponent_PlayerControls>().followingPath) followPath();
+            //if (GetSadComponent<IComponent_PlayerControls>().followingPath) followPath();
 
             //updates all entities (GameObject player)
             entityManager.Update(this, delta);
