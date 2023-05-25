@@ -76,7 +76,7 @@ namespace ResidentSurvivor{
                 }
  
             player.SadComponents.Add(new IComponent_Entity(player, 10, 10, 1, 1));
-            this.SadComponents.Add(new IComponent_PlayerControls(player));
+            this.SadComponents.Add(new IComponent_PlayerControls(player, this));
 
             //System.Console.WriteLine(this.GetSadComponent<IComponent_PlayerControls>().followingPath);
             

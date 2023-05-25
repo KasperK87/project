@@ -7,14 +7,16 @@ namespace ResidentSurvivor{
         
         public Point mouseLoc = new Point(0,0);
         private SadConsole.Entities.Entity parent;
+        Dungeon console;
         private bool preKeyDown; 
 
         //used to determine if the player should be running
         private TimeSpan timeStampRun = TimeSpan.Zero;
         
         //should also get a reference to the dungeonconsole
-        public IComponent_PlayerControls(SadConsole.Entities.Entity setParent){
+        public IComponent_PlayerControls(SadConsole.Entities.Entity setParent, Dungeon setConsole){
             this.parent = setParent;
+            this.console = setConsole;
             
             followingPath = false;
         }
