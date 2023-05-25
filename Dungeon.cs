@@ -124,7 +124,9 @@ namespace ResidentSurvivor{
             //View.WithCenter(player.Position);
             
             this.View = new Rectangle(player.Position.X-20, player.Position.Y-10, 40, 20);
-            pathXtoY(GetSadComponent<IComponent_PlayerControls>().mouseLoc.X,GetSadComponent<IComponent_PlayerControls>().mouseLoc.Y);
+            if (!GetSadComponent<IComponent_PlayerControls>().followingPath){
+                pathXtoY(GetSadComponent<IComponent_PlayerControls>().mouseLoc.X,GetSadComponent<IComponent_PlayerControls>().mouseLoc.Y);
+            }
         }
 
         public override void Render(TimeSpan delta){
@@ -198,7 +200,7 @@ namespace ResidentSurvivor{
         }
     
         //should be moved into a player component
-        
+        /*
         private void followPath(){
             if ( _cells != null && timer >= TimeSpan.FromMilliseconds(100))
             {
@@ -220,6 +222,7 @@ namespace ResidentSurvivor{
                 }
             }
         }
+        */
         
 
         //This is not optimal, might be very buggy

@@ -31,27 +31,27 @@ namespace ResidentSurvivor{
 
             mouseLoc = info.CellPosition;
 
-            if (followingPath) followPath();
+            if (followingPath) followPath(console._cells);
         }
 
         //will be implemented when refactered
-        private void followPath(){
-            if ( console._cells != null && timeStampRun >= TimeSpan.FromMilliseconds(100))
+        private void followPath(RogueSharp.Path? _cells){
+            if ( _cells != null)
             {
-                timeStampRun = TimeSpan.Zero;
+                //timeStampRun = TimeSpan.Zero;
                 try {
                     //_cells.TryStepForward();
-                    console._cells.StepForward();
-                    System.Console.WriteLine(console._cells.CurrentStep.X +"," + console._cells.CurrentStep.Y);
-                    if (console.GetMonsterAt(console._cells.CurrentStep.X, console._cells.CurrentStep.Y) != null){
+                    _cells.StepForward();
+                    System.Console.WriteLine(_cells.CurrentStep.X +"," + _cells.CurrentStep.Y);
+                    if (console.GetMonsterAt(_cells.CurrentStep.X, _cells.CurrentStep.Y) != null){
                         throw new RogueSharp.NoMoreStepsException();
                     } else {
-                        parent.Position = new SadRogue.Primitives.Point(console._cells.CurrentStep.X, console._cells.CurrentStep.Y);                  
-                        console.pathXtoY(console._cells.End.X, console._cells.End.Y);
+                        parent.Position = new SadRogue.Primitives.Point(_cells.CurrentStep.X, _cells.CurrentStep.Y);                  
+                        console.pathXtoY(_cells.End.X, _cells.End.Y);
                         console.turn++;
                     }
                 } catch (RogueSharp.NoMoreStepsException) {
-                    console._cells = null;
+                    _cells = null;
                     followingPath = false;
                 }
             }
