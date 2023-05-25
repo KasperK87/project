@@ -150,17 +150,12 @@ namespace ResidentSurvivor{
         public override bool ProcessMouse(SadConsole.Input.MouseScreenObjectState info){
 
             //if(mouseLoc != info.CellPosition) pathXtoY();
+            GetSadComponent<IComponent_PlayerControls>().ProcessMouse(info);
             
+            //used to draw the path
             if (!GetSadComponent<IComponent_PlayerControls>().followingPath){
                 mouseLoc = info.CellPosition;
             }
-
-            if (info.Mouse.LeftClicked){
-                GetSadComponent<IComponent_PlayerControls>().followingPath = 
-                !GetSadComponent<IComponent_PlayerControls>().followingPath;
-            }
-            
-            
 
             return false;
         }

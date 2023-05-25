@@ -21,8 +21,17 @@ namespace ResidentSurvivor{
 
         public override void ProcessMouse(SadConsole.IScreenObject obj, 
             SadConsole.Input.MouseScreenObjectState info, out bool flag){
-                
-            flag = false;
+
+            flag = true;
+        }
+
+        public void ProcessMouse(SadConsole.Input.MouseScreenObjectState info){
+            
+            //System.Console.WriteLine(info.Mouse.LeftClicked);
+
+            if (info.Mouse.LeftClicked){
+                followingPath = !followingPath;
+            }
         }
 
         //will be implemented when refactered
