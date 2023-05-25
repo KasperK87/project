@@ -4,7 +4,7 @@ using SadRogue.Primitives;
 using Console = SadConsole.Console;
 
 namespace ResidentSurvivor{
-    public class World : Console {
+    public class Dungeon : Console {
         public UInt64 turn;
         private static GameObject player = new GameObject(
                 Color.White, Color.Blue, 1, 100);
@@ -29,7 +29,7 @@ namespace ResidentSurvivor{
         public SadConsole.Entities.Manager entityManager;
         
 
-        public World(int w, int h) : base( w, h){
+        public Dungeon(int w, int h) : base( w, h){
             //sets current turn:
             turn = 0;
 

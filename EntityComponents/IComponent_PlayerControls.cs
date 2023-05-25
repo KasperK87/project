@@ -35,6 +35,8 @@ namespace ResidentSurvivor{
 
             // Process logic for moving the entity.
             bool keyHit = false;
+            //if the player is holding down a movement key
+            //we want to run, by repeating the movement
             bool run = false;
 
             Point oldPosition = parent.Position;
@@ -86,7 +88,7 @@ namespace ResidentSurvivor{
 
             //System.Console.WriteLine("KeyHit: " + keyHit);
             //System.Console.WriteLine("preKeydown: " + preKeyDown);
-            System.Console.WriteLine("timer " + Game.UIManager.newWorld.timer );
+            //System.Console.WriteLine("timer " + Game.UIManager.newWorld.timer );
             
             if(preKeyDown && keyHit && Game.UIManager.newWorld.timer >= TimeSpan.FromMilliseconds(500)+timeStampRun){
                 run = true;
