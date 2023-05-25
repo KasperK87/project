@@ -3,7 +3,8 @@ using SadRogue.Primitives;
 
 namespace ResidentSurvivor{
     class IComponent_PlayerControls : SadConsole.Components.InputConsoleComponent{
-        public bool followingPath{get; private set;}
+        public bool followingPath{get; set;}
+        
         private Point mouseLoc = new Point(0,0);
         private SadConsole.Entities.Entity parent;
         private bool preKeyDown; 
@@ -23,6 +24,31 @@ namespace ResidentSurvivor{
                 
             flag = false;
         }
+
+        //will be implemented when refactered
+        /*
+        private void followPath(){
+            if ( _cells != null && timer >= TimeSpan.FromMilliseconds(100))
+            {
+                timer = TimeSpan.Zero;
+                try {
+                    //_cells.TryStepForward();
+                    _cells.StepForward();
+                    System.Console.WriteLine(_cells.CurrentStep.X +"," + _cells.CurrentStep.Y);
+                    if (GetMonsterAt(_cells.CurrentStep.X, _cells.CurrentStep.Y) != null){
+                        throw new RogueSharp.NoMoreStepsException();
+                    } else {
+                        player.Position = new SadRogue.Primitives.Point(_cells.CurrentStep.X, _cells.CurrentStep.Y);                  
+                        pathXtoY(_cells.End.X, _cells.End.Y);
+                        turn++;
+                    }
+                } catch (RogueSharp.NoMoreStepsException) {
+                    _cells = null;
+                    followingPath = false;
+                }
+            }
+        }
+        */
 
         public override void ProcessKeyboard(SadConsole.IScreenObject obj, 
             SadConsole.Input.Keyboard info, out bool flag){
@@ -125,7 +151,6 @@ namespace ResidentSurvivor{
                 //_cells should also be part of this instance 
                 Game.UIManager.newWorld._cells = null;
             }
-
 
             // You could have multiple entities in the game for example, and change
             // which entity gets keyboard commands.

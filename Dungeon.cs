@@ -10,7 +10,7 @@ namespace ResidentSurvivor{
                 Color.White, Color.Blue, 1, 100);
 
         //will be refactored away
-        private bool followingPath;
+        //private bool followingPath;
         public RogueSharpSadConsoleSamples.Core.DungeonMap DungeonMap;
 
         //will be refactored away
@@ -84,13 +84,15 @@ namespace ResidentSurvivor{
  
             player.SadComponents.Add(new IComponent_Entity(player, 10, 10, 1, 1));
             this.SadComponents.Add(new IComponent_PlayerControls(player));
+
+            //System.Console.WriteLine(this.GetSadComponent<IComponent_PlayerControls>().followingPath);
             
             entityManager.Add(player);
 
             //doesn't work, call from update loop instead 
             //entityManager.DoEntityUpdate = true;
 
-            followingPath = false;
+            //followingPath = false;
 
             var fontMaster = SadConsole.Game.Instance.LoadFont("./fonts/_test.font");
             //var normalSizedFont = fontMaster.GetFont(SadConsole.Font.FontSizes.One);
@@ -120,7 +122,8 @@ namespace ResidentSurvivor{
               
             DungeonMap.UpdatePlayerFieldOfView(player);
 
-            if (followingPath) followPath();
+            //removed as the level shouldn't know if the player is following a path
+            //if (followingPath) player.followPath();
 
             //updates all entities (GameObject player)
             entityManager.Update(this, delta);
@@ -148,13 +151,15 @@ namespace ResidentSurvivor{
 
             //if(mouseLoc != info.CellPosition) pathXtoY();
             
-            if (!followingPath){
+            if (!GetSadComponent<IComponent_PlayerControls>().followingPath){
                 mouseLoc = info.CellPosition;
             }
 
             if (info.Mouse.LeftClicked){
-                followingPath = !followingPath;
+                GetSadComponent<IComponent_PlayerControls>().followingPath = 
+                !GetSadComponent<IComponent_PlayerControls>().followingPath;
             }
+            
             
 
             return false;
@@ -210,6 +215,7 @@ namespace ResidentSurvivor{
         }
     
         //should be moved into a player component
+        
         private void followPath(){
             if ( _cells != null && timer >= TimeSpan.FromMilliseconds(100))
             {
@@ -227,10 +233,11 @@ namespace ResidentSurvivor{
                     }
                 } catch (RogueSharp.NoMoreStepsException) {
                     _cells = null;
-                    followingPath = false;
+                    GetSadComponent<IComponent_PlayerControls>().followingPath = false;
                 }
             }
         }
+        
 
         //This is not optimal, might be very buggy
         public SadConsole.Entities.Entity GetMonsterAt( int x, int y ){
