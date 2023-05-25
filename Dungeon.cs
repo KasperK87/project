@@ -9,12 +9,7 @@ namespace ResidentSurvivor{
         private static GameObject player = new GameObject(
                 Color.White, Color.Blue, 1, 100);
 
-        //will be refactored away
-        //private bool followingPath;
         public RogueSharpSadConsoleSamples.Core.DungeonMap DungeonMap;
-
-        //will be refactored away
-        private Point mouseLoc;
 
         //will be refactored away
         public TimeSpan timer;
@@ -34,8 +29,6 @@ namespace ResidentSurvivor{
             turn = 0;
 
             entityManager = new SadConsole.Entities.Manager();
-
-            mouseLoc = new Point(0,0);
 
             //referenced in playerController
             timer = TimeSpan.Zero;
@@ -131,7 +124,7 @@ namespace ResidentSurvivor{
             //View.WithCenter(player.Position);
             
             this.View = new Rectangle(player.Position.X-20, player.Position.Y-10, 40, 20);
-            pathXtoY(mouseLoc.X, mouseLoc.Y);
+            pathXtoY(GetSadComponent<IComponent_PlayerControls>().mouseLoc.X,GetSadComponent<IComponent_PlayerControls>().mouseLoc.Y);
         }
 
         public override void Render(TimeSpan delta){
@@ -143,7 +136,7 @@ namespace ResidentSurvivor{
 
             drawPath();
 
-            this.SetBackground(mouseLoc.X, mouseLoc.Y, Color.Yellow);
+            this.SetBackground(GetSadComponent<IComponent_PlayerControls>().mouseLoc.X,GetSadComponent<IComponent_PlayerControls>().mouseLoc.Y, Color.Yellow);
         }
 
         //draws path to mouse
@@ -151,11 +144,6 @@ namespace ResidentSurvivor{
 
             //if(mouseLoc != info.CellPosition) pathXtoY();
             GetSadComponent<IComponent_PlayerControls>().ProcessMouse(info);
-            
-            //used to draw the path
-            if (!GetSadComponent<IComponent_PlayerControls>().followingPath){
-                mouseLoc = info.CellPosition;
-            }
 
             return false;
         }

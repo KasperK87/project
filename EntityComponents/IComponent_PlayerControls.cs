@@ -5,14 +5,14 @@ namespace ResidentSurvivor{
     class IComponent_PlayerControls : SadConsole.Components.InputConsoleComponent{
         public bool followingPath{get; set;}
         
-        private Point mouseLoc = new Point(0,0);
+        public Point mouseLoc = new Point(0,0);
         private SadConsole.Entities.Entity parent;
         private bool preKeyDown; 
 
         //used to determine if the player should be running
         private TimeSpan timeStampRun = TimeSpan.Zero;
         
-
+        //should also get a reference to the dungeonconsole
         public IComponent_PlayerControls(SadConsole.Entities.Entity setParent){
             this.parent = setParent;
             
@@ -32,11 +32,14 @@ namespace ResidentSurvivor{
             if (info.Mouse.LeftClicked){
                 followingPath = !followingPath;
             }
+
+            mouseLoc = info.CellPosition;
         }
 
         //will be implemented when refactered
+        
         /*
-        private void followPath(){
+        private void followPath(RogueSharp.Path _cells){
             if ( _cells != null && timer >= TimeSpan.FromMilliseconds(100))
             {
                 timer = TimeSpan.Zero;
@@ -58,6 +61,7 @@ namespace ResidentSurvivor{
             }
         }
         */
+        
 
         public override void ProcessKeyboard(SadConsole.IScreenObject obj, 
             SadConsole.Input.Keyboard info, out bool flag){
