@@ -6,14 +6,19 @@ namespace ResidentSurvivor{
         public bool followingPath{get; set;}
         
         public Point mouseLoc = new Point(0,0);
+
+        //parent objects used to couple the controls of the playrt
+        //with the rest of the game
         private SadConsole.Entities.Entity parent;
         Dungeon console;
+
+
         private bool preKeyDown; 
 
         //used to determine if the player should be running
         private TimeSpan timeStampRun = TimeSpan.Zero;
         
-        //should also get a reference to the dungeonconsole
+        //also get a reference to the dungeonconsole
         public IComponent_PlayerControls(SadConsole.Entities.Entity setParent, Dungeon setConsole){
             this.parent = setParent;
             this.console = setConsole;
@@ -34,7 +39,6 @@ namespace ResidentSurvivor{
             if (followingPath) followPath(console._cells);
         }
 
-        //will be implemented when refactered
         private void followPath(RogueSharp.Path? _cells){
             if ( _cells != null)
             {
@@ -80,7 +84,6 @@ namespace ResidentSurvivor{
             {
                 newPosition = parent.Position + (0, -1);
                 keyHit = true;
-                System.Console.WriteLine("UP");
             } else if (info.IsKeyDown(SadConsole.Input.Keys.Down) || info.IsKeyDown(SadConsole.Input.Keys.NumPad2))
             {
                 newPosition = parent.Position + (0, 1);
@@ -118,10 +121,6 @@ namespace ResidentSurvivor{
             {
                 keyHit = true;
             }
-
-            //System.Console.WriteLine("KeyHit: " + keyHit);
-            //System.Console.WriteLine("preKeydown: " + preKeyDown);
-            //System.Console.WriteLine("timer " + Game.UIManager.newWorld.timer );
             
             if(preKeyDown && keyHit && Game.UIManager.newWorld.timer >= TimeSpan.FromMilliseconds(500)+timeStampRun){
                 run = true;
@@ -155,7 +154,8 @@ namespace ResidentSurvivor{
 
             if (keyHit) {
                 followingPath = false;
-                //_cells should also be part of this instance 
+                //_cells should also be part of this instance
+                //should it really??? 
                 Game.UIManager.newWorld._cells = null;
             }
 
