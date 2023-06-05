@@ -198,32 +198,6 @@ namespace ResidentSurvivor{
                 this.SetBackground(_cells.Start.X, _cells.Start.Y, Color.Blue);
             }
         }
-    
-        //should be moved into a player component
-        /*
-        private void followPath(){
-            if ( _cells != null && timer >= TimeSpan.FromMilliseconds(100))
-            {
-                timer = TimeSpan.Zero;
-                try {
-                    //_cells.TryStepForward();
-                    _cells.StepForward();
-                    System.Console.WriteLine(_cells.CurrentStep.X +"," + _cells.CurrentStep.Y);
-                    if (GetMonsterAt(_cells.CurrentStep.X, _cells.CurrentStep.Y) != null){
-                        throw new RogueSharp.NoMoreStepsException();
-                    } else {
-                        player.Position = new SadRogue.Primitives.Point(_cells.CurrentStep.X, _cells.CurrentStep.Y);                  
-                        pathXtoY(_cells.End.X, _cells.End.Y);
-                        turn++;
-                    }
-                } catch (RogueSharp.NoMoreStepsException) {
-                    _cells = null;
-                    GetSadComponent<IComponent_PlayerControls>().followingPath = false;
-                }
-            }
-        }
-        */
-        
 
         //This is not optimal, might be very buggy
         public SadConsole.Entities.Entity GetMonsterAt( int x, int y ){
