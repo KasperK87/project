@@ -4,17 +4,12 @@ using SadRogue.Primitives;
 using Console = SadConsole.Console;
 
 namespace ResidentSurvivor{
-    public class World : Console {
+    public class Dungeon : Console {
         public UInt64 turn;
         private static GameObject player = new GameObject(
                 Color.White, Color.Blue, 1, 100);
 
-        //will be refactored away
-        private bool followingPath;
         public RogueSharpSadConsoleSamples.Core.DungeonMap DungeonMap;
-
-        //will be refactored away
-        private Point mouseLoc;
 
         //will be refactored away
         public TimeSpan timer;
@@ -29,13 +24,11 @@ namespace ResidentSurvivor{
         public SadConsole.Entities.Manager entityManager;
         
 
-        public World(int w, int h) : base( w, h){
+        public Dungeon(int w, int h) : base( w, h){
             //sets current turn:
             turn = 0;
 
             entityManager = new SadConsole.Entities.Manager();
-
-            mouseLoc = new Point(0,0);
 
             //referenced in playerController
             timer = TimeSpan.Zero;
@@ -83,14 +76,16 @@ namespace ResidentSurvivor{
                 }
  
             player.SadComponents.Add(new IComponent_Entity(player, 10, 10, 1, 1));
-            this.SadComponents.Add(new IComponent_PlayerControls(player));
+            this.SadComponents.Add(new IComponent_PlayerControls(player, this));
+
+            //System.Console.WriteLine(this.GetSadComponent<IComponent_PlayerControls>().followingPath);
             
             entityManager.Add(player);
 
             //doesn't work, call from update loop instead 
             //entityManager.DoEntityUpdate = true;
 
-            followingPath = false;
+            //followingPath = false;
 
             var fontMaster = SadConsole.Game.Instance.LoadFont("./fonts/_test.font");
             //var normalSizedFont = fontMaster.GetFont(SadConsole.Font.FontSizes.One);
@@ -120,7 +115,8 @@ namespace ResidentSurvivor{
               
             DungeonMap.UpdatePlayerFieldOfView(player);
 
-            if (followingPath) followPath();
+            //removed as the level shouldn't know if the player is following a path
+            //if (GetSadComponent<IComponent_PlayerControls>().followingPath) followPath();
 
             //updates all entities (GameObject player)
             entityManager.Update(this, delta);
@@ -128,7 +124,9 @@ namespace ResidentSurvivor{
             //View.WithCenter(player.Position);
             
             this.View = new Rectangle(player.Position.X-20, player.Position.Y-10, 40, 20);
-            pathXtoY(mouseLoc.X, mouseLoc.Y);
+            if (!GetSadComponent<IComponent_PlayerControls>().followingPath){
+                pathXtoY(GetSadComponent<IComponent_PlayerControls>().mouseLoc.X,GetSadComponent<IComponent_PlayerControls>().mouseLoc.Y);
+            }
         }
 
         public override void Render(TimeSpan delta){
@@ -140,128 +138,14 @@ namespace ResidentSurvivor{
 
             drawPath();
 
-            this.SetBackground(mouseLoc.X, mouseLoc.Y, Color.Yellow);
+            this.SetBackground(GetSadComponent<IComponent_PlayerControls>().mouseLoc.X,GetSadComponent<IComponent_PlayerControls>().mouseLoc.Y, Color.Yellow);
         }
-    
-    /*
-        public override bool ProcessKeyboard(SadConsole.Input.Keyboard info)
-        {
-            // Forward the keyboard data to the entity to handle the movement code.
-            // We could detect if the users hit ESC and popup a menu or something.
-            // By not setting the entity as the active object, twe let this
-            // "game level" (the console we're hosting the entity on) determine if
-            // the keyboard data should be sent to the entity.
 
-            // Process logic for moving the entity.
-            bool keyHit = false;
-            bool run = false;
-
-            Point oldPosition = player.Position;
-            Point newPosition = (0, 0);
-
-            // Process UP/DOWN movements
-            if (info.IsKeyDown(SadConsole.Input.Keys.Up) || info.IsKeyDown(SadConsole.Input.Keys.NumPad8))
-            {
-                newPosition = player.Position + (0, -1);
-                keyHit = true;
-            }
-            else if (info.IsKeyDown(SadConsole.Input.Keys.Down) || info.IsKeyDown(SadConsole.Input.Keys.NumPad2))
-            {
-                newPosition = player.Position + (0, 1);
-                keyHit = true;
-            }
-
-            // Process LEFT/RIGHT movements
-            if (info.IsKeyDown(SadConsole.Input.Keys.Left) ||info.IsKeyDown(SadConsole.Input.Keys.NumPad4))
-            {
-                newPosition = player.Position + (-1, 0);
-                keyHit = true;
-            }
-            else if (info.IsKeyDown(SadConsole.Input.Keys.Right) || info.IsKeyDown(SadConsole.Input.Keys.NumPad6))
-            {
-                newPosition = player.Position + (1, 0);
-                keyHit = true;
-            }
-
-            //diagonal movement
-            if (info.IsKeyDown(SadConsole.Input.Keys.NumPad7))
-            {
-                newPosition = player.Position + (-1, -1);
-                keyHit = true;
-            }
-            else if (info.IsKeyDown(SadConsole.Input.Keys.NumPad9))
-            {
-                newPosition = player.Position + (1, -1);
-                keyHit = true;
-            } else if (info.IsKeyDown(SadConsole.Input.Keys.NumPad1))
-            {
-                newPosition = player.Position + (-1, 1);
-                keyHit = true;
-            }
-            else if (info.IsKeyDown(SadConsole.Input.Keys.NumPad3))
-            {
-                newPosition = player.Position + (1, 1);
-                keyHit = true;
-            }
-
-            //Do nothing
-            if (info.IsKeyDown(SadConsole.Input.Keys.NumPad5))
-            {
-                newPosition = player.Position + (0, 0);
-                keyHit = true;
-            }
-
-            if(preKeyDown && keyHit && timer >= TimeSpan.FromMilliseconds(500)){
-                run = true;
-            } else if (!preKeyDown && !keyHit && !followingPath) {
-                timer = TimeSpan.Zero;
-            } 
-
-            // If a movement key was pressed
-            if ((keyHit && !preKeyDown && !followingPath) || run)
-            {
-                // Check if the new position is valid
-                if (Surface.Area.Contains(newPosition) && DungeonMap.GetCell(newPosition.X, newPosition.Y).IsWalkable){
-                    //check is there is a monster
-                    var monster = Game.UIManager.newWorld.GetMonsterAt(newPosition.X, newPosition.Y);
-                    if (monster == null || player.Position == newPosition){
-                        player.Position = newPosition;
-                        pathXtoY(mouseLoc.X, mouseLoc.Y);
-                    } else {
-                        System.Console.WriteLine("Player Attack");
-                        player.Attack(monster);
-                    }
-                    preKeyDown = keyHit;
-                    turn++;
-                    return true;
-                }
-            }
-
-            if (keyHit) {
-                followingPath = false;
-                _cells = null;
-            }
-
-
-            // You could have multiple entities in the game for example, and change
-            // which entity gets keyboard commands.
-
-            preKeyDown = keyHit;
-            return false;
-        }   
-*/
+        //draws path to mouse
         public override bool ProcessMouse(SadConsole.Input.MouseScreenObjectState info){
 
             //if(mouseLoc != info.CellPosition) pathXtoY();
-            
-            if (!followingPath){
-                mouseLoc = info.CellPosition;
-            }
-
-            if (info.Mouse.LeftClicked){
-                followingPath = !followingPath;
-            }
-            
+            GetSadComponent<IComponent_PlayerControls>().ProcessMouse(info);
 
             return false;
         }
@@ -316,6 +200,7 @@ namespace ResidentSurvivor{
         }
     
         //should be moved into a player component
+        /*
         private void followPath(){
             if ( _cells != null && timer >= TimeSpan.FromMilliseconds(100))
             {
@@ -333,10 +218,12 @@ namespace ResidentSurvivor{
                     }
                 } catch (RogueSharp.NoMoreStepsException) {
                     _cells = null;
-                    followingPath = false;
+                    GetSadComponent<IComponent_PlayerControls>().followingPath = false;
                 }
             }
         }
+        */
+        
 
         //This is not optimal, might be very buggy
         public SadConsole.Entities.Entity GetMonsterAt( int x, int y ){

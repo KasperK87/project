@@ -6,27 +6,64 @@ namespace ResidentSurvivor{
     //IComponent_PlayerControls is a component that can be added to any entity
     //it will give the entity player controls
     class IComponent_PlayerControls : SadConsole.Components.InputConsoleComponent{
-        public bool followingPath{get; private set;}
-        private Point mouseLoc = new Point(0,0);
+        public bool followingPath{get; set;}
+        
+        public Point mouseLoc = new Point(0,0);
+
+        //parent objects used to couple the controls of the playrt
+        //with the rest of the game
         private SadConsole.Entities.Entity parent;
+        Dungeon console;
+
+
         private bool preKeyDown; 
 
         //used to determine if the player should be running
         private TimeSpan timeStampRun = TimeSpan.Zero;
         
-
-        public IComponent_PlayerControls(SadConsole.Entities.Entity setParent){
+        //also get a reference to the dungeonconsole
+        public IComponent_PlayerControls(SadConsole.Entities.Entity setParent, Dungeon setConsole){
             this.parent = setParent;
+            this.console = setConsole;
             
             followingPath = false;
         }
 
-        public override void ProcessMouse(SadConsole.IScreenObject obj, 
-            SadConsole.Input.MouseScreenObjectState info, out bool flag){
-                
-            flag = false;
+        public void ProcessMouse(SadConsole.Input.MouseScreenObjectState info){
+            
+            //System.Console.WriteLine(info.Mouse.LeftClicked);
+
+            if (info.Mouse.LeftClicked){
+                followingPath = !followingPath;
+            }
+
+            mouseLoc = info.CellPosition;
+
+            if (followingPath) followPath(console._cells);
         }
 
+        private void followPath(RogueSharp.Path? _cells){
+            if ( _cells != null)
+            {
+                //timeStampRun = TimeSpan.Zero;
+                try {
+                    //_cells.TryStepForward();
+                    _cells.StepForward();
+                    System.Console.WriteLine(_cells.CurrentStep.X +"," + _cells.CurrentStep.Y);
+                    if (console.GetMonsterAt(_cells.CurrentStep.X, _cells.CurrentStep.Y) != null){
+                        throw new RogueSharp.NoMoreStepsException();
+                    } else {
+                        parent.Position = new SadRogue.Primitives.Point(_cells.CurrentStep.X, _cells.CurrentStep.Y);                  
+                        console.pathXtoY(_cells.End.X, _cells.End.Y);
+                        console.turn++;
+                    }
+                } catch (RogueSharp.NoMoreStepsException) {
+                    _cells = null;
+                    followingPath = false;
+                }
+            }
+        }
+        
         public override void ProcessKeyboard(SadConsole.IScreenObject obj, 
             SadConsole.Input.Keyboard info, out bool flag){
 
@@ -38,6 +75,8 @@ namespace ResidentSurvivor{
 
             // Process logic for moving the entity.
             bool keyHit = false;
+            //if the player is holding down a movement key
+            //we want to run, by repeating the movement
             bool run = false;
 
             Point oldPosition = parent.Position;
@@ -48,7 +87,6 @@ namespace ResidentSurvivor{
             {
                 newPosition = parent.Position + (0, -1);
                 keyHit = true;
-                System.Console.WriteLine("UP");
             } else if (info.IsKeyDown(SadConsole.Input.Keys.Down) || info.IsKeyDown(SadConsole.Input.Keys.NumPad2))
             {
                 newPosition = parent.Position + (0, 1);
@@ -86,10 +124,6 @@ namespace ResidentSurvivor{
             {
                 keyHit = true;
             }
-
-            //System.Console.WriteLine("KeyHit: " + keyHit);
-            //System.Console.WriteLine("preKeydown: " + preKeyDown);
-            System.Console.WriteLine("timer " + Game.UIManager.newWorld.timer );
             
             if(preKeyDown && keyHit && Game.UIManager.newWorld.timer >= TimeSpan.FromMilliseconds(500)+timeStampRun){
                 run = true;
@@ -123,10 +157,10 @@ namespace ResidentSurvivor{
 
             if (keyHit) {
                 followingPath = false;
-                //_cells should also be part of this instance 
+                //_cells should also be part of this instance
+                //should it really??? 
                 Game.UIManager.newWorld._cells = null;
             }
-
 
             // You could have multiple entities in the game for example, and change
             // which entity gets keyboard commands.
@@ -135,5 +169,11 @@ namespace ResidentSurvivor{
             flag = false;
         }
 
+    public override void ProcessMouse(SadConsole.IScreenObject obj, 
+            SadConsole.Input.MouseScreenObjectState info, out bool flag){
+
+            flag = true;
+        }
+    
     }
 }
