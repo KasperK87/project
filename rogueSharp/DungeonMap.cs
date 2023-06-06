@@ -9,6 +9,7 @@ namespace RogueSharpSadConsoleSamples.Core
 {
     public class DungeonMap : Map{
         public List<Rectangle> Rooms;
+        public List<ResidentSurvivor.Door> Doors;
 
         public DungeonMap(){
             Rooms = new List<Rectangle>();
