@@ -86,11 +86,13 @@ namespace RogueSharpSadConsoleSamples.Systems
             }
          }
 
-        /*
+        
          foreach ( Rectangle room in _map.Rooms )
          {
             CreateDoors( room );
          }
+
+         /*
 
          CreateStairs();
 
@@ -134,7 +136,7 @@ namespace RogueSharpSadConsoleSamples.Systems
             _map.SetCellProperties( xPosition, y, true, true );
          }
       }
-      /*
+      
       private void CreateDoors( Rectangle room )
       {
          int xMin = room.Left;
@@ -142,6 +144,9 @@ namespace RogueSharpSadConsoleSamples.Systems
          int yMin = room.Top;
          int yMax = room.Bottom;
 
+         //_map.Doors.Add(new ResidentSurvivor.Door())
+
+         /*
          List<Cell> borderCells = _map.GetCellsAlongLine( xMin, yMin, xMax, yMin ).ToList();
          borderCells.AddRange( _map.GetCellsAlongLine( xMin, yMin, xMin, yMax ) );
          borderCells.AddRange( _map.GetCellsAlongLine( xMin, yMax, xMax, yMax ) );
@@ -159,8 +164,10 @@ namespace RogueSharpSadConsoleSamples.Systems
                } );
             }
          }
+         */
       }
 
+      /*
       private bool IsPotentialDoor( Cell cell )
       {
          if ( !cell.IsWalkable )
