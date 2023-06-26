@@ -13,6 +13,7 @@ namespace RogueSharpSadConsoleSamples.Core
 
         public DungeonMap(){
             Rooms = new List<Rectangle>();
+            Doors = new List<ResidentSurvivor.Door>();
         }
 
         /*
@@ -68,7 +69,7 @@ namespace RogueSharpSadConsoleSamples.Core
             if ( cell.IsWalkable )
             {
                 map.SetBackground(cell.X, cell.Y, SadRogue.Primitives.Color.Blue);              
-                //map.SetGlyph(cell.X, cell.Y,100);
+                map.SetGlyph(cell.X, cell.Y,19);
                 
                //console.CellData.SetCharacter( cell.X, cell.Y, '.', Colors.FloorFov, Colors.FloorBackgroundFov );
             }

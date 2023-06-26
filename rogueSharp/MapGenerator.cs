@@ -87,6 +87,7 @@ namespace RogueSharpSadConsoleSamples.Systems
          }
 
         
+        
          foreach ( Rectangle room in _map.Rooms )
          {
             CreateDoors( room );
@@ -136,12 +137,15 @@ namespace RogueSharpSadConsoleSamples.Systems
          }
       }
       
+      
       private void CreateDoors( Rectangle room )
       {
          int xMin = room.Left;
          int xMax = room.Right;
          int yMin = room.Top;
          int yMax = room.Bottom;
+
+         //_map.Doors.Add(new ResidentSurvivor.Door())
 
          /*
          List<Cell> borderCells = _map.GetCellsAlongLine( xMin, yMin, xMax, yMin ).ToList();
@@ -161,8 +165,7 @@ namespace RogueSharpSadConsoleSamples.Systems
                } );
             }
          }
-      
-      */
+         */
       }
 
       /*
