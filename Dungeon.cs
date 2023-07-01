@@ -4,10 +4,20 @@ using SadRogue.Primitives;
 using Console = SadConsole.Console;
 
 namespace ResidentSurvivor{
+    enum TileType : int{
+        Player = 1,
+        Rat = 96,
+        Floor,
+        Wall,
+        Door,
+        DoorOpen,
+        UpStairs,
+        DownStairs
+    }
     public class Dungeon : Console {
         public UInt64 turn;
         private static GameObject player = new GameObject(
-                Color.White, Color.Blue, 1, 100);
+                Color.White, Color.Blue, (int) TileType.Player, 100);
 
         public RogueSharpSadConsoleSamples.Core.DungeonMap DungeonMap;
 
@@ -63,7 +73,7 @@ namespace ResidentSurvivor{
 
                     if (Random.Next(100) == 0){
                         SadConsole.Entities.Entity rat = new SadConsole.Entities.Entity(
-                            Color.White, Color.Transparent, 100, 99);
+                            Color.White, Color.Transparent, (int) TileType.Rat, 99);
 
                         rat.Position = new Point(cell.X,cell.Y);
 
