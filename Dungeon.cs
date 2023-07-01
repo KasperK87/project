@@ -5,8 +5,9 @@ using Console = SadConsole.Console;
 
 namespace ResidentSurvivor{
     enum TileType : int{
+        Empty = 38,
         Player = 1,
-        Rat = 96,
+        Rat = 376,
         Floor,
         Wall,
         Door,

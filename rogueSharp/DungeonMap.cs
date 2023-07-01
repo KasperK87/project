@@ -4,6 +4,7 @@ using RogueSharp;
 using SadConsole;
 //using SadRogue.Primitives;
 using Console = SadConsole.Console;
+using TileType = ResidentSurvivor.TileType;
 
 namespace RogueSharpSadConsoleSamples.Core
 {
@@ -68,11 +69,13 @@ namespace RogueSharpSadConsoleSamples.Core
          {
             if ( cell.IsWalkable )
             {
+                map.SetGlyph(cell.X, cell.Y, (int) TileType.Empty);
+               
                 map.SetBackground(cell.X, cell.Y, SadRogue.Primitives.Color.Blue);  
                 //TODO: change  to a dot            
-                //map.SetGlyph(cell.X, cell.Y,''100'');
                 
-               //console.CellData.SetCharacter( cell.X, cell.Y, '.', Colors.FloorFov, Colors.FloorBackgroundFov );
+                
+                //console.CellData.SetCharacter( cell.X, cell.Y, '.', Colors.FloorFov, Colors.FloorBackgroundFov );
             }
             else
             {
