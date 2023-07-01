@@ -64,7 +64,7 @@ namespace ResidentSurvivor{
 
             //creates player to remove annoying could be null warnings
             player = new GameObject(
-                Color.White, Color.Blue, 1, 100);
+                Color.White, Color.Blue, (int) TileType.Player, 100);
 
             foreach ( RogueSharp.Cell cell in DungeonMap.GetAllCells() )
                 if (cell.IsWalkable){
@@ -112,7 +112,7 @@ namespace ResidentSurvivor{
         private static void CreatePlayer(int x, int y)
         {
             player = new GameObject(
-                Color.White, Color.Blue, 1, 100);
+                Color.White, Color.Blue, (int) TileType.Player, 100);
 
             player.Position = new Point(x,y);
         }
