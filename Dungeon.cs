@@ -8,7 +8,7 @@ namespace ResidentSurvivor{
         Empty = 38,
         Player = 1,
         Rat = 376,
-        Floor,
+        Floor = 27,
         Wall,
         Door,
         DoorOpen,

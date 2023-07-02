@@ -69,12 +69,10 @@ namespace RogueSharpSadConsoleSamples.Core
          {
             if ( cell.IsWalkable )
             {
-                map.SetGlyph(cell.X, cell.Y, (int) TileType.Empty);
+                map.SetGlyph(cell.X, cell.Y, (int) TileType.Floor);
                
                 map.SetBackground(cell.X, cell.Y, SadRogue.Primitives.Color.Blue);  
-                //TODO: change  to a dot            
-                
-                
+              
                 //console.CellData.SetCharacter( cell.X, cell.Y, '.', Colors.FloorFov, Colors.FloorBackgroundFov );
             }
             else
