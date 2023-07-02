@@ -98,8 +98,6 @@ namespace ResidentSurvivor{
 
             //followingPath = false;
 
-            //font with monsters 
-            //todo add tiles
             var fontMaster = SadConsole.Game.Instance.LoadFont("./fonts/_test.font");
             //var normalSizedFont = fontMaster.GetFont(SadConsole.Font.FontSizes.One);
             //var normalFont = fontMaster
