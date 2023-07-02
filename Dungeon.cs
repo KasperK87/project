@@ -27,6 +27,7 @@ namespace ResidentSurvivor{
 
         public static RogueSharp.Random.IRandom? Random { get; private set; }
 
+        //MapGenerator not used, but could be used to generate maps in the future
         //int width, int height, int maxRooms, int roomMaxSize, int roomMinSize, int level
         RogueSharpSadConsoleSamples.Systems.MapGenerator
             mapGenerator = new RogueSharpSadConsoleSamples.Systems.MapGenerator(
