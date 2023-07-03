@@ -54,6 +54,10 @@ namespace ResidentSurvivor {
 
         }
 
+        public virtual void Interact(){
+            
+        }
+
         public void Attack(SadConsole.Entities.Entity target){
             target.GetSadComponent<IComponent_Entity>().currHP -= this.damage;
             

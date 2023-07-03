@@ -34,7 +34,6 @@ namespace ResidentSurvivor{
                 120,40, 10, 10, 5, 1);
 
         public SadConsole.Entities.Manager entityManager;
-        
 
         public Dungeon(int w, int h) : base( w, h){
             //sets current turn:
@@ -50,18 +49,19 @@ namespace ResidentSurvivor{
             IsVisible = true;
             UseMouse = true;
 
-            //create dungeon
+            //Create dungeon
             //DungeonMap = mapGenerator.CreateMap();
             int seed = (int) DateTime.UtcNow.Ticks;
             Random = new RogueSharp.Random.DotNetRandom( seed );
 
+            //Temporarily using RogueSharp's RandomRoomsMapCreationStrategy
             RogueSharp.MapCreation.IMapCreationStrategy<RogueSharpSadConsoleSamples.Core.DungeonMap> mapCreationStrategy =
                 new RogueSharp.MapCreation.RandomRoomsMapCreationStrategy<RogueSharpSadConsoleSamples.Core.DungeonMap>( 80, 29, 100, 7, 3 );
             DungeonMap = mapCreationStrategy.CreateMap();
 
             
 
-            //create player & populate dungeon
+            //create player, populate and decorate dungeon
             SadComponents.Add(entityManager);
 
             //creates player to remove annoying could be null warnings
@@ -70,6 +70,16 @@ namespace ResidentSurvivor{
 
             foreach ( RogueSharp.Cell cell in DungeonMap.GetAllCells() )
                 if (cell.IsWalkable){
+                    //insert door generation here
+                    if (Random.Next(100) == 0){
+                        Door door = new Door(
+                            Color.White, Color.Transparent, (int) TileType.Door, 98);
+
+                        door.Position = new Point(cell.X,cell.Y);
+
+                        entityManager.Add(door);     
+                    }
+
                     CreatePlayer(cell.X, cell.Y);
                     //break;
 
@@ -83,7 +93,7 @@ namespace ResidentSurvivor{
 
                         rat.SadComponents.Add(entity);
                         rat.SadComponents.Add(new IComponent_Hostile(rat, entity));
-                        entityManager.Add(rat);
+                         entityManager.Add(rat);
                     }
                 }
  

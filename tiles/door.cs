@@ -1,6 +1,6 @@
 namespace ResidentSurvivor
 {
-    public class Door : SadConsole.Entities.Entity
+    public class Door : GameObject
     {
         Boolean Walkable { get; set; }
         Char Symbol { get; set; }
@@ -12,14 +12,19 @@ namespace ResidentSurvivor
                 this.Name = "Door";
                 this.Walkable = false;
                 this.Symbol = '+';
+                this.IsOpen = false;
+        }
+
+        public override void Interact(){
+            this.IsOpen = true;
         }
 
         public override void Update(TimeSpan delta){
             if (IsOpen){
-                this.Appearance.Glyph = '-';
+                this.Appearance.Glyph = (int) TileType.DoorOpen;
                 this.Walkable = true;
             } else {
-                this.Appearance.Glyph = '+';
+                this.Appearance.Glyph = (int) TileType.Door;
                 this.Walkable = false;
             }
             base.Update(delta);

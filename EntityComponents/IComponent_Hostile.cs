@@ -51,9 +51,10 @@ namespace ResidentSurvivor{
         }
 
         public void Attack(SadConsole.Entities.Entity target){
-            
-            target.GetSadComponent<IComponent_Entity>().currHP -= parent.GetSadComponent<IComponent_Entity>().damage; ;
-            //System.Console.WriteLine("Monster Attack!!!");
+            if (target.GetSadComponent<IComponent_Entity>() != null){
+                target.GetSadComponent<IComponent_Entity>().currHP -= parent.GetSadComponent<IComponent_Entity>().damage; ;
+            }
+            System.Console.WriteLine("Monster Attack!!!");
         }
     }
 }

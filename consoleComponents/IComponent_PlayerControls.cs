@@ -136,13 +136,15 @@ namespace ResidentSurvivor{
                 if (Game.UIManager.newWorld.Surface.Area.Contains(newPosition) && Game.UIManager.newWorld.DungeonMap.GetCell(newPosition.X, newPosition.Y).IsWalkable){
                     //check is there is a monster
                     var monster = Game.UIManager.newWorld.GetMonsterAt(newPosition.X, newPosition.Y);
-                    if (monster == null || parent.Position == newPosition){
+                    if (monster == null || parent.Position == newPosition ||
+                        monster.GetSadComponent<IComponent_Entity>() == null){
                         parent.Position = newPosition;
                         Game.UIManager.newWorld.pathXtoY(mouseLoc.X, mouseLoc.Y);
                     } else {
                         System.Console.WriteLine("Player Attack");
-                        
-                        monster.GetSadComponent<IComponent_Entity>().currHP -= parent.GetSadComponent<IComponent_Entity>().damage;
+                        if (monster.GetSadComponent<IComponent_Entity>() != null){
+                            monster.GetSadComponent<IComponent_Entity>().currHP -= parent.GetSadComponent<IComponent_Entity>().damage;
+                        }
                     }
                     preKeyDown = keyHit;
                     //World instance should control turn progression
