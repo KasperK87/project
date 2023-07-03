@@ -5,6 +5,7 @@ namespace ResidentSurvivor {
         public int maxHP;
         protected int speed;
         public int damage; 
+        public Boolean Walkable { get; set; }
 
         public GameObject(SadRogue.Primitives.Color c1,SadRogue.Primitives.Color c2, int SetGlyph, int zIndex):
             base(c1, c2, SetGlyph, zIndex){
@@ -12,6 +13,7 @@ namespace ResidentSurvivor {
               this.currHP = 10;
               this.speed = 1;
               this.damage = 3;
+              this.Walkable = true;
 
               //crashes many places?!
               //this.SadComponents.Add(new SadConsole.Components.SmoothMove(new SadRogue.Primitives.Point(15,24)));

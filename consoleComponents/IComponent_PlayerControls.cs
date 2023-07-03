@@ -136,14 +136,20 @@ namespace ResidentSurvivor{
                 if (Game.UIManager.newWorld.Surface.Area.Contains(newPosition) && Game.UIManager.newWorld.DungeonMap.GetCell(newPosition.X, newPosition.Y).IsWalkable){
                     //check is there is a monster
                     var monster = Game.UIManager.newWorld.GetMonsterAt(newPosition.X, newPosition.Y);
-                    if (monster == null || parent.Position == newPosition ||
-                        monster.GetSadComponent<IComponent_Entity>() == null){
+                    if (monster == null || parent.Position == newPosition){
                         parent.Position = newPosition;
                         Game.UIManager.newWorld.pathXtoY(mouseLoc.X, mouseLoc.Y);
                     } else {
                         System.Console.WriteLine("Player Attack");
                         if (monster.GetSadComponent<IComponent_Entity>() != null){
                             monster.GetSadComponent<IComponent_Entity>().currHP -= parent.GetSadComponent<IComponent_Entity>().damage;
+                        } else {
+                            GameObject gameobj = (GameObject)monster;
+                            if (gameobj.Walkable){
+                                parent.Position = newPosition;
+                            } else {
+                                gameobj.Interact();
+                            }
                         }
                     }
                     preKeyDown = keyHit;

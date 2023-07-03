@@ -84,7 +84,7 @@ namespace ResidentSurvivor{
                     //break;
 
                     if (Random.Next(100) == 0){
-                        SadConsole.Entities.Entity rat = new SadConsole.Entities.Entity(
+                        GameObject rat = new GameObject(
                             Color.White, Color.Transparent, (int) TileType.Rat, 99);
 
                         rat.Position = new Point(cell.X,cell.Y);
@@ -122,8 +122,8 @@ namespace ResidentSurvivor{
         private static void CreatePlayer(int x, int y)
         {
             player = new GameObject(
-                Color.White, Color.Blue, (int) TileType.Player, 100);
-
+                Color.White, Color.Transparent, (int) TileType.Player, 100);
+            player.Walkable = false;
             player.Position = new Point(x,y);
         }
 

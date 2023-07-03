@@ -2,7 +2,6 @@ namespace ResidentSurvivor
 {
     public class Door : GameObject
     {
-        Boolean Walkable { get; set; }
         Char Symbol { get; set; }
 
         bool IsOpen { get; set; }
