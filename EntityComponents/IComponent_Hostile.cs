@@ -44,10 +44,12 @@ namespace ResidentSurvivor{
                         GameObject gameobj = (GameObject)monster;
                         if (gameobj.Walkable){
                             parent.Position = new SadRogue.Primitives.Point(_cells.CurrentStep.X, _cells.CurrentStep.Y);;
+                        } else if (gameobj.isPlayer){
+                            Attack(monster);
                         } else {
                             gameobj.Interact();
                         }
-                        Attack(monster);
+                        
                     }             
                 } catch (RogueSharp.NoMoreStepsException) {
                     _cells = null;

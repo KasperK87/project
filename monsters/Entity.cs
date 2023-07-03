@@ -1,6 +1,7 @@
 //gameObejct extends entity, and is based on a component patten
 namespace ResidentSurvivor {
     public class GameObject : SadConsole.Entities.Entity {
+        public bool isPlayer = false;
         public int currHP;
         public int maxHP;
         protected int speed;

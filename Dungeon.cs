@@ -88,6 +88,7 @@ namespace ResidentSurvivor{
                             Color.White, Color.Transparent, (int) TileType.Rat, 99);
 
                         rat.Position = new Point(cell.X,cell.Y);
+                        rat.Walkable = false;
 
                         var entity = new IComponent_Entity(rat, 1, 1, 1, 1);
 
@@ -98,6 +99,7 @@ namespace ResidentSurvivor{
                 }
  
             player.SadComponents.Add(new IComponent_Entity(player, 10, 10, 1, 1));
+            player.isPlayer = true;
             this.SadComponents.Add(new IComponent_PlayerControls(player, this));
 
             //System.Console.WriteLine(this.GetSadComponent<IComponent_PlayerControls>().followingPath);
