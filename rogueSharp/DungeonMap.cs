@@ -69,6 +69,8 @@ namespace RogueSharpSadConsoleSamples.Core
          {
             if ( cell.IsWalkable )
             {
+               if (GetCell(cell.X, cell.Y).IsWalkable && !GetCell(cell.X, cell.Y-1).IsWalkable)
+                    map.SetGlyph(cell.X, cell.Y-1, (int) TileType.Wall);
                /*
                if (!map.GetGlyph(cell.X, cell.Y-1).Equals((int) TileType.Floor))
                     map.SetGlyph(cell.X, cell.Y-1, (int) TileType.Wall);
@@ -82,8 +84,9 @@ namespace RogueSharpSadConsoleSamples.Core
             }
             else
             {
+
                 map.SetBackground(cell.X, cell.Y, SadRogue.Primitives.Color.Red);
-               //console.CellData.SetCharacter( cell.X, cell.Y, '#', Colors.WallFov, Colors.WallBackgroundFov );
+                map.SetGlyph(cell.X, cell.Y, (int) TileType.Solid);
             }
          }
          else

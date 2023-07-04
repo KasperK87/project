@@ -10,7 +10,7 @@ namespace ResidentSurvivor{
         Rat = 376,
         Floor = 27,
         Wall = 284,
-        WallTop,
+        Solid = 76,
         Door = 96,
         DoorOpen = 97,
         UpStairs,
