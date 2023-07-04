@@ -71,7 +71,7 @@ namespace ResidentSurvivor{
             foreach ( RogueSharp.Cell cell in DungeonMap.GetAllCells() )
                 if (cell.IsWalkable){
                     //insert door generation here
-                    /*DOOR KERNELS
+                    /*DOOR KERNELS IMPLEMENTATION
                     -----------
                     *d*
                     ...
