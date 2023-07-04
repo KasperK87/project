@@ -4,14 +4,17 @@ using RogueSharp;
 using SadConsole;
 //using SadRogue.Primitives;
 using Console = SadConsole.Console;
+using TileType = ResidentSurvivor.TileType;
 
 namespace RogueSharpSadConsoleSamples.Core
 {
     public class DungeonMap : Map{
         public List<Rectangle> Rooms;
+        public List<ResidentSurvivor.Door> Doors;
 
         public DungeonMap(){
             Rooms = new List<Rectangle>();
+            Doors = new List<ResidentSurvivor.Door>();
         }
 
         /*
@@ -66,10 +69,11 @@ namespace RogueSharpSadConsoleSamples.Core
          {
             if ( cell.IsWalkable )
             {
-                map.SetBackground(cell.X, cell.Y, SadRogue.Primitives.Color.Blue);              
-                //map.SetGlyph(cell.X, cell.Y,100);
-                
-               //console.CellData.SetCharacter( cell.X, cell.Y, '.', Colors.FloorFov, Colors.FloorBackgroundFov );
+                map.SetGlyph(cell.X, cell.Y, (int) TileType.Floor);
+               
+                map.SetBackground(cell.X, cell.Y, SadRogue.Primitives.Color.Blue);  
+              
+                //console.CellData.SetCharacter( cell.X, cell.Y, '.', Colors.FloorFov, Colors.FloorBackgroundFov );
             }
             else
             {

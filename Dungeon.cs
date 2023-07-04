@@ -4,10 +4,21 @@ using SadRogue.Primitives;
 using Console = SadConsole.Console;
 
 namespace ResidentSurvivor{
+    enum TileType : int{
+        Empty = 38,
+        Player = 1,
+        Rat = 376,
+        Floor = 27,
+        Wall,
+        Door = 96,
+        DoorOpen = 97,
+        UpStairs,
+        DownStairs
+    }
     public class Dungeon : Console {
         public UInt64 turn;
         private static GameObject player = new GameObject(
-                Color.White, Color.Blue, 1, 100);
+                Color.White, Color.Blue, (int) TileType.Player, 100);
 
         public RogueSharpSadConsoleSamples.Core.DungeonMap DungeonMap;
 
@@ -16,13 +27,13 @@ namespace ResidentSurvivor{
 
         public static RogueSharp.Random.IRandom? Random { get; private set; }
 
+        //MapGenerator not used, but could be used to generate maps in the future
         //int width, int height, int maxRooms, int roomMaxSize, int roomMinSize, int level
         RogueSharpSadConsoleSamples.Systems.MapGenerator
             mapGenerator = new RogueSharpSadConsoleSamples.Systems.MapGenerator(
                 120,40, 10, 10, 5, 1);
 
         public SadConsole.Entities.Manager entityManager;
-        
 
         public Dungeon(int w, int h) : base( w, h){
             //sets current turn:
@@ -38,44 +49,77 @@ namespace ResidentSurvivor{
             IsVisible = true;
             UseMouse = true;
 
-            //create dungeon
+            //Create dungeon
             //DungeonMap = mapGenerator.CreateMap();
             int seed = (int) DateTime.UtcNow.Ticks;
             Random = new RogueSharp.Random.DotNetRandom( seed );
 
+            //Temporarily using RogueSharp's RandomRoomsMapCreationStrategy
             RogueSharp.MapCreation.IMapCreationStrategy<RogueSharpSadConsoleSamples.Core.DungeonMap> mapCreationStrategy =
                 new RogueSharp.MapCreation.RandomRoomsMapCreationStrategy<RogueSharpSadConsoleSamples.Core.DungeonMap>( 80, 29, 100, 7, 3 );
             DungeonMap = mapCreationStrategy.CreateMap();
 
             
 
-            //create player & populate dungeon
+            //create player, populate and decorate dungeon
             SadComponents.Add(entityManager);
 
             //creates player to remove annoying could be null warnings
             player = new GameObject(
-                Color.White, Color.Blue, 1, 100);
+                Color.White, Color.Blue, (int) TileType.Player, 100);
 
             foreach ( RogueSharp.Cell cell in DungeonMap.GetAllCells() )
                 if (cell.IsWalkable){
+                    //insert door generation here
+                    /*DOOR KERNELS
+                    -----------
+                    *d*
+                    ...
+                    -----------
+                    .*
+                    .d
+                    .*
+                    -----------
+                    */
+                    if ((!DungeonMap.GetCell(cell.X-1, cell.Y).IsWalkable && DungeonMap.GetCell(cell.X, cell.Y).IsWalkable &&
+                        !DungeonMap.GetCell(cell.X+1, cell.Y).IsWalkable && DungeonMap.GetCell(cell.X-1, cell.Y+1).IsWalkable &&
+                        DungeonMap.GetCell(cell.X, cell.Y+1).IsWalkable && DungeonMap.GetCell(cell.X+1, cell.Y+1).IsWalkable) ||
+                        (DungeonMap.GetCell(cell.X-1, cell.Y-1).IsWalkable && !DungeonMap.GetCell(cell.X, cell.Y-1).IsWalkable &&
+                        DungeonMap.GetCell(cell.X-1, cell.Y).IsWalkable && DungeonMap.GetCell(cell.X, cell.Y).IsWalkable &&
+                        DungeonMap.GetCell(cell.X-1, cell.Y+1).IsWalkable && !DungeonMap.GetCell(cell.X, cell.Y+1).IsWalkable))               
+                    {
+                        if (Random.Next(100) < 33){
+                        DungeonMap.SetCellProperties(cell.X, cell.Y, false, true, false);
+
+                        Door door = new Door(
+                            Color.White, Color.Transparent, (int) TileType.Door, 98, DungeonMap);
+
+                        door.Position = new Point(cell.X,cell.Y);
+
+                        entityManager.Add(door);     
+                        }
+                    }
+
                     CreatePlayer(cell.X, cell.Y);
                     //break;
 
                     if (Random.Next(100) == 0){
-                        SadConsole.Entities.Entity rat = new SadConsole.Entities.Entity(
-                            Color.White, Color.Transparent, 100, 99);
+                        GameObject rat = new GameObject(
+                            Color.White, Color.Transparent, (int) TileType.Rat, 99);
 
                         rat.Position = new Point(cell.X,cell.Y);
+                        rat.Walkable = false;
 
                         var entity = new IComponent_Entity(rat, 1, 1, 1, 1);
 
                         rat.SadComponents.Add(entity);
                         rat.SadComponents.Add(new IComponent_Hostile(rat, entity));
-                        entityManager.Add(rat);
+                         entityManager.Add(rat);
                     }
                 }
  
             player.SadComponents.Add(new IComponent_Entity(player, 10, 10, 1, 1));
+            player.isPlayer = true;
             this.SadComponents.Add(new IComponent_PlayerControls(player, this));
 
             //System.Console.WriteLine(this.GetSadComponent<IComponent_PlayerControls>().followingPath);
@@ -100,8 +144,8 @@ namespace ResidentSurvivor{
         private static void CreatePlayer(int x, int y)
         {
             player = new GameObject(
-                Color.White, Color.Blue, 1, 100);
-
+                Color.White, Color.Transparent, (int) TileType.Player, 100);
+            player.Walkable = false;
             player.Position = new Point(x,y);
         }
 
@@ -198,32 +242,6 @@ namespace ResidentSurvivor{
                 this.SetBackground(_cells.Start.X, _cells.Start.Y, Color.Blue);
             }
         }
-    
-        //should be moved into a player component
-        /*
-        private void followPath(){
-            if ( _cells != null && timer >= TimeSpan.FromMilliseconds(100))
-            {
-                timer = TimeSpan.Zero;
-                try {
-                    //_cells.TryStepForward();
-                    _cells.StepForward();
-                    System.Console.WriteLine(_cells.CurrentStep.X +"," + _cells.CurrentStep.Y);
-                    if (GetMonsterAt(_cells.CurrentStep.X, _cells.CurrentStep.Y) != null){
-                        throw new RogueSharp.NoMoreStepsException();
-                    } else {
-                        player.Position = new SadRogue.Primitives.Point(_cells.CurrentStep.X, _cells.CurrentStep.Y);                  
-                        pathXtoY(_cells.End.X, _cells.End.Y);
-                        turn++;
-                    }
-                } catch (RogueSharp.NoMoreStepsException) {
-                    _cells = null;
-                    GetSadComponent<IComponent_PlayerControls>().followingPath = false;
-                }
-            }
-        }
-        */
-        
 
         //This is not optimal, might be very buggy
         public SadConsole.Entities.Entity GetMonsterAt( int x, int y ){

@@ -144,8 +144,16 @@ namespace ResidentSurvivor{
                         Game.UIManager.newWorld.pathXtoY(mouseLoc.X, mouseLoc.Y);
                     } else {
                         System.Console.WriteLine("Player Attack");
-                        
-                        monster.GetSadComponent<IComponent_Entity>().currHP -= parent.GetSadComponent<IComponent_Entity>().damage;
+                        if (monster.GetSadComponent<IComponent_Entity>() != null){
+                            monster.GetSadComponent<IComponent_Entity>().currHP -= parent.GetSadComponent<IComponent_Entity>().damage;
+                        } else {
+                            GameObject gameobj = (GameObject)monster;
+                            if (gameobj.Walkable){
+                                parent.Position = newPosition;
+                            } else {
+                                gameobj.Interact();
+                            }
+                        }
                     }
                     preKeyDown = keyHit;
                     //World instance should control turn progression

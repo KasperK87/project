@@ -1,9 +1,9 @@
 {
   "$type": "SadConsole.SadFont, SadConsole",
-  "FilePath": "Monsters2.png",
+  "FilePath": "Spritesheet.png",
   "GlyphHeight": 24,
   "GlyphPadding": 0,
   "GlyphWidth": 16,
   "Name": "test",
-  "SolidGlyphIndex": 19
+  "SolidGlyphIndex": 76
 }

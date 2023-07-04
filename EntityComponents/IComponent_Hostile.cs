@@ -45,7 +45,15 @@ namespace ResidentSurvivor{
                         parent.Position = new SadRogue.Primitives.Point(_cells.CurrentStep.X, _cells.CurrentStep.Y);     
                     } else {
                         System.Console.WriteLine("Monster Attack!!!");
-                        Attack(monster);
+                        GameObject gameobj = (GameObject)monster;
+                        if (gameobj.Walkable){
+                            parent.Position = new SadRogue.Primitives.Point(_cells.CurrentStep.X, _cells.CurrentStep.Y);;
+                        } else if (gameobj.isPlayer){
+                            Attack(monster);
+                        } else {
+                            gameobj.Interact();
+                        }
+                        
                     }             
                 } catch (RogueSharp.NoMoreStepsException) {
                     _cells = null;
@@ -55,9 +63,13 @@ namespace ResidentSurvivor{
         }
 
         public void Attack(SadConsole.Entities.Entity target){
-            
-            target.GetSadComponent<IComponent_Entity>().currHP -= parent.GetSadComponent<IComponent_Entity>().damage; ;
-            //System.Console.WriteLine("Monster Attack!!!");
+            if (target.GetSadComponent<IComponent_Entity>() != null){
+                target.GetSadComponent<IComponent_Entity>().currHP -= parent.GetSadComponent<IComponent_Entity>().damage; ;
+            } else {
+                GameObject obj = (GameObject)target;
+                obj.Interact();
+            }
+            System.Console.WriteLine("Monster Attack!!!");
         }
     }
 }
