@@ -72,8 +72,10 @@ namespace ResidentSurvivor{
                 if (cell.IsWalkable){
                     //insert door generation here
                     if (Random.Next(100) == 0){
+                        DungeonMap.SetCellProperties(cell.X, cell.Y, false, true, false);
+
                         Door door = new Door(
-                            Color.White, Color.Transparent, (int) TileType.Door, 98);
+                            Color.White, Color.Transparent, (int) TileType.Door, 98, DungeonMap);
 
                         door.Position = new Point(cell.X,cell.Y);
 
