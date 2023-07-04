@@ -69,6 +69,11 @@ namespace RogueSharpSadConsoleSamples.Core
          {
             if ( cell.IsWalkable )
             {
+               /*
+               if (!map.GetGlyph(cell.X, cell.Y-1).Equals((int) TileType.Floor))
+                    map.SetGlyph(cell.X, cell.Y-1, (int) TileType.Wall);
+               */
+               
                 map.SetGlyph(cell.X, cell.Y, (int) TileType.Floor);
                
                 map.SetBackground(cell.X, cell.Y, SadRogue.Primitives.Color.Blue);  
