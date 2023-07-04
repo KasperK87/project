@@ -69,12 +69,9 @@ namespace RogueSharpSadConsoleSamples.Core
          {
             if ( cell.IsWalkable )
             {
+               //TODO: should be done in generate map
                if (GetCell(cell.X, cell.Y).IsWalkable && !GetCell(cell.X, cell.Y-1).IsWalkable)
-                    map.SetGlyph(cell.X, cell.Y-1, (int) TileType.Wall);
-               /*
-               if (!map.GetGlyph(cell.X, cell.Y-1).Equals((int) TileType.Floor))
-                    map.SetGlyph(cell.X, cell.Y-1, (int) TileType.Wall);
-               */
+                  map.SetGlyph(cell.X, cell.Y-1, (int) TileType.Wall);
                
                 map.SetGlyph(cell.X, cell.Y, (int) TileType.Floor);
                
@@ -84,9 +81,16 @@ namespace RogueSharpSadConsoleSamples.Core
             }
             else
             {
-
-                map.SetBackground(cell.X, cell.Y, SadRogue.Primitives.Color.Red);
-                map.SetGlyph(cell.X, cell.Y, (int) TileType.Solid);
+               //TODO: should be done in generate map
+               map.SetBackground(cell.X, cell.Y, SadRogue.Primitives.Color.Red);
+               if (cell.Y+1 < map.Height)
+                  if (GetCell(cell.X, cell.Y+1).IsWalkable && !GetCell(cell.X, cell.Y).IsWalkable)
+                     map.SetGlyph(cell.X, cell.Y, (int) TileType.Wall);
+                  else
+                     map.SetGlyph(cell.X, cell.Y, (int) TileType.Solid);
+               else
+                  map.SetGlyph(cell.X, cell.Y, (int) TileType.Solid);
+               
             }
          }
          else
