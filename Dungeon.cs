@@ -71,7 +71,24 @@ namespace ResidentSurvivor{
             foreach ( RogueSharp.Cell cell in DungeonMap.GetAllCells() )
                 if (cell.IsWalkable){
                     //insert door generation here
-                    if (Random.Next(100) == 0){
+                    /*DOOR KERNELS
+                    -----------
+                    *d*
+                    ...
+                    -----------
+                    .*
+                    .d
+                    .*
+                    -----------
+                    */
+                    if ((!DungeonMap.GetCell(cell.X-1, cell.Y).IsWalkable && DungeonMap.GetCell(cell.X, cell.Y).IsWalkable &&
+                        !DungeonMap.GetCell(cell.X+1, cell.Y).IsWalkable && DungeonMap.GetCell(cell.X-1, cell.Y+1).IsWalkable &&
+                        DungeonMap.GetCell(cell.X, cell.Y+1).IsWalkable && DungeonMap.GetCell(cell.X+1, cell.Y+1).IsWalkable) ||
+                        (DungeonMap.GetCell(cell.X-1, cell.Y-1).IsWalkable && !DungeonMap.GetCell(cell.X, cell.Y-1).IsWalkable &&
+                        DungeonMap.GetCell(cell.X-1, cell.Y).IsWalkable && DungeonMap.GetCell(cell.X, cell.Y).IsWalkable &&
+                        DungeonMap.GetCell(cell.X-1, cell.Y+1).IsWalkable && !DungeonMap.GetCell(cell.X, cell.Y+1).IsWalkable))               
+                    {
+                        if (Random.Next(100) < 33){
                         DungeonMap.SetCellProperties(cell.X, cell.Y, false, true, false);
 
                         Door door = new Door(
@@ -80,6 +97,7 @@ namespace ResidentSurvivor{
                         door.Position = new Point(cell.X,cell.Y);
 
                         entityManager.Add(door);     
+                        }
                     }
 
                     CreatePlayer(cell.X, cell.Y);
