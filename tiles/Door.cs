@@ -13,7 +13,6 @@ namespace ResidentSurvivor
             base(c1, c2, SetGlyph, zIndex){
                 this.Name = "Door";
                 this.Walkable = false;
-                this.Symbol = '+';
                 this.IsOpen = false;
 
                 hostDungeon = setDungeon;
