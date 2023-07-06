@@ -18,7 +18,7 @@ namespace ResidentSurvivor{
     }
     public class Dungeon : Console {
         public UInt64 turn;
-        public int currentLevel = 1;
+        public int currentLevel = 0;
         private static GameObject player = new GameObject(
                 Color.White, Color.Blue, (int) TileType.Player, 100);
 
@@ -61,9 +61,8 @@ namespace ResidentSurvivor{
             //Temporarily using RogueSharp's RandomRoomsMapCreationStrategy
             RogueSharp.MapCreation.IMapCreationStrategy<RogueSharpSadConsoleSamples.Core.DungeonMap> mapCreationStrategy =
                 new RogueSharp.MapCreation.RandomRoomsMapCreationStrategy<RogueSharpSadConsoleSamples.Core.DungeonMap>( 80, 29, 100, 7, 3 );
-            DungeonMap[currentLevel] = mapCreationStrategy.CreateMap();
-
-            
+            DungeonMap[0] = mapCreationStrategy.CreateMap();
+            DungeonMap[1] = mapCreationStrategy.CreateMap();
 
             //create player, populate and decorate dungeon
             SadComponents.Add(entityManager);

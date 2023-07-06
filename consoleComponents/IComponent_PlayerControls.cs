@@ -124,6 +124,13 @@ namespace ResidentSurvivor{
             {
                 keyHit = true;
             }
+
+            //DEBUG
+            if (info.IsKeyPressed(SadConsole.Input.Keys.Q))
+            {
+                //ternary operator, you can switch between levels
+                Game.UIManager.newWorld.currentLevel = Game.UIManager.newWorld.currentLevel == 1 ? 0 : 1;
+            }
             
             if(preKeyDown && keyHit && Game.UIManager.newWorld.timer >= TimeSpan.FromMilliseconds(500)+timeStampRun){
                 run = true;
