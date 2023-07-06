@@ -18,10 +18,11 @@ namespace ResidentSurvivor{
     }
     public class Dungeon : Console {
         public UInt64 turn;
+        public int currentLevel = 1;
         private static GameObject player = new GameObject(
                 Color.White, Color.Blue, (int) TileType.Player, 100);
 
-        public RogueSharpSadConsoleSamples.Core.DungeonMap DungeonMap;
+        public RogueSharpSadConsoleSamples.Core.DungeonMap[] DungeonMap;
 
         //will be refactored away
         public TimeSpan timer;
@@ -55,10 +56,12 @@ namespace ResidentSurvivor{
             int seed = (int) DateTime.UtcNow.Ticks;
             Random = new RogueSharp.Random.DotNetRandom( seed );
 
+            DungeonMap = new RogueSharpSadConsoleSamples.Core.DungeonMap[16];
+
             //Temporarily using RogueSharp's RandomRoomsMapCreationStrategy
             RogueSharp.MapCreation.IMapCreationStrategy<RogueSharpSadConsoleSamples.Core.DungeonMap> mapCreationStrategy =
                 new RogueSharp.MapCreation.RandomRoomsMapCreationStrategy<RogueSharpSadConsoleSamples.Core.DungeonMap>( 80, 29, 100, 7, 3 );
-            DungeonMap = mapCreationStrategy.CreateMap();
+            DungeonMap[currentLevel] = mapCreationStrategy.CreateMap();
 
             
 
@@ -69,7 +72,7 @@ namespace ResidentSurvivor{
             player = new GameObject(
                 Color.White, Color.Blue, (int) TileType.Player, 100);
 
-            foreach ( RogueSharp.Cell cell in DungeonMap.GetAllCells() )
+            foreach ( RogueSharp.Cell cell in DungeonMap[currentLevel].GetAllCells() )
                 if (cell.IsWalkable){
                     //insert door generation here
                     /*DOOR KERNELS IMPLEMENTATION
@@ -82,18 +85,18 @@ namespace ResidentSurvivor{
                     .*
                     -----------
                     */
-                    if ((!DungeonMap.GetCell(cell.X-1, cell.Y).IsWalkable && DungeonMap.GetCell(cell.X, cell.Y).IsWalkable &&
-                        !DungeonMap.GetCell(cell.X+1, cell.Y).IsWalkable && DungeonMap.GetCell(cell.X-1, cell.Y+1).IsWalkable &&
-                        DungeonMap.GetCell(cell.X, cell.Y+1).IsWalkable && DungeonMap.GetCell(cell.X+1, cell.Y+1).IsWalkable) ||
-                        (DungeonMap.GetCell(cell.X-1, cell.Y-1).IsWalkable && !DungeonMap.GetCell(cell.X, cell.Y-1).IsWalkable &&
-                        DungeonMap.GetCell(cell.X-1, cell.Y).IsWalkable && DungeonMap.GetCell(cell.X, cell.Y).IsWalkable &&
-                        DungeonMap.GetCell(cell.X-1, cell.Y+1).IsWalkable && !DungeonMap.GetCell(cell.X, cell.Y+1).IsWalkable))               
+                    if ((!DungeonMap[currentLevel].GetCell(cell.X-1, cell.Y).IsWalkable && DungeonMap[currentLevel].GetCell(cell.X, cell.Y).IsWalkable &&
+                        !DungeonMap[currentLevel].GetCell(cell.X+1, cell.Y).IsWalkable && DungeonMap[currentLevel].GetCell(cell.X-1, cell.Y+1).IsWalkable &&
+                        DungeonMap[currentLevel].GetCell(cell.X, cell.Y+1).IsWalkable && DungeonMap[currentLevel].GetCell(cell.X+1, cell.Y+1).IsWalkable) ||
+                        (DungeonMap[currentLevel].GetCell(cell.X-1, cell.Y-1).IsWalkable && !DungeonMap[currentLevel].GetCell(cell.X, cell.Y-1).IsWalkable &&
+                        DungeonMap[currentLevel].GetCell(cell.X-1, cell.Y).IsWalkable && DungeonMap[currentLevel].GetCell(cell.X, cell.Y).IsWalkable &&
+                        DungeonMap[currentLevel].GetCell(cell.X-1, cell.Y+1).IsWalkable && !DungeonMap[currentLevel].GetCell(cell.X, cell.Y+1).IsWalkable))               
                     {
                         if (Random.Next(100) < 33){
-                        DungeonMap.SetCellProperties(cell.X, cell.Y, false, true, false);
+                        DungeonMap[currentLevel].SetCellProperties(cell.X, cell.Y, false, true, false);
 
                         Door door = new Door(
-                            Color.White, Color.Transparent, (int) TileType.Door, 98, DungeonMap);
+                            Color.White, Color.Transparent, (int) TileType.Door, 98, DungeonMap[currentLevel]);
 
                         door.Position = new Point(cell.X,cell.Y);
 
@@ -158,7 +161,7 @@ namespace ResidentSurvivor{
             this.IsFocused = true;
             timer += delta;
               
-            DungeonMap.UpdatePlayerFieldOfView(player);
+            DungeonMap[currentLevel].UpdatePlayerFieldOfView(player);
 
             //removed as the level shouldn't know if the player is following a path
             //if (GetSadComponent<IComponent_PlayerControls>().followingPath) followPath();
@@ -179,7 +182,7 @@ namespace ResidentSurvivor{
 
             this.Clear();
 
-            DungeonMap.Draw(this);
+            DungeonMap[currentLevel].Draw(this);
 
             drawPath();
 
@@ -202,14 +205,14 @@ namespace ResidentSurvivor{
         //should be renamed to better reflex use:
         //player move to point
         public void pathXtoY(int destX, int destY){
-            if (player != null && DungeonMap.GetCell(destX, destY).IsWalkable){
+            if (player != null && DungeonMap[currentLevel].GetCell(destX, destY).IsWalkable){
               
             RogueSharp.PathFinder _pathFinder;
-            _pathFinder = new RogueSharp.PathFinder( DungeonMap );
+            _pathFinder = new RogueSharp.PathFinder( DungeonMap[currentLevel] );
 
-            _cells = _pathFinder.ShortestPath( DungeonMap.GetCell
+            _cells = _pathFinder.ShortestPath( DungeonMap[currentLevel].GetCell
                 (player.Position.X, player.Position.Y),
-                DungeonMap.GetCell( destX, destY ) );
+                DungeonMap[currentLevel].GetCell( destX, destY ) );
             
             }
 
@@ -218,12 +221,12 @@ namespace ResidentSurvivor{
         //gives the path to the player from a point
          public RogueSharp.Path? pathToPlayerFrom(int origX, int origY){
             RogueSharp.PathFinder _pathFinder;
-            _pathFinder = new RogueSharp.PathFinder( DungeonMap );
+            _pathFinder = new RogueSharp.PathFinder( DungeonMap[currentLevel] );
 
             try {
-            return _pathFinder.ShortestPath( DungeonMap.GetCell
+            return _pathFinder.ShortestPath( DungeonMap[currentLevel].GetCell
                 (origX, origY),
-                DungeonMap.GetCell( player.Position.X, player.Position.Y) );
+                DungeonMap[currentLevel].GetCell( player.Position.X, player.Position.Y) );
             } catch (RogueSharp.NoMoreStepsException) { 
                 return null;
             }
@@ -255,6 +258,10 @@ namespace ResidentSurvivor{
             return (GameObject?)entityManager.Entities.FirstOrDefault( m => m.Position.X == x && 
                     m.Position.Y == y );
             */
+        }
+
+        public RogueSharpSadConsoleSamples.Core.DungeonMap GetDungeonMap(){
+            return DungeonMap[currentLevel];
         }
     }
 

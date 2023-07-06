@@ -136,7 +136,7 @@ namespace ResidentSurvivor{
             if ((keyHit && !preKeyDown && !followingPath) || run)
             {
                 // Check if the new position is valid
-                if (Game.UIManager.newWorld.Surface.Area.Contains(newPosition) && Game.UIManager.newWorld.DungeonMap.GetCell(newPosition.X, newPosition.Y).IsWalkable){
+                if (Game.UIManager.newWorld.Surface.Area.Contains(newPosition) && Game.UIManager.newWorld.GetDungeonMap().GetCell(newPosition.X, newPosition.Y).IsWalkable){
                     //check is there is a monster
                     var monster = Game.UIManager.newWorld.GetMonsterAt(newPosition.X, newPosition.Y);
                     if (monster == null || parent.Position == newPosition){

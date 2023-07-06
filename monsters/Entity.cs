@@ -31,7 +31,7 @@ namespace ResidentSurvivor {
         }
 
         public override void Update(TimeSpan delta){
-            if (!Game.UIManager.newWorld.DungeonMap.IsInFov(this.Position.X, this.Position.Y)){
+            if (!!Game.UIManager.newWorld.GetDungeonMap().IsInFov(this.Position.X, this.Position.Y)){
                 //this.Appearance.Glyph = 0;
                 this.Appearance.Foreground = SadRogue.Primitives.Color.Transparent;
             } else {
