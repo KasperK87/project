@@ -22,7 +22,7 @@ namespace ResidentSurvivor{
         public override void Update(SadConsole.IScreenObject p, TimeSpan delta){
             if (currHP < 1){
                 //this.Appearance.Foreground = SadRogue.Primitives.Color.Transparent;  
-                Game.UIManager.newWorld.entityManager.Remove(parent);
+                Game.UIManager.newWorld.GetEntityManager().Remove(parent);
                 System.Console.WriteLine("rat dead");
             }
 
