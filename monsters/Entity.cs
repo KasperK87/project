@@ -30,9 +30,6 @@ namespace ResidentSurvivor {
             base.Render(delta);
         }
 
-        //the following code only effects doors, but not 
-        //monsters, for some reason... should figure out 
-        //why
         public override void Update(TimeSpan delta){
             if (!Game.UIManager.newWorld.GetDungeonMap().IsInFov(this.Position.X, this.Position.Y) && 
                 !Game.UIManager.newWorld.GetDungeonMap().IsExplored(this.Position.X, this.Position.Y)){
@@ -41,6 +38,16 @@ namespace ResidentSurvivor {
             } else {
                 this.Appearance.Foreground = SadRogue.Primitives.Color.White;
             }
+    
+            //This allows us to use the render function,
+            //but it shouldn't be needed
+            //for some reason render component are not called.
+            /*
+            foreach (SadConsole.Components.IComponent obj in this.SadComponents){
+                obj.Update(this, delta);
+                //obj.Render(this, delta);
+            }
+            */
 
             if (currHP < 1){
                 this.Appearance.Foreground = SadRogue.Primitives.Color.Transparent;   
