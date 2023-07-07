@@ -18,13 +18,11 @@ namespace ResidentSurvivor{
     }
     public class Dungeon : Console {
         public UInt64 turn;
-        
+        public int currentLevel = 0;
         private static GameObject player = new GameObject(
                 Color.White, Color.Blue, (int) TileType.Player, 100);
 
-        public int currentLevel = 0;
         public RogueSharpSadConsoleSamples.Core.DungeonMap[] DungeonMap;
-        public SadConsole.Entities.Manager[] entityManager;
 
         //will be refactored away
         public TimeSpan timer;
@@ -37,9 +35,13 @@ namespace ResidentSurvivor{
             mapGenerator = new RogueSharpSadConsoleSamples.Systems.MapGenerator(
                 120,40, 10, 10, 5, 1);
 
+        public SadConsole.Entities.Manager entityManager;
+
         public Dungeon(int w, int h) : base( w, h){
             //sets current turn:
             turn = 0;
+
+            entityManager = new SadConsole.Entities.Manager();
 
             //referenced in playerController
             timer = TimeSpan.Zero;
@@ -55,9 +57,7 @@ namespace ResidentSurvivor{
             Random = new RogueSharp.Random.DotNetRandom( seed );
 
             DungeonMap = new RogueSharpSadConsoleSamples.Core.DungeonMap[16];
-            entityManager = new SadConsole.Entities.Manager[16];
 
-            entityManager[0] = new SadConsole.Entities.Manager();
             //Temporarily using RogueSharp's RandomRoomsMapCreationStrategy
             RogueSharp.MapCreation.IMapCreationStrategy<RogueSharpSadConsoleSamples.Core.DungeonMap> mapCreationStrategy =
                 new RogueSharp.MapCreation.RandomRoomsMapCreationStrategy<RogueSharpSadConsoleSamples.Core.DungeonMap>( 80, 29, 100, 7, 3 );
@@ -65,7 +65,7 @@ namespace ResidentSurvivor{
             DungeonMap[1] = mapCreationStrategy.CreateMap();
 
             //create player, populate and decorate dungeon
-            SadComponents.Add(entityManager[currentLevel]);
+            SadComponents.Add(entityManager);
 
             //creates player to remove annoying could be null warnings
             player = new GameObject(
@@ -99,7 +99,7 @@ namespace ResidentSurvivor{
 
                         door.Position = new Point(cell.X,cell.Y);
 
-                        entityManager[currentLevel].Add(door);     
+                        entityManager.Add(door);     
                         }
                     }
 
@@ -117,7 +117,7 @@ namespace ResidentSurvivor{
 
                         rat.SadComponents.Add(entity);
                         rat.SadComponents.Add(new IComponent_Hostile(rat, entity));
-                         entityManager[currentLevel].Add(rat);
+                         entityManager.Add(rat);
                     }
                 }
  
@@ -127,7 +127,7 @@ namespace ResidentSurvivor{
 
             //System.Console.WriteLine(this.GetSadComponent<IComponent_PlayerControls>().followingPath);
             
-            entityManager[currentLevel].Add(player);
+            entityManager.Add(player);
 
             //doesn't work, call from update loop instead 
             //entityManager.DoEntityUpdate = true;
@@ -166,7 +166,7 @@ namespace ResidentSurvivor{
             //if (GetSadComponent<IComponent_PlayerControls>().followingPath) followPath();
 
             //updates all entities (GameObject player)
-            entityManager[currentLevel].Update(this, delta);
+            entityManager.Update(this, delta);
 
             //View.WithCenter(player.Position);
             
@@ -252,7 +252,7 @@ namespace ResidentSurvivor{
             //could use a try catch block to fix.
             //or remove gameobject class and make a 
             //game object component 
-            return entityManager[currentLevel].GetEntityAtPosition(new Point(x, y));
+            return entityManager.GetEntityAtPosition(new Point(x, y));
             /*
             return (GameObject?)entityManager.Entities.FirstOrDefault( m => m.Position.X == x && 
                     m.Position.Y == y );
@@ -261,9 +261,6 @@ namespace ResidentSurvivor{
 
         public RogueSharpSadConsoleSamples.Core.DungeonMap GetDungeonMap(){
             return DungeonMap[currentLevel];
-        }
-        public SadConsole.Entities.Manager GetEntityManager(){
-            return entityManager[currentLevel];
         }
     }
 
