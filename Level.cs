@@ -142,7 +142,7 @@ namespace ResidentSurvivor{
         }
 
         // Create a player using SadConsole's Entity class
-        private static void CreatePlayer(int x, int y)
+        public static void CreatePlayer(int x, int y)
         {
             player = new GameObject(
                 Color.White, Color.Transparent, (int) TileType.Player, 100);
@@ -151,14 +151,14 @@ namespace ResidentSurvivor{
         }
 
         public GameObject getPlayer(){
-            return player;
+            return (GameObject)GetSadComponent<IComponent_PlayerControls>().parent;
         }
 
         public override void Update(TimeSpan delta){
             this.IsFocused = true;
             timer += delta;
               
-            DungeonMap.UpdatePlayerFieldOfView(player);
+            DungeonMap.UpdatePlayerFieldOfView(GetSadComponent<IComponent_PlayerControls>().parent);
 
             //removed as the level shouldn't know if the player is following a path
             //if (GetSadComponent<IComponent_PlayerControls>().followingPath) followPath();
@@ -168,7 +168,8 @@ namespace ResidentSurvivor{
 
             //View.WithCenter(player.Position);
             
-            this.View = new Rectangle(player.Position.X-20, player.Position.Y-10, 40, 20);
+            this.View = new Rectangle(GetSadComponent<IComponent_PlayerControls>().parent.Position.X-20, 
+                GetSadComponent<IComponent_PlayerControls>().parent.Position.Y-10, 40, 20);
             if (!GetSadComponent<IComponent_PlayerControls>().followingPath){
                 pathXtoY(GetSadComponent<IComponent_PlayerControls>().mouseLoc.X,GetSadComponent<IComponent_PlayerControls>().mouseLoc.Y);
             }
@@ -202,13 +203,14 @@ namespace ResidentSurvivor{
         //should be renamed to better reflex use:
         //player move to point
         public void pathXtoY(int destX, int destY){
-            if (player != null && DungeonMap.GetCell(destX, destY).IsWalkable){
+            if (GetSadComponent<IComponent_PlayerControls>().parent != null && DungeonMap.GetCell(destX, destY).IsWalkable){
               
             RogueSharp.PathFinder _pathFinder;
             _pathFinder = new RogueSharp.PathFinder( DungeonMap);
 
             _cells = _pathFinder.ShortestPath( DungeonMap.GetCell
-                (player.Position.X, player.Position.Y),
+                (GetSadComponent<IComponent_PlayerControls>().parent.Position.X, 
+                    GetSadComponent<IComponent_PlayerControls>().parent.Position.Y),
                 DungeonMap.GetCell( destX, destY ) );
             
             }
@@ -223,7 +225,8 @@ namespace ResidentSurvivor{
             try {
             return _pathFinder.ShortestPath( DungeonMap.GetCell
                 (origX, origY),
-                DungeonMap.GetCell( player.Position.X, player.Position.Y) );
+                DungeonMap.GetCell( GetSadComponent<IComponent_PlayerControls>().parent.Position.X, 
+                    GetSadComponent<IComponent_PlayerControls>().parent.Position.Y) );
             } catch (RogueSharp.NoMoreStepsException) { 
                 return null;
             }

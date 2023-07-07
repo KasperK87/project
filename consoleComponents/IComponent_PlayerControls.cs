@@ -12,7 +12,7 @@ namespace ResidentSurvivor{
 
         //parent objects used to couple the controls of the playrt
         //with the rest of the game
-        private SadConsole.Entities.Entity parent;
+        public SadConsole.Entities.Entity parent;
         Level console;
 
 
@@ -123,6 +123,18 @@ namespace ResidentSurvivor{
             if (info.IsKeyDown(SadConsole.Input.Keys.NumPad5))
             {
                 keyHit = true;
+            }
+
+            //DEBUG
+            if (info.IsKeyPressed(SadConsole.Input.Keys.Q))
+            {
+            Game.Instance.Screen.Children.Remove(Game.UIManager.dungeon.getCurrentLevel());
+
+                //ternary operator, you can switch between levels
+                Game.UIManager.dungeon.setLevel(Game.UIManager.dungeon.currentLevel == 0 ? 1 : 0);
+                Game.UIManager.newWorld = Game.UIManager.dungeon.getCurrentLevel();
+
+                Game.UIManager.Children.Add(Game.UIManager.newWorld);
             }
             
             if(preKeyDown && keyHit && Game.UIManager.newWorld.timer >= TimeSpan.FromMilliseconds(500)+timeStampRun){

@@ -10,6 +10,7 @@ namespace ResidentSurvivor
      // and makes consoles easily addressable from a central place.
 
         public ProcessState currentState;
+        public Dungeon dungeon;
         public Level newWorld;
         public Console? menu;
         public Console statusScreen;
@@ -24,13 +25,10 @@ namespace ResidentSurvivor
             IsVisible = true;
             IsFocused = true;
 
+            //Creating Dungeon
+            dungeon = new Dungeon(2);
             
-            //TODO: Implement as singleton (maybe)
-            newWorld = new Level(80,29);
-            //newWorld.Position = new Point(40,1);
-            newWorld.Position = new Point(21,1);
-            newWorld.DefaultBackground = Color.Black;
-            newWorld.View = new Rectangle(0, 0, 20, 15);
+            newWorld = dungeon.getCurrentLevel();
            
             //this is the main game screen
             this.Children.Add(newWorld);
