@@ -10,7 +10,7 @@ namespace ResidentSurvivor
      // and makes consoles easily addressable from a central place.
 
         public ProcessState currentState;
-        public Dungeon newWorld;
+        public Level newWorld;
         public Console? menu;
         public Console statusScreen;
         public Console massageScreen;
@@ -26,7 +26,7 @@ namespace ResidentSurvivor
 
             
             //TODO: Implement as singleton (maybe)
-            newWorld = new Dungeon(80,29);
+            newWorld = new Level(80,29);
             //newWorld.Position = new Point(40,1);
             newWorld.Position = new Point(21,1);
             newWorld.DefaultBackground = Color.Black;
