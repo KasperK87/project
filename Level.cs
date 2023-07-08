@@ -13,8 +13,8 @@ namespace ResidentSurvivor{
         Solid = 76,
         Door = 96,
         DoorOpen = 97,
-        UpStairs,
-        DownStairs
+        UpStairs = 169,
+        DownStairs = 170
     }
     public class Level : Console {
         public UInt64 turn;
