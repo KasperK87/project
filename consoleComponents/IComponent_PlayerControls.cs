@@ -128,7 +128,7 @@ namespace ResidentSurvivor{
             //DEBUG
             if (info.IsKeyPressed(SadConsole.Input.Keys.Q))
             {
-            Game.Instance.Screen.Children.Remove(Game.UIManager.dungeon.getCurrentLevel());
+                Game.Instance.Screen.Children.Remove(Game.UIManager.dungeon.getCurrentLevel());
 
                 //ternary operator, you can switch between levels
                 Game.UIManager.dungeon.setLevel(Game.UIManager.dungeon.currentLevel == 0 ? 1 : 0);

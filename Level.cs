@@ -92,8 +92,9 @@ namespace ResidentSurvivor{
                         if (Random.Next(100) < 33){
                         DungeonMap.SetCellProperties(cell.X, cell.Y, false, true, false);
 
-                        Door door = new Door(
-                            Color.White, Color.Transparent, (int) TileType.Door, 98, DungeonMap);
+                        //changed too stairs for testing
+                        Stairs door = new Stairs(
+                            Color.White, Color.Transparent, (int) TileType.Door, 98, true);
 
                         door.Position = new Point(cell.X,cell.Y);
 

@@ -26,7 +26,7 @@ namespace ResidentSurvivor
             IsFocused = true;
 
             //Creating Dungeon
-            dungeon = new Dungeon(2);
+            dungeon = new Dungeon(16);
             
             newWorld = dungeon.getCurrentLevel();
            
