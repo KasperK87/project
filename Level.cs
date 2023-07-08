@@ -93,8 +93,8 @@ namespace ResidentSurvivor{
                         DungeonMap.SetCellProperties(cell.X, cell.Y, false, true, false);
 
                         //changed too stairs for testing
-                        Stairs door = new Stairs(
-                            Color.White, Color.Transparent, (int) TileType.Door, 98, true);
+                        Door door = new Door(
+                            Color.White, Color.Transparent, (int) TileType.Door, 98, DungeonMap);
 
                         door.Position = new Point(cell.X,cell.Y);
 
