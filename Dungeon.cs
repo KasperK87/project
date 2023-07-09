@@ -24,16 +24,17 @@ namespace ResidentSurvivor{
         }
 
         public void setLevel(int setLevel){
-            
-            //transfer player
-            levels[setLevel].GetSadComponent<IComponent_PlayerControls>().parent = levels[currentLevel].getPlayer();
+            if (setLevel >= 0 && setLevel <= depth){
+                //transfer player
+                levels[setLevel].GetSadComponent<IComponent_PlayerControls>().parent = levels[currentLevel].getPlayer();
 
-            //levels[setLevel].entityManager.Remove(levels[currentLevel].GetSadComponent<IComponent_PlayerControls>().parent);
-            levels[setLevel].entityManager.Remove(levels[currentLevel].getPlayer());
-            levels[setLevel].entityManager.Add(levels[setLevel].GetSadComponent<IComponent_PlayerControls>().parent);
-            
-            
-            currentLevel = setLevel;
+                //levels[setLevel].entityManager.Remove(levels[currentLevel].GetSadComponent<IComponent_PlayerControls>().parent);
+                levels[setLevel].entityManager.Remove(levels[currentLevel].getPlayer());
+                levels[setLevel].entityManager.Add(levels[setLevel].GetSadComponent<IComponent_PlayerControls>().parent);
+                
+                
+                currentLevel = setLevel;
+            }
         }
             
         public Level getCurrentLevel(){

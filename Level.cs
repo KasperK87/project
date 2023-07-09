@@ -223,11 +223,15 @@ namespace ResidentSurvivor{
               
             RogueSharp.PathFinder _pathFinder;
             _pathFinder = new RogueSharp.PathFinder( DungeonMap);
-
+            
+            try{
             _cells = _pathFinder.ShortestPath( DungeonMap.GetCell
                 (GetSadComponent<IComponent_PlayerControls>().parent.Position.X, 
                     GetSadComponent<IComponent_PlayerControls>().parent.Position.Y),
                 DungeonMap.GetCell( destX, destY ) );
+            } catch (RogueSharp.PathNotFoundException) { 
+                _cells = null;
+            }
             
             }
 
