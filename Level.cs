@@ -21,7 +21,7 @@ namespace ResidentSurvivor{
         private static GameObject player = new GameObject(
                 Color.White, Color.Blue, (int) TileType.Player, 100);
 
-        public RogueSharpSadConsoleSamples.Core.DungeonMap DungeonMap;
+        private RogueSharpSadConsoleSamples.Core.DungeonMap DungeonMap;
 
         //will be refactored away
         public TimeSpan timer;
@@ -68,6 +68,9 @@ namespace ResidentSurvivor{
             //creates player to remove annoying could be null warnings
             player = new GameObject(
                 Color.White, Color.Blue, (int) TileType.Player, 100);
+
+            // List of valid locations where stairs can be placed
+            List<RogueSharp.Point> stairsLocations = new List<RogueSharp.Point>();
 
             foreach ( RogueSharp.Cell cell in DungeonMap.GetAllCells() )
                 if (cell.IsWalkable){
@@ -124,17 +127,39 @@ namespace ResidentSurvivor{
                         (DungeonMap.GetCell(cell.X-1, cell.Y-1).IsWalkable && !DungeonMap.GetCell(cell.X, cell.Y-1).IsWalkable &&
                         DungeonMap.GetCell(cell.X-1, cell.Y).IsWalkable && !DungeonMap.GetCell(cell.X, cell.Y).IsWalkable &&
                         DungeonMap.GetCell(cell.X-1, cell.Y+1).IsWalkable && !DungeonMap.GetCell(cell.X, cell.Y+1).IsWalkable)){
-                    DungeonMap.SetCellProperties(cell.X, cell.Y, true, true, false);
+                    
+                    stairsLocations.Add( new RogueSharp.Point( cell.X, cell.Y ) );
+                }
+            
+            // Choose Up Stairs location
+            int stairsIndex = Random.Next(stairsLocations.Count);
+            RogueSharp.Point upStairsLocation = stairsLocations[stairsIndex];
+
+            DungeonMap.SetCellProperties(upStairsLocation.X, upStairsLocation.Y, true, true, false);
                     Stairs stairs = new Stairs(
                         Color.White, Color.Transparent, (int) TileType.UpStairs, 98, 
-                        Random.Next(100) < 50 ? true : false);
+                        true);
+                        //Random.Next(100) < 50 ? true : false);
 
-                    stairs.Position = new Point(cell.X,cell.Y);
+                    stairs.Position = new Point(upStairsLocation.X,upStairsLocation.Y);
 
                     entityManager.Add(stairs);
-                }
-                
- 
+            
+            stairsLocations.RemoveAt(stairsIndex);
+            
+            // Choose Down Stairs location
+            RogueSharp.Point downStairsLocation = stairsLocations[Random.Next(stairsLocations.Count-1)];
+
+            DungeonMap.SetCellProperties(downStairsLocation.X, downStairsLocation.Y, true, true, false);
+                    Stairs stairs2 = new Stairs(
+                        Color.White, Color.Transparent, (int) TileType.DownStairs, 98, 
+                        false);
+                        //Random.Next(100) < 50 ? true : false);
+
+                    stairs2.Position = new Point(downStairsLocation.X,downStairsLocation.Y);
+
+                    entityManager.Add(stairs2);
+
             player.SadComponents.Add(new IComponent_Entity(player, 10, 10, 1, 1));
             player.isPlayer = true;
             this.SadComponents.Add(new IComponent_PlayerControls(player, this));
