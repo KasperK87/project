@@ -118,7 +118,22 @@ namespace ResidentSurvivor{
                         rat.SadComponents.Add(new IComponent_Hostile(rat, entity));
                          entityManager.Add(rat);
                     }
+                } // check to generate stairs
+                else if (Random.Next(100) < 101 && cell.X >= 5 && cell.X <= 75 && cell.Y >= 5 && cell.Y <= 25 &&
+                    
+                        (DungeonMap.GetCell(cell.X-1, cell.Y-1).IsWalkable && !DungeonMap.GetCell(cell.X, cell.Y-1).IsWalkable &&
+                        DungeonMap.GetCell(cell.X-1, cell.Y).IsWalkable && !DungeonMap.GetCell(cell.X, cell.Y).IsWalkable &&
+                        DungeonMap.GetCell(cell.X-1, cell.Y+1).IsWalkable && !DungeonMap.GetCell(cell.X, cell.Y+1).IsWalkable)){
+                    DungeonMap.SetCellProperties(cell.X, cell.Y, true, true, false);
+                    Stairs stairs = new Stairs(
+                        Color.White, Color.Transparent, (int) TileType.UpStairs, 98, 
+                        Random.Next(100) < 50 ? true : false);
+
+                    stairs.Position = new Point(cell.X,cell.Y);
+
+                    entityManager.Add(stairs);
                 }
+                
  
             player.SadComponents.Add(new IComponent_Entity(player, 10, 10, 1, 1));
             player.isPlayer = true;

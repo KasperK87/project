@@ -21,14 +21,16 @@ namespace ResidentSurvivor
         public override void Interact()
         {   
             //Mock up code for stairs
-            if(IsUp || !IsUp){
-                Game.Instance.Screen.Children.Remove(Game.UIManager.dungeon.getCurrentLevel());
-                
-                Game.UIManager.dungeon.setLevel(Game.UIManager.dungeon.currentLevel+1);
-                Game.UIManager.newWorld = Game.UIManager.dungeon.getCurrentLevel();
+            Game.Instance.Screen.Children.Remove(Game.UIManager.dungeon.getCurrentLevel());
 
-                Game.UIManager.Children.Add(Game.UIManager.newWorld);
+            if(!IsUp){
+                Game.UIManager.dungeon.setLevel(Game.UIManager.dungeon.currentLevel+1);    
+            } else {
+                Game.UIManager.dungeon.setLevel(Game.UIManager.dungeon.currentLevel-1); 
             }
+
+            Game.UIManager.newWorld = Game.UIManager.dungeon.getCurrentLevel();
+            Game.UIManager.Children.Add(Game.UIManager.newWorld);
             base.Interact();
         }
     }
