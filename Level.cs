@@ -136,7 +136,7 @@ namespace ResidentSurvivor{
                 }
             
             // Choose Up Stairs location
-            int stairsIndex = Random.Next(stairsLocations.Count);
+            int stairsIndex = Random.Next(stairsLocations.Count-1);
             upStairsLocation = stairsLocations[stairsIndex];
 
             DungeonMap.SetCellProperties(upStairsLocation.X, upStairsLocation.Y, true, true, false);
