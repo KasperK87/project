@@ -26,13 +26,11 @@ namespace ResidentSurvivor{
         public void setLevel(int setLevel){
             if (setLevel >= 0 && setLevel <= depth){
                 //transfer player
-                levels[setLevel].GetSadComponent<IComponent_PlayerControls>().parent = levels[currentLevel].getPlayer();
-
-                //levels[setLevel].entityManager.Remove(levels[currentLevel].GetSadComponent<IComponent_PlayerControls>().parent);
-                levels[setLevel].entityManager.Remove(levels[currentLevel].getPlayer());
-                levels[setLevel].entityManager.Add(levels[setLevel].GetSadComponent<IComponent_PlayerControls>().parent);
-                
-                
+                levels[setLevel].playerEnterFromUp(
+                    (GameObject)levels[currentLevel].GetSadComponent<IComponent_PlayerControls>().parent,
+                    currentLevel < setLevel ? true : false
+                );
+        
                 currentLevel = setLevel;
             }
         }

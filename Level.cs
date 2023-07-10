@@ -33,6 +33,10 @@ namespace ResidentSurvivor{
         RogueSharpSadConsoleSamples.Systems.MapGenerator
             mapGenerator = new RogueSharpSadConsoleSamples.Systems.MapGenerator(
                 120,40, 10, 10, 5, 1);
+        
+        RogueSharp.Point downStairsLocation;
+        RogueSharp.Point upStairsLocation;
+
 
         public SadConsole.Entities.Manager entityManager;
 
@@ -133,7 +137,7 @@ namespace ResidentSurvivor{
             
             // Choose Up Stairs location
             int stairsIndex = Random.Next(stairsLocations.Count);
-            RogueSharp.Point upStairsLocation = stairsLocations[stairsIndex];
+            upStairsLocation = stairsLocations[stairsIndex];
 
             DungeonMap.SetCellProperties(upStairsLocation.X, upStairsLocation.Y, true, true, false);
                     Stairs stairs = new Stairs(
@@ -148,7 +152,7 @@ namespace ResidentSurvivor{
             stairsLocations.RemoveAt(stairsIndex);
             
             // Choose Down Stairs location
-            RogueSharp.Point downStairsLocation = stairsLocations[Random.Next(stairsLocations.Count-1)];
+            downStairsLocation = stairsLocations[Random.Next(stairsLocations.Count-1)];
 
             DungeonMap.SetCellProperties(downStairsLocation.X, downStairsLocation.Y, true, true, false);
                     Stairs stairs2 = new Stairs(
@@ -183,12 +187,25 @@ namespace ResidentSurvivor{
         }
 
         // Create a player using SadConsole's Entity class
-        public static void CreatePlayer(int x, int y)
+        private static void CreatePlayer(int x, int y)
         {
             player = new GameObject(
                 Color.White, Color.Transparent, (int) TileType.Player, 100);
             player.Walkable = false;
             player.Position = new Point(x,y);
+        }
+
+        public void playerEnterFromUp(GameObject newPlayer, bool up){
+
+            GetSadComponent<IComponent_PlayerControls>().parent = newPlayer;
+            entityManager.Remove(getPlayer());
+            entityManager.Add(newPlayer);
+
+            if (!up){
+                player.Position = new Point(downStairsLocation.X-1, downStairsLocation.Y);
+            } else {
+                player.Position = new Point(upStairsLocation.X-1, upStairsLocation.Y);
+            }
         }
 
         public GameObject getPlayer(){
