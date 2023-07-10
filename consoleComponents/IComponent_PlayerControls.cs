@@ -50,7 +50,15 @@ namespace ResidentSurvivor{
                     //_cells.TryStepForward();
                     _cells.StepForward();
                     System.Console.WriteLine(_cells.CurrentStep.X +"," + _cells.CurrentStep.Y);
-                    if (console.GetMonsterAt(_cells.CurrentStep.X, _cells.CurrentStep.Y) != null){
+                    GameObject obj = (GameObject)console.GetMonsterAt(_cells.CurrentStep.X, _cells.CurrentStep.Y);
+                    if (obj != null && obj.Walkable){
+                        parent.Position = new SadRogue.Primitives.Point(_cells.CurrentStep.X, _cells.CurrentStep.Y); 
+                    } else if(obj != null){ 
+                        obj.Interact();
+                        System.Console.WriteLine("Player Attack");
+                        if (obj.GetSadComponent<IComponent_Entity>() != null){
+                            obj.GetSadComponent<IComponent_Entity>().currHP -= parent.GetSadComponent<IComponent_Entity>().damage;
+                        }
                         throw new RogueSharp.NoMoreStepsException();
                     } else {
                         parent.Position = new SadRogue.Primitives.Point(_cells.CurrentStep.X, _cells.CurrentStep.Y);                  
