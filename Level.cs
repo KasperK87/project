@@ -105,12 +105,10 @@ namespace ResidentSurvivor{
 
                         door.Position = new Point(cell.X,cell.Y);
 
-                        entityManager.Add(door);     
+                        entityManager.Add(door); 
+                        break;    
                         }
                     }
-
-                    CreatePlayer(cell.X, cell.Y);
-                    //break;
 
                     if (Random.Next(100) == 0){
                         GameObject rat = new GameObject(
@@ -123,8 +121,10 @@ namespace ResidentSurvivor{
 
                         rat.SadComponents.Add(entity);
                         rat.SadComponents.Add(new IComponent_Hostile(rat, entity));
-                         entityManager.Add(rat);
+                        entityManager.Add(rat);
+                        break;
                     }
+                    CreatePlayer(cell.X, cell.Y);
                 } // check to generate stairs
                 else if (Random.Next(100) < 101 && cell.X >= 5 && cell.X <= 75 && cell.Y >= 5 && cell.Y <= 25 &&
                     
