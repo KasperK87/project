@@ -78,6 +78,7 @@ namespace ResidentSurvivor{
 
             foreach ( RogueSharp.Cell cell in DungeonMap.GetAllCells() )
                 if (cell.IsWalkable){
+                    bool isEmpty = true;
                     //insert door generation here
                     /*DOOR KERNELS IMPLEMENTATION
                     -----------
@@ -96,7 +97,7 @@ namespace ResidentSurvivor{
                         DungeonMap.GetCell(cell.X-1, cell.Y).IsWalkable && DungeonMap.GetCell(cell.X, cell.Y).IsWalkable &&
                         DungeonMap.GetCell(cell.X-1, cell.Y+1).IsWalkable && !DungeonMap.GetCell(cell.X, cell.Y+1).IsWalkable))               
                     {
-                        if (Random.Next(100) < 33){
+                        if (Random.Next(100) < 33 && isEmpty){
                         DungeonMap.SetCellProperties(cell.X, cell.Y, false, true, false);
 
                         //changed too stairs for testing
@@ -106,11 +107,12 @@ namespace ResidentSurvivor{
                         door.Position = new Point(cell.X,cell.Y);
 
                         entityManager.Add(door); 
-                        break;    
+                        isEmpty = false;
+                          
                         }
                     }
 
-                    if (Random.Next(100) == 0){
+                    if (Random.Next(100) == 0 && isEmpty){
                         GameObject rat = new GameObject(
                             Color.White, Color.Transparent, (int) TileType.Rat, 99);
 
@@ -122,7 +124,8 @@ namespace ResidentSurvivor{
                         rat.SadComponents.Add(entity);
                         rat.SadComponents.Add(new IComponent_Hostile(rat, entity));
                         entityManager.Add(rat);
-                        break;
+                        isEmpty = false;
+                        
                     }
                     CreatePlayer(cell.X, cell.Y);
                 } // check to generate stairs
