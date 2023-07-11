@@ -134,6 +134,7 @@ namespace ResidentSurvivor{
             }
 
             //DEBUG
+            /*
             if (info.IsKeyPressed(SadConsole.Input.Keys.Q))
             {
                 Game.Instance.Screen.Children.Remove(Game.UIManager.dungeon.getCurrentLevel());
@@ -144,6 +145,7 @@ namespace ResidentSurvivor{
 
                 Game.UIManager.Children.Add(Game.UIManager.newWorld);
             }
+            */
             
             if(preKeyDown && keyHit && Game.UIManager.newWorld.timer >= TimeSpan.FromMilliseconds(500)+timeStampRun){
                 run = true;

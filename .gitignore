@@ -6,5 +6,6 @@
 # git add .
 
 .vscode/
+.vs/
 bin/
 obj/
