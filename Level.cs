@@ -305,7 +305,7 @@ namespace ResidentSurvivor{
                 {
                     if ( cell != null )
                     {
-                        this.SetBackground(cell.X, cell.Y, Color.LightYellow);
+                        this.SetBackground(cell.X, cell.Y, Color.LightYellow.SetAlpha(180));
                     }
                 }
                 this.SetBackground(_cells.Start.X, _cells.Start.Y, Color.Blue);
@@ -319,10 +319,6 @@ namespace ResidentSurvivor{
             //or remove gameobject class and make a 
             //game object component 
             return entityManager.GetEntityAtPosition(new Point(x, y));
-            /*
-            return (GameObject?)entityManager.Entities.FirstOrDefault( m => m.Position.X == x && 
-                    m.Position.Y == y );
-            */
         }
 
         public RogueSharpSadConsoleSamples.Core.DungeonMap GetDungeonMap(){

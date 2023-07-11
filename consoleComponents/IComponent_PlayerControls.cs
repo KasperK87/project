@@ -35,6 +35,11 @@ namespace ResidentSurvivor{
 
             if (info.Mouse.LeftClicked){
                 followingPath = !followingPath;
+                
+                //this is a hack to allow the player to wait when clicked on
+                if (info.CellPosition == parent.Position){
+                    Game.UIManager.newWorld.turn++;
+                }
             }
 
             mouseLoc = info.CellPosition;
@@ -179,7 +184,6 @@ namespace ResidentSurvivor{
                     }
                     preKeyDown = keyHit;
                     //World instance should control turn progression
-                    //turn++;
                     Game.UIManager.newWorld.turn++;
                     flag = true;
                 }
