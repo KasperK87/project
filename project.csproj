@@ -11,6 +11,7 @@
     <PackageReference Include="SadConsole.Host.MonoGame" Version="9.2.2" />
     <PackageReference Include="RogueSharp" Version="4.2.0" />
     <FilesToMove Include="fonts\*.*" />
+    <SubfolderFilesToMove Include="fonts\TheDraw\*.*" />
     <PackageReference Include="SadConsole.Extended" Version="9.2.1" />
     <DLLToMove Include="dll\*.*" />
   </ItemGroup>
@@ -21,5 +22,6 @@
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
       <Message Importance="High" Text="Moving dlls" />
       <Copy SourceFiles="@(DLLToMove)" DestinationFolder="bin\Debug\net6.0" />
+      <Copy SourceFiles="@(SubfolderFilesToMove)" DestinationFolder="bin\Debug\net6.0\fonts\TheDraw" /> 
   </Target>
 </Project>
