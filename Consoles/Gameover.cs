@@ -28,6 +28,5 @@ class Gameover : Console{
             Surface.PrintTheDraw(this.Width-80-offcenteringX, this.Height/2-offcenteringY, "OVER", _selectedFont);
 
             base.Render(delta);
-            //this.Print(1, 1, "Resident Survivor");
         }
 }

@@ -64,6 +64,7 @@ namespace ResidentSurvivor{
                         if (obj.GetSadComponent<IComponent_Entity>() != null){
                             obj.GetSadComponent<IComponent_Entity>().currHP -= parent.GetSadComponent<IComponent_Entity>().damage;
                         }
+                        console.turn++;
                         throw new RogueSharp.NoMoreStepsException();
                     } else {
                         parent.Position = new SadRogue.Primitives.Point(_cells.CurrentStep.X, _cells.CurrentStep.Y);                  
