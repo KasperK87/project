@@ -32,6 +32,8 @@ namespace ResidentSurvivor{
                 );
         
                 currentLevel = setLevel;
+            } else {
+                Game.UIManager.currentState = ProcessState.Terminated;
             }
         }
             

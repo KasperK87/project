@@ -74,6 +74,12 @@ namespace ResidentSurvivor
 
             } else if (currentState == ProcessState.Paused){
                
+            } else if (currentState == ProcessState.Terminated){
+                this.Children.Remove(newWorld);
+                this.Children.Remove(statusScreen);
+                this.Children.Remove(massageScreen);
+
+                this.Children.Add(new Gameover(120,40));
             }
 
             base.Update(timeElapsed);
