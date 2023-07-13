@@ -7,27 +7,27 @@ namespace ResidentSurvivor{
     public class Dungeon{
         private int depth;
 
-        private Level[] levels;
-        public int currentLevel;
+        private Floor[] floors;
+        private int currentLevel;
         public Dungeon(int setDepth){
             depth = setDepth;
-            levels = new Level[depth];
+            floors = new Floor[depth];
 
             currentLevel = 0;
 
             for (int i = depth-1; i >= 0; i--){
-                levels[i] = new Level(80,29);
-                levels[i].Position = new Point(21,1);
-                levels[i].DefaultBackground = Color.Black;
-                levels[i].View = new Rectangle(0, 0, 20, 15);
+                floors[i] = new Floor(80,29);
+                floors[i].Position = new Point(21,1);
+                floors[i].DefaultBackground = Color.Black;
+                floors[i].View = new Rectangle(0, 0, 20, 15);
             }
         }
 
         public void setLevel(int setLevel){
             if (setLevel >= 0 && setLevel <= depth){
                 //transfer player
-                levels[setLevel].playerEnterFromUp(
-                    (GameObject)levels[currentLevel].GetSadComponent<IComponent_PlayerControls>().parent,
+                floors[setLevel].playerEnterFromUp(
+                    (GameObject)floors[currentLevel].GetSadComponent<IComponent_PlayerControls>().parent,
                     currentLevel < setLevel ? true : false
                 );
         
@@ -37,8 +37,12 @@ namespace ResidentSurvivor{
             }
         }
             
-        public Level getCurrentLevel(){
-            return levels[currentLevel];
+        public Floor getCurrentFloor(){
+            return floors[currentLevel];
+        }
+
+        public int getCurrentLevel(){
+            return currentLevel;
         }
     }
 }

@@ -13,7 +13,7 @@ namespace ResidentSurvivor{
         //parent objects used to couple the controls of the playrt
         //with the rest of the game
         public SadConsole.Entities.Entity parent;
-        Level console;
+        Floor console;
 
 
         private bool preKeyDown; 
@@ -22,7 +22,7 @@ namespace ResidentSurvivor{
         private TimeSpan timeStampRun = TimeSpan.Zero;
         
         //also get a reference to the dungeonconsole
-        public IComponent_PlayerControls(SadConsole.Entities.Entity setParent, Level setConsole){
+        public IComponent_PlayerControls(SadConsole.Entities.Entity setParent, Floor setConsole){
             this.parent = setParent;
             this.console = setConsole;
             

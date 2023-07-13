@@ -11,7 +11,7 @@ namespace ResidentSurvivor
 
         public ProcessState currentState;
         public Dungeon dungeon;
-        public Level newWorld;
+        public Floor newWorld;
         public Console? menu;
         public Console statusScreen;
         public Console massageScreen;
@@ -28,7 +28,7 @@ namespace ResidentSurvivor
             //Creating Dungeon
             dungeon = new Dungeon(16);
             
-            newWorld = dungeon.getCurrentLevel();
+            newWorld = dungeon.getCurrentFloor();
            
             //this is the main game screen
             this.Children.Add(newWorld);

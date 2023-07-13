@@ -16,7 +16,7 @@ namespace ResidentSurvivor{
         UpStairs = 169,
         DownStairs = 170
     }
-    public class Level : Console {
+    public class Floor : Console {
         public UInt64 turn;
         private static GameObject player = new GameObject(
                 Color.White, Color.Blue, (int) TileType.Player, 100);
@@ -40,7 +40,7 @@ namespace ResidentSurvivor{
 
         public SadConsole.Entities.Manager entityManager;
 
-        public Level(int w, int h) : base( w, h){
+        public Floor(int w, int h) : base( w, h){
             //sets current turn:
             turn = 0;
 
