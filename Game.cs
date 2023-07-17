@@ -23,6 +23,9 @@ namespace ResidentSurvivor
        } 
 
        public static void Setup(int w, int h){
+            //run tests && should be static
+            DungeonTest dungeonTest = new DungeonTest();
+            dungeonTest.test1();
 
             Create(w, h);
             
