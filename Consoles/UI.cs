@@ -18,6 +18,10 @@ namespace ResidentSurvivor
 
         public UIManager()
         {
+             //run tests && should be static
+            DungeonTest.test1();
+            DungeonTest.test2();
+
             currentState = ProcessState.Active;
 
             // must be set to true
