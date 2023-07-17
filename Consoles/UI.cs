@@ -21,6 +21,7 @@ namespace ResidentSurvivor
              //run tests && should be static
             DungeonTest.test1();
             DungeonTest.test2();
+            DungeonTest.test3();
 
             currentState = ProcessState.Active;
 

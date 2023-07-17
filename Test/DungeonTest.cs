@@ -12,8 +12,8 @@ namespace ResidentSurvivor
             Dungeon dungeon = new Dungeon(16);
 
             // arrange
-            dungeon.setLevel(15);
-            int expected = 15;
+            dungeon.setLevel(3);
+            int expected = 3;
 
             // act
             int actual = dungeon.getCurrentLevel();
@@ -36,6 +36,22 @@ namespace ResidentSurvivor
 
             // assert
             System.Console.WriteLine("Test 2: " + (expected == actual));
+            
+        }
+
+        public static void test3()
+        {
+            Dungeon dungeon = new Dungeon(16);
+
+            // arrange
+            dungeon.setLevel(200);
+            int expected = 0;
+
+            // act
+            int actual = dungeon.getCurrentLevel();
+
+            // assert
+            System.Console.WriteLine("Test 3: " + (expected == actual));
             
         }
     }
