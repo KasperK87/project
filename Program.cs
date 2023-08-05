@@ -1,6 +1,6 @@
 ﻿using ResidentSurvivor;
 
-//entry point to everything
+//entry point to everythinggi
 namespace Setup{
     class Program{
         static void Main(string[] args){
