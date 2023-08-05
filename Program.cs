@@ -1,5 +1,6 @@
 ﻿using ResidentSurvivor;
 
+//entry point to everything
 namespace Setup{
     class Program{
         static void Main(string[] args){
