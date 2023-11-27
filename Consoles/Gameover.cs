@@ -22,10 +22,10 @@ class Gameover : Console{
         {
             this.Clear();
 
-            int offcenteringX = 15;
+            int offcenteringX =30;
             int offcenteringY = (int)(timer.TotalMilliseconds/300);
             Surface.PrintTheDraw(2+offcenteringX, this.Height/2-10-offcenteringY, "GAME", _selectedFont);
-            Surface.PrintTheDraw(this.Width-80-offcenteringX, this.Height/2-offcenteringY, "OVER", _selectedFont);
+            Surface.PrintTheDraw(this.Width/2, this.Height/2-offcenteringY, "OVER", _selectedFont);
 
             base.Render(delta);
         }
