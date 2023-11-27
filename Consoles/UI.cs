@@ -138,7 +138,7 @@ namespace ResidentSurvivor
         }
     }
 
-    class Menu : SadConsole.UI.Window{
+    public class Menu : SadConsole.UI.Window{
         //private Console menuConsole;
         
         private SadConsole.Readers.TheDrawFont[] fonts;
