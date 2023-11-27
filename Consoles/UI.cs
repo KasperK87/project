@@ -81,11 +81,16 @@ namespace ResidentSurvivor
                
             } else if (currentState == ProcessState.Terminated){
                 //kill all screens, and show gameover screen
+                
                 this.Children.Remove(newWorld);
                 this.Children.Remove(statusScreen);
                 this.Children.Remove(massageScreen);
+                
 
+                //this.Children.Add(new Menu(120,40));
                 this.Children.Add(new Gameover(120,40));
+
+                currentState = ProcessState.Paused;
             }
 
             base.Update(timeElapsed);
