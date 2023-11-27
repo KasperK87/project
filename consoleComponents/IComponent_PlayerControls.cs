@@ -204,7 +204,7 @@ namespace ResidentSurvivor{
             flag = false;
         }
 
-    public override void ProcessMouse(SadConsole.IScreenObject obj, 
+        public override void ProcessMouse(SadConsole.IScreenObject obj, 
             SadConsole.Input.MouseScreenObjectState info, out bool flag){
 
             flag = true;

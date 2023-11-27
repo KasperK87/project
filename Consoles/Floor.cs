@@ -234,6 +234,11 @@ namespace ResidentSurvivor{
             if (!GetSadComponent<IComponent_PlayerControls>().followingPath){
                 pathXtoY(GetSadComponent<IComponent_PlayerControls>().mouseLoc.X,GetSadComponent<IComponent_PlayerControls>().mouseLoc.Y);
             }
+
+            //If player is dead, game over
+            if (player.GetSadComponent<IComponent_Entity>().currHP < 1){
+                Game.UIManager.currentState = ProcessState.Terminated;
+            }
         }
 
         public override void Render(TimeSpan delta){
