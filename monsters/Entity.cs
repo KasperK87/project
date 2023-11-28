@@ -62,6 +62,11 @@ namespace ResidentSurvivor {
             
         }
 
+        //used for items, intend is only the player can pickup
+        public virtual void Pickup(){
+            
+        }
+
         public void Attack(SadConsole.Entities.Entity target){
             target.GetSadComponent<IComponent_Entity>().currHP -= this.damage;
             

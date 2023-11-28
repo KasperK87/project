@@ -57,6 +57,7 @@ namespace ResidentSurvivor{
                     System.Console.WriteLine(_cells.CurrentStep.X +"," + _cells.CurrentStep.Y);
                     GameObject obj = (GameObject)console.GetMonsterAt(_cells.CurrentStep.X, _cells.CurrentStep.Y);
                     if (obj != null && obj.Walkable){
+                        obj.Pickup();
                         parent.Position = new SadRogue.Primitives.Point(_cells.CurrentStep.X, _cells.CurrentStep.Y); 
                     } else if(obj != null){ 
                         obj.Interact();
@@ -177,6 +178,7 @@ namespace ResidentSurvivor{
                         } else {
                             GameObject gameobj = (GameObject)monster;
                             if (gameobj.Walkable){
+                                gameobj.Pickup();
                                 parent.Position = newPosition;
                             } else {
                                 gameobj.Interact();

@@ -14,7 +14,8 @@ namespace ResidentSurvivor{
         Door = 96,
         DoorOpen = 97,
         UpStairs = 169,
-        DownStairs = 170
+        DownStairs = 170,
+        Gold = 282
     }
     public class Floor : Console {
         public UInt64 turn;
@@ -126,6 +127,20 @@ namespace ResidentSurvivor{
                         entityManager.Add(rat);
                         isEmpty = false;
                         
+                    } else if (Random.Next(100) < 10 && isEmpty){
+                        Gold gold = new Gold(
+                            Color.Yellow, Color.Transparent, (int) TileType.Gold, 98, 
+                            Random.Next(10, 100));
+
+                        gold.Position = new Point(cell.X,cell.Y);
+                        gold.Walkable = true;
+
+                        //var entity = new IComponent_Entity(gold, 1, 1, 0, 0);
+                    
+                        //gold.SadComponents.Add(entity);
+
+                        entityManager.Add(gold);
+                        isEmpty = false;
                     }
                     CreatePlayer(cell.X, cell.Y);
                 } // check to generate stairs
