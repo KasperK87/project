@@ -28,7 +28,14 @@ namespace ResidentSurvivor{
             restartButton.Text = "RESTART";
             
             restartButton.Click += (x, y) => {
-                restartButton.Text = "CLICKED";
+                //Refactor this, should be a method in UIManager
+                Game.UIManager.dungeon = new Dungeon(16);
+                Game.UIManager.newWorld = Game.UIManager.dungeon.getCurrentFloor(); 
+                Game.Instance.Screen.Children.Add(Game.UIManager.newWorld);
+                Game.Instance.Screen.Children.Add(Game.UIManager.statusScreen);
+                Game.Instance.Screen.Children.Add(Game.UIManager.massageScreen);
+                Game.UIManager.currentState = ProcessState.Active;
+                SadConsole.Game.Instance.Screen.Children.Remove(this);
             };
 
             //adding a quit button

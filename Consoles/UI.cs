@@ -64,6 +64,8 @@ namespace ResidentSurvivor
         {
             if (currentState == ProcessState.Active){
                 
+                statusScreen.Clear();
+                
                 statusScreen.Print(1,1, "Current turn: " + newWorld.turn.ToString());
 
                 //Added clear space to remove numbers when the string gets shorter
