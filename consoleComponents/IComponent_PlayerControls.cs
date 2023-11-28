@@ -45,6 +45,11 @@ namespace ResidentSurvivor{
             mouseLoc = info.CellPosition;
 
             if (followingPath) followPath(console._cells);
+
+            //DEBUG
+            if (Game.UIManager.currentFloor != null)
+                if (Game.UIManager.currentFloor.GetMonsterAt(info.CellPosition.X, info.CellPosition.Y) != null)
+                    System.Console.WriteLine(Game.UIManager.currentFloor.GetMonsterAt(info.CellPosition.X, info.CellPosition.Y).Name);
         }
 
         private void followPath(RogueSharp.Path? _cells){
