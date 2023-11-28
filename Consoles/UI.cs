@@ -186,8 +186,20 @@ namespace ResidentSurvivor
                 //hides the menu
                 this.Hide();
             };
+
+            //adding a quit button
+            SadConsole.UI.Controls.Button quitButton = new SadConsole.UI.Controls.Button(13,3);
+            quitButton.Theme = new SadConsole.UI.Themes.ButtonLinesTheme();
+            
+            quitButton.Position = new Point(w/2-6,h/2+6);
+            quitButton.Text = "QUIT ";
+            
+            quitButton.Click += (x, y) => {
+                SadConsole.Game.Instance.MonoGameInstance.Exit();
+            };
             
             this.Controls.Add(startButton);
+            this.Controls.Add(quitButton);
 
             //WHY NOT WORKING?
             this.DefaultBackground = Color.Blue;

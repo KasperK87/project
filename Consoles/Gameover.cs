@@ -20,35 +20,32 @@ namespace ResidentSurvivor{
 
                 this.Title = "GAME OVER";
 
-                 //adding a start button
+            //adding a restart button
             SadConsole.UI.Controls.Button restartButton = new SadConsole.UI.Controls.Button(13,3);
-            //startButton.Theme = new SadConsole.UI.Themes.ButtonTheme('[',']');
             restartButton.Theme = new SadConsole.UI.Themes.ButtonLinesTheme();
-            
-            //NOT VALID WHY?
-            //startButton.SetThemeColors((SadConsole.UI.Colors.ColorNames.Orange);
             
             restartButton.Position = new Point(w/2-6,h/2+6);
             restartButton.Text = "RESTART";
             
             restartButton.Click += (x, y) => {
-                
-                // World is created in UIManeger 
-                // and will appears when we hide 
-                // this menu;
-
-                // This code is needed if we change 
-                // how world is created
-
                 restartButton.Text = "CLICKED";
+            };
 
-                //hides the menu
-                //this.Hide();
+            //adding a quit button
+            SadConsole.UI.Controls.Button quitButton = new SadConsole.UI.Controls.Button(13,3);
+            quitButton.Theme = new SadConsole.UI.Themes.ButtonLinesTheme();
+            
+            quitButton.Position = new Point(w/2-6,h/2+9);
+            quitButton.Text = "QUIT ";
+            
+            quitButton.Click += (x, y) => {
+                SadConsole.Game.Instance.MonoGameInstance.Exit();
             };
             
             
             
             this.Controls.Add(restartButton);
+            this.Controls.Add(quitButton);
 
             this.Show();
                 

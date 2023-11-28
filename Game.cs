@@ -22,6 +22,7 @@ namespace ResidentSurvivor
             UIManager = new UIManager();
        } 
 
+       //This is the main loop
        public static void Setup(int w, int h){
             Create(w, h);
             
