@@ -35,20 +35,17 @@ namespace ResidentSurvivor{
             SadConsole.UI.Controls.Button quitButton = new SadConsole.UI.Controls.Button(13,3);
             quitButton.Theme = new SadConsole.UI.Themes.ButtonLinesTheme();
             
-            quitButton.Position = new Point(w/2-6,h/2+9);
+            quitButton.Position = new Point(w/2-6,h/2+12);
             quitButton.Text = "QUIT ";
             
             quitButton.Click += (x, y) => {
                 SadConsole.Game.Instance.MonoGameInstance.Exit();
             };
             
-            
-            
             this.Controls.Add(restartButton);
             this.Controls.Add(quitButton);
 
             this.Show();
-                
             }
 
             public override void Update(TimeSpan delta)
