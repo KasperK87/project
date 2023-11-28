@@ -11,7 +11,7 @@ namespace ResidentSurvivor
 
         public ProcessState currentState;
         public Dungeon dungeon;
-        public Floor newWorld;
+        public Floor currentFloor;
         public Console? menu;
         public Console statusScreen;
         public Console massageScreen;
@@ -33,10 +33,10 @@ namespace ResidentSurvivor
             //Creating Dungeon
             dungeon = new Dungeon(16);
             
-            newWorld = dungeon.getCurrentFloor();
+            currentFloor = dungeon.getCurrentFloor();
            
             //this is the main game screen
-            this.Children.Add(newWorld);
+            this.Children.Add(currentFloor);
 
             statusScreen = new Console(40, 29){
                 DefaultBackground = Color.AnsiCyan,
@@ -66,17 +66,17 @@ namespace ResidentSurvivor
                 
                 statusScreen.Clear();
                 
-                statusScreen.Print(1,1, "Current turn: " + newWorld.turn.ToString());
+                statusScreen.Print(1,1, "Current turn: " + currentFloor.turn.ToString());
 
                 //Added clear space to remove numbers when the string gets shorter
-                statusScreen.Print(1,3, "HP: " + newWorld.getPlayer().GetSadComponent<IComponent_Entity>().currHP + "/" + 
-                    newWorld.getPlayer().GetSadComponent<IComponent_Entity>().maxHP  + "    ");
+                statusScreen.Print(1,3, "HP: " + currentFloor.getPlayer().GetSadComponent<IComponent_Entity>().currHP + "/" + 
+                    currentFloor.getPlayer().GetSadComponent<IComponent_Entity>().maxHP  + "    ");
 
                 //basic test of components, this allows you to store attributes and
                 //use them at will
                 /*
-                IComponent_updater com = newWorld.getPlayer().GetSadComponent<IComponent_updater>();
-                statusScreen.Print(1,3, "HP: " + com.HP + "/" + newWorld.getPlayer().maxHP + "    ");
+                IComponent_updater com = currentFloor.getPlayer().GetSadComponent<IComponent_updater>();
+                statusScreen.Print(1,3, "HP: " + com.HP + "/" + currentFloor.getPlayer().maxHP + "    ");
                 */
 
             } else if (currentState == ProcessState.Paused){
@@ -84,7 +84,7 @@ namespace ResidentSurvivor
             } else if (currentState == ProcessState.Terminated){
                 //kill all screens, and show gameover screen
                 
-                this.Children.Remove(newWorld);
+                this.Children.Remove(currentFloor);
                 this.Children.Remove(statusScreen);
                 this.Children.Remove(massageScreen);
                 
@@ -179,10 +179,10 @@ namespace ResidentSurvivor
                 // This code is needed if we change 
                 // how world is created
                 /*
-                World newWorld = new World(80,29);
-                newWorld.Position = new Point(1,1);
-                newWorld.DefaultBackground = Color.Black;
-                Game.Instance.Screen.Children.Add(newWorld);  
+                World currentFloor = new World(80,29);
+                currentFloor.Position = new Point(1,1);
+                currentFloor.DefaultBackground = Color.Black;
+                Game.Instance.Screen.Children.Add(currentFloor);  
                 */
 
                 //hides the menu

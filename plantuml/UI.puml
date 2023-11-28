@@ -15,7 +15,7 @@ class Menu {
 }
 ScreenObject <|-- UIManager
 UIManager --> "currentState" ProcessState
-UIManager --> "newWorld" World
+UIManager --> "currentFloor" World
 UIManager --> "statusScreen" Console
 UIManager --> "massageScreen" Console
 Console <|-- SplashScreen

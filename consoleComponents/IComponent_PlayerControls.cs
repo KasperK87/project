@@ -38,7 +38,7 @@ namespace ResidentSurvivor{
                 
                 //this is a hack to allow the player to wait when clicked on
                 if (info.CellPosition == parent.Position){
-                    Game.UIManager.newWorld.turn++;
+                    Game.UIManager.currentFloor.turn++;
                 }
             }
 
@@ -147,16 +147,16 @@ namespace ResidentSurvivor{
 
                 //ternary operator, you can switch between levels
                 Game.UIManager.dungeon.setLevel(Game.UIManager.dungeon.currentLevel == 0 ? 1 : 0);
-                Game.UIManager.newWorld = Game.UIManager.dungeon.getCurrentLevel();
+                Game.UIManager.currentFloor = Game.UIManager.dungeon.getCurrentLevel();
 
-                Game.UIManager.Children.Add(Game.UIManager.newWorld);
+                Game.UIManager.Children.Add(Game.UIManager.currentFloor);
             }
             */
             
-            if(preKeyDown && keyHit && Game.UIManager.newWorld.timer >= TimeSpan.FromMilliseconds(500)+timeStampRun){
+            if(preKeyDown && keyHit && Game.UIManager.currentFloor.timer >= TimeSpan.FromMilliseconds(500)+timeStampRun){
                 run = true;
             } else if (!preKeyDown && !keyHit && !followingPath){
-                timeStampRun = Game.UIManager.newWorld.timer;
+                timeStampRun = Game.UIManager.currentFloor.timer;
                 //System.Console.WriteLine("RESET TIMER");
             } 
             
@@ -164,12 +164,12 @@ namespace ResidentSurvivor{
             if ((keyHit && !preKeyDown && !followingPath) || run)
             {
                 // Check if the new position is valid
-                if (Game.UIManager.newWorld.Surface.Area.Contains(newPosition) && Game.UIManager.newWorld.GetDungeonMap().GetCell(newPosition.X, newPosition.Y).IsWalkable){
+                if (Game.UIManager.currentFloor.Surface.Area.Contains(newPosition) && Game.UIManager.currentFloor.GetDungeonMap().GetCell(newPosition.X, newPosition.Y).IsWalkable){
                     //check is there is a monster
-                    var monster = Game.UIManager.newWorld.GetMonsterAt(newPosition.X, newPosition.Y);
+                    var monster = Game.UIManager.currentFloor.GetMonsterAt(newPosition.X, newPosition.Y);
                     if (monster == null || parent.Position == newPosition){
                         parent.Position = newPosition;
-                        Game.UIManager.newWorld.pathXtoY(mouseLoc.X, mouseLoc.Y);
+                        Game.UIManager.currentFloor.pathXtoY(mouseLoc.X, mouseLoc.Y);
                     } else {
                         System.Console.WriteLine("Player Attack");
                         if (monster.GetSadComponent<IComponent_Entity>() != null){
@@ -185,7 +185,7 @@ namespace ResidentSurvivor{
                     }
                     preKeyDown = keyHit;
                     //World instance should control turn progression
-                    Game.UIManager.newWorld.turn++;
+                    Game.UIManager.currentFloor.turn++;
                     flag = true;
                 }
             }
@@ -194,7 +194,7 @@ namespace ResidentSurvivor{
                 followingPath = false;
                 //_cells should also be part of this instance
                 //should it really??? 
-                Game.UIManager.newWorld._cells = null;
+                Game.UIManager.currentFloor._cells = null;
             }
 
             // You could have multiple entities in the game for example, and change

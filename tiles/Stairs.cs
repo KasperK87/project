@@ -29,8 +29,8 @@ namespace ResidentSurvivor
                 Game.UIManager.dungeon.setLevel(Game.UIManager.dungeon.getCurrentLevel()-1); 
             }
 
-            Game.UIManager.newWorld = Game.UIManager.dungeon.getCurrentFloor();
-            Game.UIManager.Children.Add(Game.UIManager.newWorld);
+            Game.UIManager.currentFloor = Game.UIManager.dungeon.getCurrentFloor();
+            Game.UIManager.Children.Add(Game.UIManager.currentFloor);
             base.Interact();
         }
     }

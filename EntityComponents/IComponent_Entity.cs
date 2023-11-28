@@ -22,11 +22,11 @@ namespace ResidentSurvivor{
         public override void Update(SadConsole.IScreenObject p, TimeSpan delta){
             if (currHP < 1){
                 //this.Appearance.Foreground = SadRogue.Primitives.Color.Transparent;  
-                Game.UIManager.newWorld.entityManager.Remove(parent);
+                Game.UIManager.currentFloor.entityManager.Remove(parent);
                 System.Console.WriteLine("rat dead");
             }
 
-            if (!Game.UIManager.newWorld.GetDungeonMap().IsInFov(parent.Position.X, parent.Position.Y)){
+            if (!Game.UIManager.currentFloor.GetDungeonMap().IsInFov(parent.Position.X, parent.Position.Y)){
                 parent.Appearance.Foreground = SadRogue.Primitives.Color.Transparent;
             } else {
                 parent.Appearance.Foreground = SadRogue.Primitives.Color.White;

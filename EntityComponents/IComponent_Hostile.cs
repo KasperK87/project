@@ -21,16 +21,16 @@ namespace ResidentSurvivor{
 
         
         public override void Update(SadConsole.IScreenObject p, TimeSpan delta){
-            if (this.turn < Game.UIManager.newWorld.turn && entity.currHP > 0){
+            if (this.turn < Game.UIManager.currentFloor.turn && entity.currHP > 0){
                 followPath();
-                this.turn = Game.UIManager.newWorld.turn;
+                this.turn = Game.UIManager.currentFloor.turn;
             }
             
-            if (!Game.UIManager.newWorld.GetDungeonMap().IsInFov(parent.Position.X, parent.Position.Y)){
+            if (!Game.UIManager.currentFloor.GetDungeonMap().IsInFov(parent.Position.X, parent.Position.Y)){
                 parent.Appearance.Foreground = SadRogue.Primitives.Color.Transparent;
             } else {
                 parent.Appearance.Foreground = SadRogue.Primitives.Color.White;
-                _cells = Game.UIManager.newWorld.pathToPlayerFrom(parent.Position.X, parent.Position.Y);
+                _cells = Game.UIManager.currentFloor.pathToPlayerFrom(parent.Position.X, parent.Position.Y);
             }
         }
 
@@ -40,7 +40,7 @@ namespace ResidentSurvivor{
                 try {
                     _cells.StepForward();
                     //check is there is a monster
-                    var monster = Game.UIManager.newWorld.GetMonsterAt(_cells.CurrentStep.X, _cells.CurrentStep.Y);
+                    var monster = Game.UIManager.currentFloor.GetMonsterAt(_cells.CurrentStep.X, _cells.CurrentStep.Y);
                     if (monster == null){
                         parent.Position = new SadRogue.Primitives.Point(_cells.CurrentStep.X, _cells.CurrentStep.Y);     
                     } else {
