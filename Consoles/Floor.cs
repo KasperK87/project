@@ -117,6 +117,8 @@ namespace ResidentSurvivor{
                         GameObject rat = new GameObject(
                             Color.White, Color.Transparent, (int) TileType.Rat, 99);
 
+                        rat.Name = "Rat";
+
                         rat.Position = new Point(cell.X,cell.Y);
                         rat.Walkable = false;
 
@@ -339,6 +341,14 @@ namespace ResidentSurvivor{
             //or remove gameobject class and make a 
             //game object component 
             return entityManager.GetEntityAtPosition(new Point(x, y));
+        }
+
+        public SadConsole.Entities.Entity[] GetEntitiesAt( int x, int y ){
+            //should crash if entity is not of class GameObject,
+            //could use a try catch block to fix.
+            //or remove gameobject class and make a 
+            //game object component 
+            return entityManager.GetEntitiesAtPosition(new Point(x, y));
         }
 
         public RogueSharpSadConsoleSamples.Core.DungeonMap GetDungeonMap(){

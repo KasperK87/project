@@ -24,6 +24,7 @@ namespace ResidentSurvivor{
         //also get a reference to the dungeonconsole
         public IComponent_PlayerControls(SadConsole.Entities.Entity setParent, Floor setConsole){
             this.parent = setParent;
+            this.parent.Name = "Player";
             this.console = setConsole;
             
             followingPath = false;
@@ -48,8 +49,8 @@ namespace ResidentSurvivor{
 
             //DEBUG
             if (Game.UIManager.currentFloor != null)
-                if (Game.UIManager.currentFloor.GetMonsterAt(info.CellPosition.X, info.CellPosition.Y) != null)
-                    System.Console.WriteLine(Game.UIManager.currentFloor.GetMonsterAt(info.CellPosition.X, info.CellPosition.Y).Name);
+                if (Game.UIManager.currentFloor.GetEntitiesAt(info.CellPosition.X, info.CellPosition.Y) != null)
+                    System.Console.WriteLine(Game.UIManager.currentFloor.GetEntitiesAt(info.CellPosition.X, info.CellPosition.Y)[0].Name);
         }
 
         private void followPath(RogueSharp.Path? _cells){
