@@ -19,7 +19,7 @@ namespace ResidentSurvivor{
     }
     public class Floor : Console {
         public UInt64 turn;
-        private static GameObject player = new GameObject(
+        private static Player player = new Player(
                 Color.White, Color.Blue, (int) TileType.Player, 100);
 
         private RogueSharpSadConsoleSamples.Core.DungeonMap DungeonMap;
@@ -71,7 +71,7 @@ namespace ResidentSurvivor{
             SadComponents.Add(entityManager);
 
             //creates player to remove annoying could be null warnings
-            player = new GameObject(
+            player = new Player(
                 Color.White, Color.Blue, (int) TileType.Player, 100);
 
             // List of valid locations where stairs can be placed
@@ -113,7 +113,7 @@ namespace ResidentSurvivor{
                         }
                     }
 
-                    if (Random.Next(100) == 0 && isEmpty){
+                    if (Random.Next(50) == 0 && isEmpty){
                         GameObject rat = new GameObject(
                             Color.White, Color.Transparent, (int) TileType.Rat, 99);
 
@@ -129,7 +129,7 @@ namespace ResidentSurvivor{
                         entityManager.Add(rat);
                         isEmpty = false;
                         
-                    } else if (Random.Next(100) < 10 && isEmpty){
+                    } else if (Random.Next(50) == 0 && isEmpty){
                         Gold gold = new Gold(
                             Color.Yellow, Color.Transparent, (int) TileType.Gold, 98, 
                             Random.Next(10, 100));
@@ -209,7 +209,7 @@ namespace ResidentSurvivor{
         // Create a player using SadConsole's Entity class
         private static void CreatePlayer(int x, int y)
         {
-            player = new GameObject(
+            player = new Player(
                 Color.White, Color.Transparent, (int) TileType.Player, 100);
             player.Walkable = false;
             player.Position = new Point(x,y);
@@ -228,8 +228,8 @@ namespace ResidentSurvivor{
             }
         }
 
-        public GameObject getPlayer(){
-            return (GameObject)GetSadComponent<IComponent_PlayerControls>().parent;
+        public Player getPlayer(){
+            return (Player)GetSadComponent<IComponent_PlayerControls>().parent;
         }
 
         public override void Update(TimeSpan delta){

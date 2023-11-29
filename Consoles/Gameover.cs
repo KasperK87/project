@@ -9,8 +9,13 @@ namespace ResidentSurvivor{
         private SadConsole.Readers.TheDrawFont[] fonts;
         private SadConsole.Readers.TheDrawFont _selectedFont;
 
-            public Gameover(int w, int h) : base( w, h){
+        private uint _score = 0;
+
+            public Gameover(int w, int h, uint highscore) : base( w, h){
                 timer = TimeSpan.Zero;
+
+                _score = highscore;
+                System.Console.WriteLine("Highscore: " + _score);
 
                 fonts = SadConsole.Readers.TheDrawFont.ReadFonts("./fonts/TheDraw/ABBADON.TDF").ToArray();
                 _selectedFont = fonts[0];
@@ -72,6 +77,8 @@ namespace ResidentSurvivor{
                 Surface.PrintTheDraw(2+offcenteringX-20, this.Height/2-10-offcenteringY, "GAME", _selectedFont);
                 Surface.PrintTheDraw(this.Width/2-20, this.Height/2-offcenteringY, "OVER", _selectedFont);
                 
+                Surface.PrintTheDraw(this.Width/2-20, this.Height/2-offcenteringY*2,"999", _selectedFont);
+
                 base.Render(delta);
                 
             }

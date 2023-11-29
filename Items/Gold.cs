@@ -15,9 +15,10 @@ namespace ResidentSurvivor
                 this.Appearance.Glyph = (int) TileType.Gold;
         }
 
-        public override void Pickup(){
+        public override void Pickup(Player player){
             this.currHP = 0;
             System.Console.WriteLine("You picked up " + this.value + " gold!");
+            player.addGold((uint)this.value);
         }
 
         public override void Update(TimeSpan delta){

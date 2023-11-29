@@ -6,14 +6,14 @@ namespace ResidentSurvivor{
     class IComponent_Hostile : SadConsole.Components.UpdateComponent {
         SadConsole.Entities.Entity parent;
         private RogueSharp.Path? _cells;
-        private bool followingPath;
+        //private bool followingPath;
         private UInt64 turn;
         private IComponent_Entity entity;
 
 
 
         public IComponent_Hostile(SadConsole.Entities.Entity setParent, IComponent_Entity setEntity){
-            followingPath = false;
+            //followingPath = false;
 
             this.parent = setParent;
             this.entity = setEntity;
@@ -57,7 +57,7 @@ namespace ResidentSurvivor{
                     }             
                 } catch (RogueSharp.NoMoreStepsException) {
                     _cells = null;
-                    followingPath = false;
+                    //followingPath = false;
                 }
             }
         }

@@ -63,7 +63,7 @@ namespace ResidentSurvivor {
         }
 
         //used for items, intend is only the player can pickup
-        public virtual void Pickup(){
+        public virtual void Pickup(Player player){
             
         }
 
