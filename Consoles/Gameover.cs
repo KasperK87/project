@@ -29,7 +29,7 @@ namespace ResidentSurvivor{
             SadConsole.UI.Controls.Button restartButton = new SadConsole.UI.Controls.Button(13,3);
             restartButton.Theme = new SadConsole.UI.Themes.ButtonLinesTheme();
             
-            restartButton.Position = new Point(w/2-6,h/2+6);
+            restartButton.Position = new Point(w/2-6,h/2+7);
             restartButton.Text = "RESTART";
             
             restartButton.Click += (x, y) => {
@@ -77,7 +77,7 @@ namespace ResidentSurvivor{
                 Surface.PrintTheDraw(2+offcenteringX-20, this.Height/2-10-offcenteringY, "GAME", _selectedFont);
                 Surface.PrintTheDraw(this.Width/2-20, this.Height/2-offcenteringY, "OVER", _selectedFont);
                 
-                Surface.PrintTheDraw(this.Width/2-20, this.Height/2-offcenteringY*2,"999", _selectedFont);
+                this.Print(this.Width/2-4, this.Height/2+offcenteringY*2-7,"SCORE: " + _score.ToString(), Color.White, Color.Black);
 
                 base.Render(delta);
                 

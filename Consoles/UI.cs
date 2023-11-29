@@ -72,6 +72,8 @@ namespace ResidentSurvivor
                 statusScreen.Print(1,3, "HP: " + currentFloor.getPlayer().GetSadComponent<IComponent_Entity>().currHP + "/" + 
                     currentFloor.getPlayer().GetSadComponent<IComponent_Entity>().maxHP  + "    ");
 
+                statusScreen.Print(1,4, "Gold: " + currentFloor.getPlayer().getGold());
+
                 //basic test of components, this allows you to store attributes and
                 //use them at will
                 /*
