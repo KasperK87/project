@@ -115,7 +115,7 @@ namespace ResidentSurvivor{
 
                     if (Random.Next(50) == 0 && isEmpty){
                         GameObject rat = new GameObject(
-                            Color.White, Color.Transparent, (int) TileType.Rat, 99);
+                            Color.Gray, Color.Transparent, (int) TileType.Rat, 99);
 
                         rat.Name = "Rat";
 

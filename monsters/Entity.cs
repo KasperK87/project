@@ -8,6 +8,8 @@ namespace ResidentSurvivor {
         public int damage; 
         public Boolean Walkable { get; set; }
 
+        private SadRogue.Primitives.Color color;
+
         public GameObject(SadRogue.Primitives.Color c1,SadRogue.Primitives.Color c2, int SetGlyph, int zIndex):
             base(c1, c2, SetGlyph, zIndex){
               this.maxHP = 10;
@@ -15,6 +17,8 @@ namespace ResidentSurvivor {
               this.speed = 1;
               this.damage = 3;
               this.Walkable = true;
+
+              this.color = c1;
 
               //crashes many places?!
               //this.SadComponents.Add(new SadConsole.Components.SmoothMove(new SadRogue.Primitives.Point(15,24)));
@@ -36,7 +40,7 @@ namespace ResidentSurvivor {
                 //this.Appearance.Glyph = 0;
                 this.Appearance.Foreground = SadRogue.Primitives.Color.Transparent;
             } else {
-                this.Appearance.Foreground = SadRogue.Primitives.Color.White;
+                this.Appearance.Foreground = this.color;
             }
     
             //This allows us to use the render function,

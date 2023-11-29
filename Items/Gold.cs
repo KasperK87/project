@@ -19,6 +19,7 @@ namespace ResidentSurvivor
             this.currHP = 0;
             System.Console.WriteLine("You picked up " + this.value + " gold!");
             player.addGold((uint)this.value);
+            Game.UIManager.currentFloor.entityManager.Remove(this);
         }
 
         public override void Update(TimeSpan delta){

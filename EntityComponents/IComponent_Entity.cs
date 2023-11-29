@@ -23,14 +23,16 @@ namespace ResidentSurvivor{
             if (currHP < 1){
                 //this.Appearance.Foreground = SadRogue.Primitives.Color.Transparent;  
                 Game.UIManager.currentFloor.entityManager.Remove(parent);
-                System.Console.WriteLine("rat dead");
+                System.Console.WriteLine(parent.Name + " dead");
             }
 
+            /*
             if (!Game.UIManager.currentFloor.GetDungeonMap().IsInFov(parent.Position.X, parent.Position.Y)){
                 parent.Appearance.Foreground = SadRogue.Primitives.Color.Transparent;
             } else {
                 parent.Appearance.Foreground = SadRogue.Primitives.Color.White;
             }
+            */
         }
     }
 }

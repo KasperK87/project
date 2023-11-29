@@ -29,7 +29,7 @@ namespace ResidentSurvivor{
             if (!Game.UIManager.currentFloor.GetDungeonMap().IsInFov(parent.Position.X, parent.Position.Y)){
                 parent.Appearance.Foreground = SadRogue.Primitives.Color.Transparent;
             } else {
-                parent.Appearance.Foreground = SadRogue.Primitives.Color.White;
+                //parent.Appearance.Foreground = SadRogue.Primitives.Color.White;
                 _cells = Game.UIManager.currentFloor.pathToPlayerFrom(parent.Position.X, parent.Position.Y);
             }
         }
