@@ -8,6 +8,8 @@ namespace ResidentSurvivor{
         Empty = 38,
         Player = 1,
         Rat = 376,
+        Kobold = 378+75*5+2+4,
+        Goblin = 378+75*5+2,
         Floor = 27,
         Wall = 284,
         Solid = 76,
@@ -131,7 +133,7 @@ namespace ResidentSurvivor{
                         
                     } else if (Random.Next(100) == 0 && isEmpty){
                         GameObject kobold = new GameObject(
-                            Color.Red, Color.Transparent, (int) TileType.Rat, 99);
+                            Color.Red, Color.Transparent, (int) TileType.Kobold, 99);
 
                         kobold.Name = "Kobold";
 
@@ -147,7 +149,7 @@ namespace ResidentSurvivor{
                         
                     } else if (Random.Next(200) == 0 && isEmpty){
                         GameObject goblin = new GameObject(
-                            Color.LimeGreen, Color.Transparent, (int) TileType.Rat, 99);
+                            Color.LimeGreen, Color.Transparent, (int) TileType.Goblin, 99);
 
                         goblin.Name = "Goblin";
 
