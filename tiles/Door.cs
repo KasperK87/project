@@ -19,7 +19,7 @@ namespace ResidentSurvivor
         }
 
         public override void Interact(){
-            this.IsOpen = true;
+            this.IsOpen = !this.IsOpen;
             hostDungeon.SetCellProperties(this.Position.X, this.Position.Y, true, true);
         }
 
