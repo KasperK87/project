@@ -17,7 +17,8 @@ namespace ResidentSurvivor{
         DoorOpen = 97,
         UpStairs = 169,
         DownStairs = 170,
-        Gold = 282
+        Gold = 282,
+        Dagger = 40
     }
     public class Floor : Console {
         public UInt64 turn;
@@ -176,6 +177,15 @@ namespace ResidentSurvivor{
                         //gold.SadComponents.Add(entity);
 
                         entityManager.Add(gold);
+                        isEmpty = false;
+                    } else if (Random.Next(50) == 0 && isEmpty){
+                        Dagger dagger = new Dagger(
+                            Color.White, Color.Transparent, (int) TileType.Dagger, 98);
+
+                        dagger.Position = new Point(cell.X,cell.Y);
+                        dagger.Walkable = true;
+
+                        entityManager.Add(dagger);
                         isEmpty = false;
                     }
                     CreatePlayer(cell.X, cell.Y);
