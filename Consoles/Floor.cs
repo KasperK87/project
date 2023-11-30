@@ -130,6 +130,38 @@ namespace ResidentSurvivor{
                         isEmpty = false;
                         
                     } else if (Random.Next(50) == 0 && isEmpty){
+                        GameObject rat = new GameObject(
+                            Color.Red, Color.Transparent, (int) TileType.Rat, 99);
+
+                        rat.Name = "Kobold";
+
+                        rat.Position = new Point(cell.X,cell.Y);
+                        rat.Walkable = false;
+
+                        var entity = new IComponent_Entity(rat, 2, 2, 1, 2);
+
+                        rat.SadComponents.Add(entity);
+                        rat.SadComponents.Add(new IComponent_Hostile(rat, entity));
+                        entityManager.Add(rat);
+                        isEmpty = false;
+                        
+                    } else if (Random.Next(50) == 0 && isEmpty){
+                        GameObject rat = new GameObject(
+                            Color.LimeGreen, Color.Transparent, (int) TileType.Rat, 99);
+
+                        rat.Name = "Goblin";
+
+                        rat.Position = new Point(cell.X,cell.Y);
+                        rat.Walkable = false;
+
+                        var entity = new IComponent_Entity(rat, 3, 3, 1, 2);
+
+                        rat.SadComponents.Add(entity);
+                        rat.SadComponents.Add(new IComponent_Hostile(rat, entity));
+                        entityManager.Add(rat);
+                        isEmpty = false;
+                        
+                    } else if (Random.Next(50) == 0 && isEmpty){
                         Gold gold = new Gold(
                             Color.Yellow, Color.Transparent, (int) TileType.Gold, 98, 
                             Random.Next(10, 100));
