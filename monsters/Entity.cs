@@ -65,8 +65,8 @@ namespace ResidentSurvivor {
 
         }
 
-        public virtual void Interact(){
-            
+        public virtual bool Interact(){
+            return false;
         }
 
         //used for items, intend is only the player can pickup

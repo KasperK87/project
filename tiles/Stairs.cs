@@ -18,8 +18,7 @@ namespace ResidentSurvivor
             base.Update(delta);
         }
 
-        public override void Interact()
-        {   
+        public override bool Interact(){   
             //Mock up code for stairs
             Game.Instance.Screen.Children.Remove(Game.UIManager.dungeon.getCurrentFloor());
 
@@ -31,7 +30,8 @@ namespace ResidentSurvivor
 
             Game.UIManager.currentFloor = Game.UIManager.dungeon.getCurrentFloor();
             Game.UIManager.Children.Add(Game.UIManager.currentFloor);
-            base.Interact();
+            return true;
+            //base.Interact();
         }
     }
 }

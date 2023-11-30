@@ -18,9 +18,13 @@ namespace ResidentSurvivor
                 hostDungeon = setDungeon;
         }
 
-        public override void Interact(){
+        public override bool Interact(){
             this.IsOpen = !this.IsOpen;
-            hostDungeon.SetCellProperties(this.Position.X, this.Position.Y, true, true);
+            if (this.IsOpen)
+                hostDungeon.SetCellProperties(this.Position.X, this.Position.Y, true, true);
+            else
+                hostDungeon.SetCellProperties(this.Position.X, this.Position.Y, false, true);
+            return true;
         }
 
         public override void Update(TimeSpan delta){
