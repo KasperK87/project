@@ -158,15 +158,19 @@ namespace ResidentSurvivor{
                         newPositionAction = parent.Position + (1, 0);
                         break;
                     case SadConsole.Input.Keys.NumPad7:
+                    case SadConsole.Input.Keys.Home:
                         newPositionAction = parent.Position + (-1, -1);
                         break;
                     case SadConsole.Input.Keys.NumPad9:
+                    case SadConsole.Input.Keys.PageUp:
                         newPositionAction = parent.Position + (1, -1);
                         break;
                     case SadConsole.Input.Keys.NumPad1:
+                    case SadConsole.Input.Keys.End:
                         newPositionAction = parent.Position + (-1, 1);
                         break;
                     case SadConsole.Input.Keys.NumPad3:
+                    case SadConsole.Input.Keys.PageDown:
                         newPositionAction = parent.Position + (1, 1);
                         break;
                     case SadConsole.Input.Keys.NumPad5:
