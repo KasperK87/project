@@ -138,20 +138,56 @@ namespace ResidentSurvivor{
             if (performAction){
                 System.Console.WriteLine("Ready");
                 //perform action
-                if (info.IsKeyDown(SadConsole.Input.Keys.Up) || info.IsKeyDown(SadConsole.Input.Keys.NumPad8)) {
-                    GameObject entity = (GameObject)Game.UIManager.currentFloor.GetMonsterAt(parent.Position.X, parent.Position.Y-1);
-                    System.Console.WriteLine("Action on up");
-                        if (entity != null){
-                            if(entity.Interact()){
-                                performAction = false;
-                                Game.UIManager.currentFloor.turn++;
-                                keyHit = true;
-                                preKeyDown = keyHit;
-                                flag = true;
-                                return;
-                            }
-                        }
+                Point newPositionAction = parent.Position;
+                if (info.KeysPressed.Count > 0)
+                switch (info.KeysPressed[0].Key){
+                    case SadConsole.Input.Keys.Up:
+                    case SadConsole.Input.Keys.NumPad8:
+                        newPositionAction = parent.Position + (0, -1);
+                        break;
+                    case SadConsole.Input.Keys.Down:
+                    case SadConsole.Input.Keys.NumPad2:
+                        newPositionAction = parent.Position + (0, 1);
+                        break;
+                    case SadConsole.Input.Keys.Left:
+                    case SadConsole.Input.Keys.NumPad4:
+                        newPositionAction = parent.Position + (-1, 0);
+                        break;
+                    case SadConsole.Input.Keys.Right:
+                    case SadConsole.Input.Keys.NumPad6:
+                        newPositionAction = parent.Position + (1, 0);
+                        break;
+                    case SadConsole.Input.Keys.NumPad7:
+                        newPositionAction = parent.Position + (-1, -1);
+                        break;
+                    case SadConsole.Input.Keys.NumPad9:
+                        newPositionAction = parent.Position + (1, -1);
+                        break;
+                    case SadConsole.Input.Keys.NumPad1:
+                        newPositionAction = parent.Position + (-1, 1);
+                        break;
+                    case SadConsole.Input.Keys.NumPad3:
+                        newPositionAction = parent.Position + (1, 1);
+                        break;
+                    case SadConsole.Input.Keys.NumPad5:
+                        newPositionAction = parent.Position + (0, 0);
+                        break;
                 }
+                
+                GameObject entity = (GameObject)Game.UIManager.currentFloor.GetMonsterAt(newPositionAction.X, newPositionAction.Y);
+                System.Console.WriteLine("Action on up");
+
+                if (entity != null){
+                    if(entity.Interact()){
+                        performAction = false;
+                        Game.UIManager.currentFloor.turn++;
+                        keyHit = true;
+                        preKeyDown = keyHit;
+                        flag = true;
+                        return;
+                    }
+                }
+                
                 if (info.HasKeysDown && !info.IsKeyDown(SadConsole.Input.Keys.A)){
                     performAction = false;
                 }
