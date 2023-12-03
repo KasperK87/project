@@ -15,7 +15,7 @@ namespace ResidentSurvivor
         public Console? menu;
         public Console statusScreen;
         public Console massageScreen;
-        Pause pauseScreen; 
+        public Pause pauseScreen; 
 
         public UIManager()
         {

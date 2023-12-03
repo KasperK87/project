@@ -62,6 +62,7 @@ namespace ResidentSurvivor{
 
             public override void Update(TimeSpan delta)
             {
+                Game.UIManager.pauseScreen.Hide();
                 base.Update(delta);
             }
 

@@ -1,6 +1,6 @@
 namespace   ResidentSurvivor {
 
-    class Pause : SadConsole.UI.Window {
+    public class Pause : SadConsole.UI.Window {
         public TimeSpan timer;
         private SadConsole.Readers.TheDrawFont[] fonts;
         private SadConsole.Readers.TheDrawFont _selectedFont;
@@ -29,7 +29,13 @@ namespace   ResidentSurvivor {
             restartButton.Click += (x, y) => {
                 //Refactor this, should be a method in UIManager
                 Game.UIManager.dungeon = new Dungeon(16);
+                
+                Game.Instance.Screen.Children.Remove(Game.UIManager.currentFloor);
+                Game.Instance.Screen.Children.Remove(Game.UIManager.statusScreen);
+                Game.Instance.Screen.Children.Remove(Game.UIManager.massageScreen);
+
                 Game.UIManager.currentFloor = Game.UIManager.dungeon.getCurrentFloor(); 
+
                 Game.Instance.Screen.Children.Add(Game.UIManager.currentFloor);
                 Game.Instance.Screen.Children.Add(Game.UIManager.statusScreen);
                 Game.Instance.Screen.Children.Add(Game.UIManager.massageScreen);
