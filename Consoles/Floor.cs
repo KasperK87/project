@@ -278,7 +278,7 @@ namespace ResidentSurvivor{
         }
 
         public override void Update(TimeSpan delta){
-            this.IsFocused = true;
+            //this.IsFocused = true;
             timer += delta;
               
             DungeonMap.UpdatePlayerFieldOfView(GetSadComponent<IComponent_PlayerControls>().parent);
@@ -317,6 +317,8 @@ namespace ResidentSurvivor{
 
         //draws path to mouse
         public override bool ProcessMouse(SadConsole.Input.MouseScreenObjectState info){
+            //don't process mouse if not focused
+            if (!IsFocused) return false;
 
             //if(mouseLoc != info.CellPosition) pathXtoY();
             GetSadComponent<IComponent_PlayerControls>().ProcessMouse(info);
@@ -360,6 +362,10 @@ namespace ResidentSurvivor{
                 DungeonMap.GetCell( GetSadComponent<IComponent_PlayerControls>().parent.Position.X, 
                     GetSadComponent<IComponent_PlayerControls>().parent.Position.Y) );
             } catch (RogueSharp.NoMoreStepsException) { 
+                return null;
+            
+            //catches if path is not found 
+            } catch (RogueSharp.PathNotFoundException) { 
                 return null;
             }
             

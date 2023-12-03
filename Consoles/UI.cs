@@ -15,6 +15,7 @@ namespace ResidentSurvivor
         public Console? menu;
         public Console statusScreen;
         public Console massageScreen;
+        Pause pauseScreen; 
 
         public UIManager()
         {
@@ -52,6 +53,12 @@ namespace ResidentSurvivor
 
             this.Children.Add(massageScreen);
 
+            //Creating Pause Screen
+            pauseScreen = new Pause(120,40, 0);
+            pauseScreen.Hide();
+            this.Children.Add(pauseScreen);
+
+
             Console splashScreen = new SplashScreen(120,40); 
 
             this.Children.Add(splashScreen);
@@ -81,7 +88,16 @@ namespace ResidentSurvivor
                 statusScreen.Print(1,3, "HP: " + com.HP + "/" + currentFloor.getPlayer().maxHP + "    ");
                 */
 
+                currentFloor.IsFocused = true;
+
+                if (SadConsole.Game.Instance.Keyboard.IsKeyReleased(SadConsole.Input.Keys.Escape)){
+                    currentState = ProcessState.Paused;
+                }   
+
             } else if (currentState == ProcessState.Paused){
+                pauseScreen.Show();
+                pauseScreen.IsFocused = true;
+                currentFloor.IsFocused = false;
                
             } else if (currentState == ProcessState.Terminated){
                 //kill all screens, and show gameover screen

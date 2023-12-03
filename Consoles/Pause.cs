@@ -23,7 +23,7 @@ namespace   ResidentSurvivor {
             SadConsole.UI.Controls.Button restartButton = new SadConsole.UI.Controls.Button(13,3);
             restartButton.Theme = new SadConsole.UI.Themes.ButtonLinesTheme();
             
-            restartButton.Position = new SadRogue.Primitives.Point(w/2-6,h/2+7);
+            restartButton.Position = new SadRogue.Primitives.Point(w/2-6,h/2+9);
             restartButton.Text = "RESTART";
             
             restartButton.Click += (x, y) => {
@@ -34,7 +34,21 @@ namespace   ResidentSurvivor {
                 Game.Instance.Screen.Children.Add(Game.UIManager.statusScreen);
                 Game.Instance.Screen.Children.Add(Game.UIManager.massageScreen);
                 Game.UIManager.currentState = ProcessState.Active;
-                SadConsole.Game.Instance.Screen.Children.Remove(this);
+                this.IsFocused = false;
+                this.Hide();
+            };
+
+            //adding a continue button
+            SadConsole.UI.Controls.Button continueButton = new SadConsole.UI.Controls.Button(13,3);
+            continueButton.Theme = new SadConsole.UI.Themes.ButtonLinesTheme();
+
+            continueButton.Position = new SadRogue.Primitives.Point(w/2-6,h/2+4);
+            continueButton.Text = "CONTINUE";
+
+            continueButton.Click += (x, y) => {
+                Game.UIManager.currentState = ProcessState.Active;
+                this.IsFocused = false;
+                this.Hide();
             };
 
             //adding a quit button
@@ -48,6 +62,7 @@ namespace   ResidentSurvivor {
                 SadConsole.Game.Instance.MonoGameInstance.Exit();
             };
             
+            this.Controls.Add(continueButton);
             this.Controls.Add(restartButton);
             this.Controls.Add(quitButton);
 

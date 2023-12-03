@@ -48,7 +48,7 @@ namespace ResidentSurvivor
 
             if (SadConsole.Game.Instance.Keyboard.IsKeyReleased(SadConsole.Input.Keys.Escape)){
                 //SadConsole.Game.Instance.Dispose();
-                SadConsole.Game.Instance.MonoGameInstance.Exit();
+                //SadConsole.Game.Instance.MonoGameInstance.Exit();
             }      
         }
     }
