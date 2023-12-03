@@ -17,6 +17,7 @@ namespace ResidentSurvivor{
 
 
         private bool preKeyDown; 
+        private bool performAction = false;
 
         //used to determine if the player should be running
         private TimeSpan timeStampRun = TimeSpan.Zero;
@@ -126,6 +127,40 @@ namespace ResidentSurvivor{
 
             Point oldPosition = parent.Position;
             Point newPosition = (0, 0);
+
+            // 'A' key pressed to perform action
+            if (info.IsKeyPressed(SadConsole.Input.Keys.A)){
+                performAction = true;
+                System.Console.WriteLine("Perform Action Where?");
+                flag = true;
+                return;
+            }
+            if (performAction){
+                System.Console.WriteLine("Ready");
+                //perform action
+                if (info.IsKeyDown(SadConsole.Input.Keys.Up) || info.IsKeyDown(SadConsole.Input.Keys.NumPad8)) {
+                    GameObject entity = (GameObject)Game.UIManager.currentFloor.GetMonsterAt(parent.Position.X, parent.Position.Y-1);
+                    System.Console.WriteLine("Action on up");
+                        if (entity != null){
+                            if(entity.Interact()){
+                                performAction = false;
+                                Game.UIManager.currentFloor.turn++;
+                                keyHit = true;
+                                preKeyDown = keyHit;
+                                flag = true;
+                                return;
+                            }
+                        }
+                }
+                if (info.HasKeysDown && !info.IsKeyDown(SadConsole.Input.Keys.A)){
+                    performAction = false;
+                }
+                //needed to stop player from running, when performing action
+                timeStampRun = Game.UIManager.currentFloor.timer;
+
+                flag = true;
+                return;
+            }
 
             // Process UP/DOWN movements
             if (info.IsKeyDown(SadConsole.Input.Keys.Up) || info.IsKeyDown(SadConsole.Input.Keys.NumPad8))
