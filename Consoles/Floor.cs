@@ -18,7 +18,8 @@ namespace ResidentSurvivor{
         UpStairs = 169,
         DownStairs = 170,
         Gold = 282,
-        Dagger = 40
+        Dagger = 40, //smaller dagger is 43
+        Sword = 40,
     }
     public class Floor : Console {
         public UInt64 turn;
