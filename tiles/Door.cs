@@ -22,8 +22,10 @@ namespace ResidentSurvivor
             this.IsOpen = !this.IsOpen;
             if (this.IsOpen)
                 hostDungeon.SetCellProperties(this.Position.X, this.Position.Y, true, true);
-            else
+            else {
+                this.Walkable = false;
                 hostDungeon.SetCellProperties(this.Position.X, this.Position.Y, false, true);
+            }
             return true;
         }
 
