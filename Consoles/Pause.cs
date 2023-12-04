@@ -1,3 +1,5 @@
+using SadConsole.Input;
+
 namespace   ResidentSurvivor {
 
     public class Pause : SadConsole.UI.Window {
@@ -18,6 +20,8 @@ namespace   ResidentSurvivor {
             DefaultBackground = SadRogue.Primitives.Color.Black;
 
             this.Title = "PAUSED";
+
+            timer = TimeSpan.Zero;
 
             //adding a restart button
             SadConsole.UI.Controls.Button restartButton = new SadConsole.UI.Controls.Button(13,3);
@@ -75,7 +79,24 @@ namespace   ResidentSurvivor {
             this.Show();
         }
 
+        public override void Show(bool modal)
+        {
+            timer = TimeSpan.Zero;
+            base.Show(modal);
+        }
+
+        public override bool ProcessKeyboard(Keyboard info)
+        {
+            if (info.IsKeyReleased(SadConsole.Input.Keys.Escape) && timer.TotalMilliseconds > 500){
+                    Game.UIManager.currentState = ProcessState.Active;
+                    this.IsFocused = false;
+                    this.Hide();
+                }  
+            return base.ProcessKeyboard(info);
+        }
+
         public override void Update(System.TimeSpan delta){
+            timer += delta;
             base.Update(delta);
         }
     }

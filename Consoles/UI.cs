@@ -10,6 +10,7 @@ namespace ResidentSurvivor
      // and makes consoles easily addressable from a central place.
 
         public ProcessState currentState;
+        private ProcessState previousState; 
         public Dungeon dungeon;
         public Floor currentFloor;
         public Console? menu;
@@ -25,6 +26,7 @@ namespace ResidentSurvivor
             DungeonTest.test3();
 
             currentState = ProcessState.Active;
+            
 
             // must be set to true
             // or will not call each child's Draw method
@@ -91,15 +93,20 @@ namespace ResidentSurvivor
 
                 currentFloor.IsFocused = true;
 
-                if (SadConsole.Game.Instance.Keyboard.IsKeyReleased(SadConsole.Input.Keys.Escape)){
+                //fixes the UI opening the pause screen
+                //on the same keypress as the pause 
+                //screen closes on
+                if (SadConsole.Game.Instance.Keyboard.IsKeyReleased(SadConsole.Input.Keys.Escape) &&
+                    previousState == currentState){
                     currentState = ProcessState.Paused;
                 }   
 
             } else if (currentState == ProcessState.Paused){
-                pauseScreen.Show();
+                if (!pauseScreen.IsVisible)
+                    pauseScreen.Show();
                 pauseScreen.IsFocused = true;
                 currentFloor.IsFocused = false;
-               
+
             } else if (currentState == ProcessState.Terminated){
                 //kill all screens, and show gameover screen
                 //this.Children.Add(new Menu(120,40));
@@ -112,6 +119,7 @@ namespace ResidentSurvivor
                 currentState = ProcessState.Paused;
             }
 
+            previousState = currentState;
             base.Update(timeElapsed);
         }
     }
