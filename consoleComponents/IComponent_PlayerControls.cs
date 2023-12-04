@@ -48,26 +48,27 @@ namespace ResidentSurvivor{
                 //and there is a gameobject there interact with it
                 if ((Math.Abs(mouseLoc.X-parent.Position.X) <= 1 && 
                     Math.Abs(mouseLoc.Y-parent.Position.Y) <= 1) &&
-                    (Math.Abs(mouseLoc.X-parent.Position.X) != 0 &&
-                    Math.Abs(mouseLoc.Y-parent.Position.Y) != 0) &&
                     Game.UIManager.currentFloor.GetMonsterAt(mouseLoc.X, mouseLoc.Y) != null) {
-                        GameObject obj = (GameObject)Game.UIManager.currentFloor.GetMonsterAt(mouseLoc.X, mouseLoc.Y);
-                        if (obj != null){
+                        if (Math.Abs(mouseLoc.X-parent.Position.X) == 0 &&
+                            Math.Abs(mouseLoc.Y-parent.Position.Y) == 0) return; 
+                                GameObject obj = (GameObject)Game.UIManager.currentFloor.GetMonsterAt(mouseLoc.X, mouseLoc.Y);
+                                if (obj != null){
                             
-                            //This is done to allow items which should be picked up
-                            //to not be picked up when the player clicks on them
-                            //but to be picked up when the player walks over them
-                            if (obj.GetSadComponent<IComponent_Entity>() != null){
-                                obj.GetSadComponent<IComponent_Entity>().currHP -= parent.GetSadComponent<IComponent_Entity>().damage;
-                                followingPath = false;
-                                Game.UIManager.currentFloor.turn++;
-                            } else if(obj.Interact()){
-                                followingPath = false;
-                                Game.UIManager.currentFloor.turn++;
-                            }
-                            //when the gameobject is not interactable
-                            //and not attackable, it is a item and
-                            //should be moved over and picked up
+                                //This is done to allow items which should be picked up
+                                //to not be picked up when the player clicks on them
+                                //but to be picked up when the player walks over them
+                                if (obj.GetSadComponent<IComponent_Entity>() != null){
+                                    obj.GetSadComponent<IComponent_Entity>().currHP -= parent.GetSadComponent<IComponent_Entity>().damage;
+                                    followingPath = false;
+                                    Game.UIManager.currentFloor.turn++;
+                                } else if(obj.Interact()){
+                                    followingPath = false;
+                                    Game.UIManager.currentFloor.turn++;
+                                }
+                                //when the gameobject is not interactable
+                                //and not attackable, it is a item and
+                                //should be moved over and picked up
+                            
                         }
                 }
             }
