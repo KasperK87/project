@@ -48,6 +48,8 @@ namespace ResidentSurvivor{
                 //and there is a gameobject there interact with it
                 if ((Math.Abs(mouseLoc.X-parent.Position.X) <= 1 && 
                     Math.Abs(mouseLoc.Y-parent.Position.Y) <= 1) &&
+                    (Math.Abs(mouseLoc.X-parent.Position.X) != 0 &&
+                    Math.Abs(mouseLoc.Y-parent.Position.Y) != 0) &&
                     Game.UIManager.currentFloor.GetMonsterAt(mouseLoc.X, mouseLoc.Y) != null) {
                         GameObject obj = (GameObject)Game.UIManager.currentFloor.GetMonsterAt(mouseLoc.X, mouseLoc.Y);
                         if (obj != null){
