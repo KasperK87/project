@@ -54,7 +54,8 @@ namespace ResidentSurvivor
             this.Children.Add(massageScreen);
 
             //Creating Pause Screen
-            pauseScreen = new Pause(120,40, 0);
+            pauseScreen = new Pause(60,20, 0);
+            pauseScreen.Position = new Point(60-30, 20-10);
             pauseScreen.Hide();
             this.Children.Add(pauseScreen);
 

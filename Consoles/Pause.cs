@@ -23,7 +23,7 @@ namespace   ResidentSurvivor {
             SadConsole.UI.Controls.Button restartButton = new SadConsole.UI.Controls.Button(13,3);
             restartButton.Theme = new SadConsole.UI.Themes.ButtonLinesTheme();
             
-            restartButton.Position = new SadRogue.Primitives.Point(w/2-6,h/2+9);
+            restartButton.Position = new SadRogue.Primitives.Point(w/2-6,h/2+9-6);
             restartButton.Text = "RESTART";
             
             restartButton.Click += (x, y) => {
@@ -48,7 +48,7 @@ namespace   ResidentSurvivor {
             SadConsole.UI.Controls.Button continueButton = new SadConsole.UI.Controls.Button(13,3);
             continueButton.Theme = new SadConsole.UI.Themes.ButtonLinesTheme();
 
-            continueButton.Position = new SadRogue.Primitives.Point(w/2-6,h/2+4);
+            continueButton.Position = new SadRogue.Primitives.Point(w/2-6,h/2+4-6);
             continueButton.Text = "CONTINUE";
 
             continueButton.Click += (x, y) => {
@@ -61,7 +61,7 @@ namespace   ResidentSurvivor {
             SadConsole.UI.Controls.Button quitButton = new SadConsole.UI.Controls.Button(13,3);
             quitButton.Theme = new SadConsole.UI.Themes.ButtonLinesTheme();
             
-            quitButton.Position = new SadRogue.Primitives.Point(w/2-6,h/2+12);
+            quitButton.Position = new SadRogue.Primitives.Point(w/2-6,h/2+12-6);
             quitButton.Text = "QUIT ";
             
             quitButton.Click += (x, y) => {
