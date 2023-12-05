@@ -48,5 +48,15 @@ namespace ResidentSurvivor {
         public uint getGold(){
             return _amountOfGold;
         }
+
+        public string[] getInventory(){
+            string[] inventory = new string[_inventory.Length];
+            for (int i = 0; i < _inventory.Length; i++){
+                if (_inventory[i] != null){
+                    inventory[i] = _inventory[i].Name;
+                }
+            }
+            return inventory;
+        }
     }
 }

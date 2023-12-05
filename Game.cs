@@ -10,7 +10,8 @@ namespace ResidentSurvivor
         Inactive,
         Active,
         Paused,
-        Terminated
+        Terminated,
+        Inventory
     }
 
     class Game : SadConsole.Game{

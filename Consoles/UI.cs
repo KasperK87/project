@@ -17,6 +17,7 @@ namespace ResidentSurvivor
         public Console statusScreen;
         public Console massageScreen;
         public Pause pauseScreen; 
+        public Inventory inventoryScreen;
 
         public UIManager()
         {
@@ -61,7 +62,10 @@ namespace ResidentSurvivor
             pauseScreen.Hide();
             this.Children.Add(pauseScreen);
 
+            //Creating Inventory Screen
+            inventoryScreen = new Inventory(currentFloor.getPlayer());
 
+            //Creating splashscreen Screen
             Console splashScreen = new SplashScreen(120,40); 
 
             this.Children.Add(splashScreen);
@@ -99,6 +103,9 @@ namespace ResidentSurvivor
                 if (SadConsole.Game.Instance.Keyboard.IsKeyReleased(SadConsole.Input.Keys.Escape) &&
                     previousState == currentState){
                     currentState = ProcessState.Paused;
+                } else if (SadConsole.Game.Instance.Keyboard.IsKeyReleased(SadConsole.Input.Keys.I) &&
+                    previousState == currentState){
+                    currentState = ProcessState.Inventory;
                 }   
 
             } else if (currentState == ProcessState.Paused){
@@ -117,6 +124,11 @@ namespace ResidentSurvivor
                 this.Children.Remove(massageScreen);
 
                 currentState = ProcessState.Paused;
+            } else if (currentState == ProcessState.Inventory){
+                if (!inventoryScreen.IsVisible)
+                    inventoryScreen.Show();
+                inventoryScreen.IsFocused = true;
+                currentFloor.IsFocused = false;
             }
 
             previousState = currentState;
