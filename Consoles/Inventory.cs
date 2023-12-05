@@ -19,11 +19,14 @@ namespace ResidentSurvivor {
 
         public override void Render(TimeSpan delta)
         {
-            this.Clear();
+            //this.Clear();
 
             //show inventory
             for (int i = 0; i < player.getInventory().Length; i++)
             {
+                //clears the line
+                this.Clear(1, i+1, 10);
+                //prints the item
                 this.Print(1, i+1, player.getInventory()[i], 
                     SadRogue.Primitives.Color.White, 
                     SadRogue.Primitives.Color.Black);
@@ -38,7 +41,8 @@ namespace ResidentSurvivor {
         }
         public override bool ProcessKeyboard(Keyboard info)
         {
-            if (info.IsKeyReleased(SadConsole.Input.Keys.Escape) && timer.TotalMilliseconds > 500){
+            if ((info.IsKeyReleased(SadConsole.Input.Keys.Escape) || info.IsKeyReleased(SadConsole.Input.Keys.I)) &&
+                 timer.TotalMilliseconds > 500){
                     Game.UIManager.currentState = ProcessState.Active;
                     this.IsFocused = false;
                     this.Hide();
