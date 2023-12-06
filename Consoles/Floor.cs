@@ -20,6 +20,7 @@ namespace ResidentSurvivor{
         Gold = 282,
         Dagger = 40, //smaller dagger is 43
         Sword = 40,
+        Axe = 46
     }
     public class Floor : Console {
         public UInt64 turn;
@@ -187,6 +188,15 @@ namespace ResidentSurvivor{
                         dagger.Walkable = true;
 
                         entityManager.Add(dagger);
+                        isEmpty = false;
+                    } else if (Random.Next(50) == 0 && isEmpty){
+                        Axe axe = new Axe(
+                            Color.White, Color.Transparent, (int) TileType.Axe, 98);
+
+                        axe.Position = new Point(cell.X,cell.Y);
+                        axe.Walkable = true;
+
+                        entityManager.Add(axe);
                         isEmpty = false;
                     }
                     CreatePlayer(cell.X, cell.Y);

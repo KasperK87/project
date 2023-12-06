@@ -5,10 +5,10 @@ namespace ResidentSurvivor {
     public class GameObject : SadConsole.Entities.Entity {
         public bool isPlayer = false;
         public string type = "GameObject";
-        public int currHP;
-        public int maxHP;
-        protected int speed;
-        public int damage; 
+        public int currHP = 1;
+        public int maxHP = 1;
+        protected int speed = 1;
+        public int damage = 1; 
         public Boolean Walkable { get; set; }
 
         private SadRogue.Primitives.Color color;

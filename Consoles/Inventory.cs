@@ -63,15 +63,19 @@ namespace ResidentSurvivor {
             } else if (info.IsKeyPressed(SadConsole.Input.Keys.Enter)){
                 if (player.getInventory()[_selectedItem] != null){
                     player.equipItem(_selectedItem);
-                    
+                    //should this take a turn?
+                    closeWindow();
                 }
             } else if ((info.IsKeyReleased(SadConsole.Input.Keys.Escape) || info.IsKeyReleased(SadConsole.Input.Keys.I)) &&
                  timer.TotalMilliseconds > 200){
-                    Game.UIManager.currentState = ProcessState.Active;
-                    this.IsFocused = false;
-                    this.Hide();
+                    closeWindow();
                 }  
             return base.ProcessKeyboard(info);
+        }
+        private void closeWindow(){
+            Game.UIManager.currentState = ProcessState.Active;
+            this.IsFocused = false;
+            this.Hide();
         }
         public override void Update(System.TimeSpan delta){
             timer += delta;
