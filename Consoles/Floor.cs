@@ -23,7 +23,13 @@ namespace ResidentSurvivor{
         Axe = 46
     }
     public class Floor : Console {
-        public UInt64 turn;
+        private bool _drawPath = false;
+        private Point _mouseLoc;
+        private UInt64 _turn;
+        public UInt64 turn {get => _turn; set {
+            _drawPath = false;
+            _turn = value;
+        }}
         private static Player player = new Player(
                 Color.White, Color.Blue, (int) TileType.Player, 100);
 
@@ -321,14 +327,18 @@ namespace ResidentSurvivor{
             DungeonMap.Draw(this);
 
             drawPath();
-
-            this.SetBackground(GetSadComponent<IComponent_PlayerControls>().mouseLoc.X,GetSadComponent<IComponent_PlayerControls>().mouseLoc.Y, Color.Yellow);
         }
 
         //draws path to mouse
         public override bool ProcessMouse(SadConsole.Input.MouseScreenObjectState info){
             //don't process mouse if not focused
             if (!IsFocused) return false;
+
+            //only draw path if mouse is in use
+            if (_mouseLoc != info.WorldCellPosition){
+                _mouseLoc = info.WorldCellPosition;
+                _drawPath = true;
+            }
 
             //if(mouseLoc != info.CellPosition) pathXtoY();
             GetSadComponent<IComponent_PlayerControls>().ProcessMouse(info);
@@ -382,16 +392,19 @@ namespace ResidentSurvivor{
         }
 
         private void drawPath(){
-            if ( _cells != null)
-            {
-                foreach ( RogueSharp.Cell cell in _cells.Steps)
+            if (_drawPath){
+                if ( _cells != null)
                 {
-                    if ( cell != null )
+                    foreach ( RogueSharp.Cell cell in _cells.Steps)
                     {
-                        this.SetBackground(cell.X, cell.Y, Color.LightYellow.SetAlpha(180));
+                        if ( cell != null )
+                        {
+                            this.SetBackground(cell.X, cell.Y, Color.LightYellow.SetAlpha(180));
+                        }
                     }
+                    this.SetBackground(_cells.Start.X, _cells.Start.Y, Color.Blue);
                 }
-                this.SetBackground(_cells.Start.X, _cells.Start.Y, Color.Blue);
+            this.SetBackground(GetSadComponent<IComponent_PlayerControls>().mouseLoc.X,GetSadComponent<IComponent_PlayerControls>().mouseLoc.Y, Color.Yellow);
             }
         }
 
