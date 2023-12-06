@@ -7,6 +7,8 @@ namespace ResidentSurvivor {
         //this class is the GUI for the inventory
         private Player player;
         private TimeSpan timer;
+
+        private int _selectedItem;
         public Inventory(Player pPlayer) : base(60, 20){
             player = pPlayer;
 
@@ -15,6 +17,7 @@ namespace ResidentSurvivor {
             this.Title = "INVENTORY";
 
             timer = TimeSpan.Zero;
+            _selectedItem = 0;
         }
 
         public override void Render(TimeSpan delta)
@@ -27,9 +30,15 @@ namespace ResidentSurvivor {
                 //clears the line
                 this.Clear(1, i+1, 10);
                 //prints the item
-                this.Print(1, i+1, player.getInventory()[i], 
-                    SadRogue.Primitives.Color.White, 
-                    SadRogue.Primitives.Color.Black);
+                if (i == _selectedItem)
+                    this.Print(1, i+1, player.getInventory()[i], 
+                        SadRogue.Primitives.Color.White, 
+                        SadRogue.Primitives.Color.Red);
+                else {
+                    this.Print(1, i+1, player.getInventory()[i], 
+                        SadRogue.Primitives.Color.White, 
+                        SadRogue.Primitives.Color.Black);
+                }
             }
 
             base.Render(delta);
@@ -41,8 +50,23 @@ namespace ResidentSurvivor {
         }
         public override bool ProcessKeyboard(Keyboard info)
         {
-            if ((info.IsKeyReleased(SadConsole.Input.Keys.Escape) || info.IsKeyReleased(SadConsole.Input.Keys.I)) &&
-                 timer.TotalMilliseconds > 500){
+            if (info.IsKeyPressed(SadConsole.Input.Keys.Down) && timer.TotalMilliseconds > 200){
+                _selectedItem++;
+                if (_selectedItem >= player.getInventory().Length)
+                    _selectedItem = 0;
+                timer = TimeSpan.Zero;
+            } else if (info.IsKeyPressed(SadConsole.Input.Keys.Up)){
+                _selectedItem--;
+                if (_selectedItem < 0)
+                    _selectedItem = player.getInventory().Length-1;
+                timer = TimeSpan.Zero;
+            } else if (info.IsKeyPressed(SadConsole.Input.Keys.Enter)){
+                if (player.getInventory()[_selectedItem] != null){
+                    player.equipItem(_selectedItem);
+                    
+                }
+            } else if ((info.IsKeyReleased(SadConsole.Input.Keys.Escape) || info.IsKeyReleased(SadConsole.Input.Keys.I)) &&
+                 timer.TotalMilliseconds > 200){
                     Game.UIManager.currentState = ProcessState.Active;
                     this.IsFocused = false;
                     this.Hide();
