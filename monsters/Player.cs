@@ -58,5 +58,15 @@ namespace ResidentSurvivor {
             }
             return inventory;
         }
+        public bool equipItem(int index){
+            if (_inventory[index] != null){
+                if (_inventory[index].type == "Weapon"){
+                    _equippedWeapon = _inventory[index];
+                    System.Console.WriteLine("You equipped a " + _inventory[index].Name);
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }
