@@ -39,6 +39,10 @@ namespace ResidentSurvivor{
                 Game.Instance.Screen.Children.Add(Game.UIManager.currentFloor);
                 Game.Instance.Screen.Children.Add(Game.UIManager.statusScreen);
                 Game.Instance.Screen.Children.Add(Game.UIManager.massageScreen);
+
+                Game.UIManager.inventoryScreen = new Inventory(Game.UIManager.currentFloor.getPlayer());
+                Game.Instance.Screen.Children.Add(Game.UIManager.inventoryScreen);
+                
                 Game.UIManager.currentState = ProcessState.Active;
                 SadConsole.Game.Instance.Screen.Children.Remove(this);
             };

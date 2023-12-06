@@ -122,6 +122,7 @@ namespace ResidentSurvivor
                 this.Children.Remove(currentFloor);
                 this.Children.Remove(statusScreen);
                 this.Children.Remove(massageScreen);
+                this.Children.Remove(inventoryScreen);
 
                 currentState = ProcessState.Paused;
             } else if (currentState == ProcessState.Inventory){
