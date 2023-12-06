@@ -1,5 +1,7 @@
 //gameObejct extends entity, and is based on a component patten
 using System.Runtime.ConstrainedExecution;
+using System.Runtime.Serialization;
+using Microsoft.VisualBasic;
 
 namespace ResidentSurvivor {
     public class GameObject : SadConsole.Entities.Entity {
@@ -10,8 +12,9 @@ namespace ResidentSurvivor {
         protected int speed = 1;
         public int damage = 1; 
         public Boolean Walkable { get; set; }
-
-        private SadRogue.Primitives.Color color;
+        public SadRogue.Primitives.Color color;
+        protected SadConsole.ColoredString.ColoredGlyphEffect[] frames = new SadConsole.ColoredString.ColoredGlyphEffect[4];
+        public TimeSpan timer = TimeSpan.FromMilliseconds(101);
 
         public GameObject(SadRogue.Primitives.Color c1,SadRogue.Primitives.Color c2, int SetGlyph, int zIndex):
             base(c1, c2, SetGlyph, zIndex){
@@ -38,11 +41,16 @@ namespace ResidentSurvivor {
         }
 
         public override void Update(TimeSpan delta){
+            timer += delta;
             if (!Game.UIManager.currentFloor.GetDungeonMap().IsInFov(this.Position.X, this.Position.Y) && 
                 !Game.UIManager.currentFloor.GetDungeonMap().IsExplored(this.Position.X, this.Position.Y)){
                 //this.Appearance.Glyph = 0;
+                //this.setFramesColor(SadRogue.Primitives.Color.Transparent);
                 this.Appearance.Foreground = SadRogue.Primitives.Color.Transparent;
-            } else {
+            } else if (timer > TimeSpan.FromMilliseconds(100)) {
+                if (frames[0] != null){
+                    this.setFramesColor(this.color);
+                }
                 this.Appearance.Foreground = this.color;
             }
     
@@ -74,9 +82,19 @@ namespace ResidentSurvivor {
             
         }
 
-        public void Attack(SadConsole.Entities.Entity target){
+        public void Attack(GameObject target){
             target.GetSadComponent<IComponent_Entity>().currHP -= this.damage;
-            
+            target.setFramesColor(SadRogue.Primitives.Color.Red);
+            target.timer = TimeSpan.Zero;
+        }
+
+        public void setFramesColor(SadRogue.Primitives.Color c){
+            if (frames[0] == null){
+                return;
+            }
+            foreach (SadConsole.ColoredString.ColoredGlyphEffect frame in frames){
+                frame.Foreground = c;
+            }
         }
     }
 }

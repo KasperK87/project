@@ -275,7 +275,7 @@ namespace ResidentSurvivor{
                 // Check if the new position is valid
                 if (Game.UIManager.currentFloor.Surface.Area.Contains(newPosition) && Game.UIManager.currentFloor.GetDungeonMap().GetCell(newPosition.X, newPosition.Y).IsWalkable){
                     //check is there is a monster
-                    var monster = Game.UIManager.currentFloor.GetMonsterAt(newPosition.X, newPosition.Y);
+                    var monster = (GameObject)Game.UIManager.currentFloor.GetMonsterAt(newPosition.X, newPosition.Y);
                     if (monster == null || parent.Position == newPosition){
                         parent.Position = newPosition;
                         Game.UIManager.currentFloor.pathXtoY(mouseLoc.X, mouseLoc.Y);
@@ -283,6 +283,9 @@ namespace ResidentSurvivor{
                         System.Console.WriteLine("Player Attack");
                         if (monster.GetSadComponent<IComponent_Entity>() != null){
                             monster.GetSadComponent<IComponent_Entity>().currHP -= parent.GetSadComponent<IComponent_Entity>().damage;
+                            monster.setFramesColor(SadRogue.Primitives.Color.Red);
+                            monster.Appearance.Foreground = SadRogue.Primitives.Color.Red;
+                            monster.timer = TimeSpan.Zero;
                         } else {
                             GameObject gameobj = (GameObject)monster;
                             if (gameobj.Walkable){

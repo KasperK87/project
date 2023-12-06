@@ -63,10 +63,13 @@ namespace ResidentSurvivor{
         }
 
         public void Attack(SadConsole.Entities.Entity target){
+            GameObject obj = (GameObject)target;
             if (target.GetSadComponent<IComponent_Entity>() != null){
-                target.GetSadComponent<IComponent_Entity>().currHP -= parent.GetSadComponent<IComponent_Entity>().damage; ;
+                target.GetSadComponent<IComponent_Entity>().currHP -= parent.GetSadComponent<IComponent_Entity>().damage;
+                obj.setFramesColor(SadRogue.Primitives.Color.Red);
+                obj.Appearance.Foreground = SadRogue.Primitives.Color.Red;
+                obj.timer = TimeSpan.Zero;
             } else {
-                GameObject obj = (GameObject)target;
                 obj.Interact();
             }
             System.Console.WriteLine("Monster Attack!!!");
