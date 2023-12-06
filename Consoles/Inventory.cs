@@ -41,6 +41,10 @@ namespace ResidentSurvivor {
                 }
             }
 
+            this.Print(1, 17, "       press enter to equip, d to drop, esc to close", 
+                        SadRogue.Primitives.Color.White, 
+                        SadRogue.Primitives.Color.Black);
+
             base.Render(delta);
         }
          public override void Show(bool modal)
@@ -66,7 +70,13 @@ namespace ResidentSurvivor {
                     //should this take a turn?
                     closeWindow();
                 }
-            } else if ((info.IsKeyReleased(SadConsole.Input.Keys.Escape) || info.IsKeyReleased(SadConsole.Input.Keys.I)) &&
+            } else if (info.IsKeyPressed(SadConsole.Input.Keys.D)){
+                if (player.getInventory()[_selectedItem] != null){
+                    player.dropItem(_selectedItem);
+                    closeWindow();
+                }
+            } 
+            else if ((info.IsKeyReleased(SadConsole.Input.Keys.Escape) || info.IsKeyReleased(SadConsole.Input.Keys.I)) &&
                  timer.TotalMilliseconds > 200){
                     closeWindow();
                 }  

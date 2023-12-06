@@ -68,5 +68,18 @@ namespace ResidentSurvivor {
             }
             return false;
         }
+        public bool dropItem(int index){
+            if (_inventory[index] != null){
+                if (_inventory[index] == _equippedWeapon){
+                    System.Console.WriteLine("You can't drop your equipped weapon!"); 
+                    return false;
+                }
+                _inventory[index].Position = this.Position;
+                Game.UIManager.currentFloor.entityManager.Add(_inventory[index]);                
+                _inventory[index] = null;
+                return true;
+            }
+            return false;
+        }
     }
 }
