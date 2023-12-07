@@ -21,35 +21,7 @@ namespace ResidentSurvivor {
               this.damage = 3;
               this.Walkable = true;     
 
-            //adds animation to player
-            var anim = new SadConsole.Entities.AnimatedAppearanceComponent();
-            
-            var frame1 = new SadConsole.ColoredString.ColoredGlyphEffect();
-            frame1.Glyph = (int)TileType.Player;
-            frame1.Foreground = color;
-            frame1.Background = SadRogue.Primitives.Color.Transparent;
-
-            frames[0] = frame1;
-            frames[1] = frame1;
-
-            var frame2 = new SadConsole.ColoredString.ColoredGlyphEffect();
-            frame2.Glyph = (int)75;
-            frame2.Foreground = color;
-            frame2.Background = SadRogue.Primitives.Color.Transparent;
-
-            frames[2] = frame2;
-            frames[3] = frame2;
-
-            anim.Frames = frames;
-
-            anim.AnimationTime = TimeSpan.FromSeconds(2);
-            anim.IsRepeatable = true;
-
-            this.SadComponents.Add(anim);
-
-            if (this.GetSadComponent<SadConsole.Entities.AnimatedAppearanceComponent>() != null){  
-                this.GetSadComponent<SadConsole.Entities.AnimatedAppearanceComponent>().Start();
-            }
+              HelperFunctionsEntities.createAnimation(this,(int)TileType.Player, 75);
         }
 
         public bool AddItemToInventory(GameObject item){

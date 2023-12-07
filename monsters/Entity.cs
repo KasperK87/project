@@ -13,7 +13,7 @@ namespace ResidentSurvivor {
         public int damage = 1; 
         public Boolean Walkable { get; set; }
         public SadRogue.Primitives.Color color;
-        protected SadConsole.ColoredString.ColoredGlyphEffect[] frames = new SadConsole.ColoredString.ColoredGlyphEffect[4];
+        public SadConsole.ColoredString.ColoredGlyphEffect[] frames = new SadConsole.ColoredString.ColoredGlyphEffect[4];
         public TimeSpan timer = TimeSpan.FromMilliseconds(101);
 
         public GameObject(SadRogue.Primitives.Color c1,SadRogue.Primitives.Color c2, int SetGlyph, int zIndex):

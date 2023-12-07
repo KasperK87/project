@@ -7,7 +7,7 @@ namespace ResidentSurvivor{
     enum TileType : int{
         Empty = 38,
         Player = 1,
-        Rat = 376,
+        Rat = 301,
         Kobold = 378+75*5+2+4,
         Goblin = 378+75*5+2,
         Floor = 27,
@@ -127,6 +127,8 @@ namespace ResidentSurvivor{
                     if (Random.Next(50) == 0 && isEmpty){
                         GameObject rat = new GameObject(
                             Color.Gray, Color.Transparent, (int) TileType.Rat, 99);
+                        
+                        HelperFunctionsEntities.createAnimation(rat,(int)TileType.Rat);
 
                         rat.Name = "Rat";
 
@@ -142,7 +144,9 @@ namespace ResidentSurvivor{
                         
                     } else if (Random.Next(100) == 0 && isEmpty){
                         GameObject kobold = new GameObject(
-                            Color.Red, Color.Transparent, (int) TileType.Kobold, 99);
+                            Color.AnsiMagenta, Color.Transparent, (int) TileType.Kobold, 99);
+                        
+                        HelperFunctionsEntities.createAnimation(kobold,(int)TileType.Kobold);
 
                         kobold.Name = "Kobold";
 
@@ -159,6 +163,8 @@ namespace ResidentSurvivor{
                     } else if (Random.Next(200) == 0 && isEmpty){
                         GameObject goblin = new GameObject(
                             Color.LimeGreen, Color.Transparent, (int) TileType.Goblin, 99);
+
+                        HelperFunctionsEntities.createAnimation(goblin,(int)TileType.Goblin);
 
                         goblin.Name = "Goblin";
 
