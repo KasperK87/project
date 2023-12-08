@@ -69,6 +69,8 @@ namespace ResidentSurvivor{
                 obj.setFramesColor(SadRogue.Primitives.Color.Red);
                 obj.Appearance.Foreground = SadRogue.Primitives.Color.Red;
                 obj.timer = TimeSpan.Zero;
+                //add blood to floor (just a quick little mockup)
+                Game.UIManager.currentFloor.addBlood(obj.Position.X, obj.Position.Y,1);
             } else {
                 obj.Interact();
             }

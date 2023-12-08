@@ -98,6 +98,8 @@ namespace ResidentSurvivor{
                         System.Console.WriteLine("Player Attack");
                         if (obj.GetSadComponent<IComponent_Entity>() != null){
                             obj.GetSadComponent<IComponent_Entity>().currHP -= parent.GetSadComponent<IComponent_Entity>().damage;
+
+                            Game.UIManager.currentFloor.addBlood(obj.Position.X, obj.Position.Y,1);
                         }
                         console.turn++;
                         throw new RogueSharp.NoMoreStepsException();
@@ -286,6 +288,9 @@ namespace ResidentSurvivor{
                             monster.setFramesColor(SadRogue.Primitives.Color.Red);
                             monster.Appearance.Foreground = SadRogue.Primitives.Color.Red;
                             monster.timer = TimeSpan.Zero;
+                            //add blood to floor (just a quick little mockup)
+                            Game.UIManager.currentFloor.addBlood(monster.Position.X, monster.Position.Y,1);
+
                         } else {
                             GameObject gameobj = (GameObject)monster;
                             if (gameobj.Walkable){

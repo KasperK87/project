@@ -24,15 +24,7 @@ namespace ResidentSurvivor{
                 //remove from world 
                 Game.UIManager.currentFloor.entityManager.Remove(parent);
                 //add blood to floor (just a quick little mockup)
-                if (Game.UIManager.currentFloor.tileMetadata[parent.Position.X, parent.Position.Y].amountOfBlood == 0){
-                    Game.UIManager.currentFloor.tileMetadata[parent.Position.X, parent.Position.Y].amountOfBlood += 10;
-                } else {
-                    Random random = new Random();
-                    int randomX = random.Next(-1,1);
-                    int randomY = random.Next(-1,1);
-                    if (Game.UIManager.currentFloor.GetDungeonMap().IsWalkable(parent.Position.X+randomX, parent.Position.Y+randomY))
-                        Game.UIManager.currentFloor.tileMetadata[parent.Position.X+randomX, parent.Position.Y+randomY].amountOfBlood += 10;
-                }
+                Game.UIManager.currentFloor.addBlood(parent.Position.X, parent.Position.Y,3);
                 System.Console.WriteLine(parent.Name + " dead");
             }
 
