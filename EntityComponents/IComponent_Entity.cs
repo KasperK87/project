@@ -23,6 +23,7 @@ namespace ResidentSurvivor{
             if (currHP < 1){
                 //this.Appearance.Foreground = SadRogue.Primitives.Color.Transparent;  
                 Game.UIManager.currentFloor.entityManager.Remove(parent);
+                Game.UIManager.currentFloor.tileMetadata[parent.Position.X, parent.Position.Y].amountOfBlood += 10;
                 System.Console.WriteLine(parent.Name + " dead");
             }
 

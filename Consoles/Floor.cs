@@ -11,6 +11,7 @@ namespace ResidentSurvivor{
         Kobold = 378+75*5+2+4,
         Goblin = 378+75*5+2,
         Floor = 27,
+        Blood = 27+75*6+5,
         Wall = 284,
         Solid = 76,
         Door = 96,
@@ -21,6 +22,14 @@ namespace ResidentSurvivor{
         Dagger = 40, //smaller dagger is 43
         Sword = 40,
         Axe = 46
+    }
+
+    public struct TileMetadata{
+        public int amountOfBlood;
+        
+        public TileMetadata(int amountOfBlood){
+            this.amountOfBlood = amountOfBlood;
+        }
     }
     public class Floor : Console {
         private bool _drawPath = false;
@@ -34,6 +43,7 @@ namespace ResidentSurvivor{
                 Color.White, Color.Blue, (int) TileType.Player, 100);
 
         private RogueSharpSadConsoleSamples.Core.DungeonMap DungeonMap;
+        public TileMetadata[,] tileMetadata;
 
         //will be refactored away
         public TimeSpan timer;
@@ -75,8 +85,13 @@ namespace ResidentSurvivor{
             RogueSharp.MapCreation.IMapCreationStrategy<RogueSharpSadConsoleSamples.Core.DungeonMap> mapCreationStrategy =
                 new RogueSharp.MapCreation.RandomRoomsMapCreationStrategy<RogueSharpSadConsoleSamples.Core.DungeonMap>( 80, 29, 100, 7, 3 );
             DungeonMap = mapCreationStrategy.CreateMap();
-
+            tileMetadata = new TileMetadata[80,29];
             
+            for (int x = 0; x < 80; x++){
+                for (int y = 0; y < 29; y++){
+                    tileMetadata[x,y] = new TileMetadata(0);
+                }
+            }
 
             //create player, populate and decorate dungeon
             SadComponents.Add(entityManager);
@@ -331,6 +346,16 @@ namespace ResidentSurvivor{
             this.Clear();
 
             DungeonMap.Draw(this);
+
+            //draw blood
+            for (int x = 0; x < 80; x++){
+                for (int y = 0; y < 29; y++){
+                    if (tileMetadata[x,y].amountOfBlood > 0){
+                        this.SetGlyph(x, y, (int) TileType.Blood);
+                        this.SetForeground(x, y, Color.Red.SetAlpha(180));
+                    }
+                }
+            }
 
             drawPath();
         }
