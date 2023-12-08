@@ -21,9 +21,18 @@ namespace ResidentSurvivor{
         }
         public override void Update(SadConsole.IScreenObject p, TimeSpan delta){
             if (currHP < 1){
-                //this.Appearance.Foreground = SadRogue.Primitives.Color.Transparent;  
+                //remove from world 
                 Game.UIManager.currentFloor.entityManager.Remove(parent);
-                Game.UIManager.currentFloor.tileMetadata[parent.Position.X, parent.Position.Y].amountOfBlood += 10;
+                //add blood to floor (just a quick little mockup)
+                if (Game.UIManager.currentFloor.tileMetadata[parent.Position.X, parent.Position.Y].amountOfBlood == 0){
+                    Game.UIManager.currentFloor.tileMetadata[parent.Position.X, parent.Position.Y].amountOfBlood += 10;
+                } else {
+                    Random random = new Random();
+                    int randomX = random.Next(-1,1);
+                    int randomY = random.Next(-1,1);
+                    if (Game.UIManager.currentFloor.GetDungeonMap().IsWalkable(parent.Position.X+randomX, parent.Position.Y+randomY))
+                        Game.UIManager.currentFloor.tileMetadata[parent.Position.X+randomX, parent.Position.Y+randomY].amountOfBlood += 10;
+                }
                 System.Console.WriteLine(parent.Name + " dead");
             }
 
