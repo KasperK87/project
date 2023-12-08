@@ -12,7 +12,7 @@ namespace ResidentSurvivor{
 
         //parent objects used to couple the controls of the playrt
         //with the rest of the game
-        public SadConsole.Entities.Entity parent;
+        public GameObject parent;
         Floor console;
 
 
@@ -24,7 +24,7 @@ namespace ResidentSurvivor{
         
         //also get a reference to the dungeonconsole
         public IComponent_PlayerControls(SadConsole.Entities.Entity setParent, Floor setConsole){
-            this.parent = setParent;
+            this.parent = (GameObject)setParent;
             this.parent.Name = "Player";
             this.console = setConsole;
             
@@ -58,7 +58,7 @@ namespace ResidentSurvivor{
                                 //to not be picked up when the player clicks on them
                                 //but to be picked up when the player walks over them
                                 if (obj.GetSadComponent<IComponent_Entity>() != null){
-                                    obj.GetSadComponent<IComponent_Entity>().currHP -= parent.GetSadComponent<IComponent_Entity>().damage;
+                                    parent.Attack(obj);
                                     followingPath = false;
                                     Game.UIManager.currentFloor.turn++;
                                 } else if(obj.Interact()){
@@ -97,6 +97,7 @@ namespace ResidentSurvivor{
                         obj.Interact();
                         System.Console.WriteLine("Player Attack");
                         if (obj.GetSadComponent<IComponent_Entity>() != null){
+                            //parent.Attack(obj);
                             obj.GetSadComponent<IComponent_Entity>().currHP -= parent.GetSadComponent<IComponent_Entity>().damage;
 
                             Game.UIManager.currentFloor.addBlood(obj.Position.X, obj.Position.Y,1);
@@ -283,14 +284,8 @@ namespace ResidentSurvivor{
                         Game.UIManager.currentFloor.pathXtoY(mouseLoc.X, mouseLoc.Y);
                     } else {
                         System.Console.WriteLine("Player Attack");
-                        if (monster.GetSadComponent<IComponent_Entity>() != null){
-                            monster.GetSadComponent<IComponent_Entity>().currHP -= parent.GetSadComponent<IComponent_Entity>().damage;
-                            monster.setFramesColor(SadRogue.Primitives.Color.Red);
-                            monster.Appearance.Foreground = SadRogue.Primitives.Color.Red;
-                            monster.timer = TimeSpan.Zero;
-                            //add blood to floor (just a quick little mockup)
-                            Game.UIManager.currentFloor.addBlood(monster.Position.X, monster.Position.Y,1);
-
+                        if (monster.GetSadComponent<IComponent_Entity>() != null){                
+                            parent.Attack(monster);    
                         } else {
                             GameObject gameobj = (GameObject)monster;
                             if (gameobj.Walkable){

@@ -40,18 +40,17 @@ namespace ResidentSurvivor{
                 try {
                     _cells.StepForward();
                     //check is there is a monster
-                    var monster = Game.UIManager.currentFloor.GetMonsterAt(_cells.CurrentStep.X, _cells.CurrentStep.Y);
+                    var monster = (GameObject)Game.UIManager.currentFloor.GetMonsterAt(_cells.CurrentStep.X, _cells.CurrentStep.Y);
                     if (monster == null){
                         parent.Position = new SadRogue.Primitives.Point(_cells.CurrentStep.X, _cells.CurrentStep.Y);     
                     } else {
-                        GameObject gameobj = (GameObject)monster;
-                        if (gameobj.Walkable){
+                        if (monster.Walkable){
                             parent.Position = new SadRogue.Primitives.Point(_cells.CurrentStep.X, _cells.CurrentStep.Y);;
-                        } else if (gameobj.isPlayer){
+                        } else if (monster.isPlayer){
                             System.Console.WriteLine("Monster Attack!!!");
                             Attack(monster);
                         } else {
-                            gameobj.Interact();
+                            monster.Interact();
                         }
                         
                     }             
@@ -62,15 +61,10 @@ namespace ResidentSurvivor{
             }
         }
 
-        public void Attack(SadConsole.Entities.Entity target){
+        public void Attack(GameObject target){
             GameObject obj = (GameObject)target;
             if (target.GetSadComponent<IComponent_Entity>() != null){
-                target.GetSadComponent<IComponent_Entity>().currHP -= parent.GetSadComponent<IComponent_Entity>().damage;
-                obj.setFramesColor(SadRogue.Primitives.Color.Red);
-                obj.Appearance.Foreground = SadRogue.Primitives.Color.Red;
-                obj.timer = TimeSpan.Zero;
-                //add blood to floor (just a quick little mockup)
-                Game.UIManager.currentFloor.addBlood(obj.Position.X, obj.Position.Y,1);
+                target.hit(parent.GetSadComponent<IComponent_Entity>().damage);
             } else {
                 obj.Interact();
             }

@@ -83,9 +83,20 @@ namespace ResidentSurvivor {
         }
 
         public void Attack(GameObject target){
-            target.GetSadComponent<IComponent_Entity>().currHP -= this.damage;
-            target.setFramesColor(SadRogue.Primitives.Color.Red);
-            target.timer = TimeSpan.Zero;
+            target.hit(this.GetSadComponent<IComponent_Entity>().damage);
+        }
+
+        //when the entitie is hit
+        public void hit(int damage){
+            this.GetSadComponent<IComponent_Entity>().currHP -= damage;
+
+            this.setFramesColor(SadRogue.Primitives.Color.Red);
+            this.Appearance.Foreground = SadRogue.Primitives.Color.Red;
+            this.timer = TimeSpan.Zero;
+
+            //add blood to floor (just a quick little mockup)
+            Game.UIManager.currentFloor.addBlood(Position.X, Position.Y,1);
+            
         }
 
         public void setFramesColor(SadRogue.Primitives.Color c){
