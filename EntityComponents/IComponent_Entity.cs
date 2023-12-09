@@ -10,6 +10,8 @@ namespace ResidentSurvivor{
         public int currHP{get; set;}
         int speed;
         public int damage{get; set;}
+        public int AC = 10;
+        public int AttackBonus = 5;
 
         public IComponent_Entity(SadConsole.Entities.Entity setParent, int setMaxHP, int setCurrHP, int setSpeed, int setDamage){
             this.parent = setParent;

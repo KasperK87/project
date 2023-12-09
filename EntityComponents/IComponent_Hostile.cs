@@ -4,7 +4,7 @@ namespace ResidentSurvivor{
     //it will make the entity hostile to the player
     //moving towards the player and attacking when in range
     class IComponent_Hostile : SadConsole.Components.UpdateComponent {
-        SadConsole.Entities.Entity parent;
+        GameObject parent;
         private RogueSharp.Path? _cells;
         //private bool followingPath;
         private UInt64 turn;
@@ -15,7 +15,7 @@ namespace ResidentSurvivor{
         public IComponent_Hostile(SadConsole.Entities.Entity setParent, IComponent_Entity setEntity){
             //followingPath = false;
 
-            this.parent = setParent;
+            this.parent = (GameObject)setParent;
             this.entity = setEntity;
         }
 
@@ -62,11 +62,10 @@ namespace ResidentSurvivor{
         }
 
         public void Attack(GameObject target){
-            GameObject obj = (GameObject)target;
             if (target.GetSadComponent<IComponent_Entity>() != null){
-                target.hit(parent.GetSadComponent<IComponent_Entity>().damage);
+                parent.Attack(target);
             } else {
-                obj.Interact();
+                target.Interact();
             }
             System.Console.WriteLine("Monster Attack!!!");
         }

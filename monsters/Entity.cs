@@ -15,6 +15,7 @@ namespace ResidentSurvivor {
         public SadRogue.Primitives.Color color;
         public SadConsole.ColoredString.ColoredGlyphEffect[] frames = new SadConsole.ColoredString.ColoredGlyphEffect[4];
         public TimeSpan timer = TimeSpan.FromMilliseconds(101);
+        private Random rand = new Random();
 
         public GameObject(SadRogue.Primitives.Color c1,SadRogue.Primitives.Color c2, int SetGlyph, int zIndex):
             base(c1, c2, SetGlyph, zIndex){
@@ -83,7 +84,14 @@ namespace ResidentSurvivor {
         }
 
         public void Attack(GameObject target){
-            target.hit(this.GetSadComponent<IComponent_Entity>().damage);
+            int roll = (int)rand.Next(1,20) + this.GetSadComponent<IComponent_Entity>().AttackBonus;
+            if (roll >= target.GetSadComponent<IComponent_Entity>().AC){
+                target.hit(this.GetSadComponent<IComponent_Entity>().damage);
+                System.Console.WriteLine(roll + ": The " + this.Name + " hit the " + target.Name);
+            } else {
+                System.Console.WriteLine(roll+ ": The " + this.Name + " missed the " + target.Name);
+                //Game.UIManager.messageLog.Add("The " + this.Name + " missed the " + target.Name);
+            }
         }
 
         //when the entitie is hit
