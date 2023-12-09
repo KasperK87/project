@@ -84,7 +84,14 @@ namespace ResidentSurvivor {
         }
 
         public void Attack(GameObject target){
-            int roll = (int)rand.Next(1,20) + this.GetSadComponent<IComponent_Entity>().AttackBonus;
+            int roll = (int)rand.Next(1,20);
+            if (roll == 20){
+                target.hit(this.GetSadComponent<IComponent_Entity>().damage * 2);
+                System.Console.WriteLine(roll + ": The " + this.Name + " crit the " + target.Name);
+                //Game.UIManager.messageLog.Add("The " + this.Name + " crit the " + target.Name);
+                return;
+            }
+            roll += this.GetSadComponent<IComponent_Entity>().AttackBonus;
             if (roll >= target.GetSadComponent<IComponent_Entity>().AC){
                 target.hit(this.GetSadComponent<IComponent_Entity>().damage);
                 System.Console.WriteLine(roll + ": The " + this.Name + " hit the " + target.Name);
