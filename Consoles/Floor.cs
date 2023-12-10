@@ -400,13 +400,13 @@ namespace ResidentSurvivor{
             if (GetSadComponent<IComponent_PlayerControls>().parent != null && DungeonMap.GetCell(destX, destY).IsWalkable){
               
             RogueSharp.PathFinder _pathFinder;
-            _pathFinder = new RogueSharp.PathFinder( DungeonMap);
+            _pathFinder = new RogueSharp.PathFinder( DungeonMap,1.1);
             
             try{
             _cells = _pathFinder.ShortestPath( DungeonMap.GetCell
                 (GetSadComponent<IComponent_PlayerControls>().parent.Position.X, 
                     GetSadComponent<IComponent_PlayerControls>().parent.Position.Y),
-                DungeonMap.GetCell( destX, destY ) );
+                DungeonMap.GetCell( destX, destY ));
             } catch (RogueSharp.PathNotFoundException) { 
                 _cells = null;
             }
@@ -418,7 +418,7 @@ namespace ResidentSurvivor{
         //gives the path to the player from a point
          public RogueSharp.Path? pathToPlayerFrom(int origX, int origY){
             RogueSharp.PathFinder _pathFinder;
-            _pathFinder = new RogueSharp.PathFinder( DungeonMap );
+            _pathFinder = new RogueSharp.PathFinder( DungeonMap, 1.1);
 
             try {
             return _pathFinder.ShortestPath( DungeonMap.GetCell
