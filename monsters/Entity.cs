@@ -86,7 +86,8 @@ namespace ResidentSurvivor {
         public void Attack(GameObject target){
             int roll = (int)rand.Next(1,20);
             if (roll == 20){
-                target.hit(this.GetSadComponent<IComponent_Entity>().damage * 2);
+                target.hit(this.GetSadComponent<IComponent_Entity>().damage, 
+                    new damageModifier[]{damageModifier.critical});
                 System.Console.WriteLine(roll + ": The " + this.Name + " crit the " + target.Name);
                 //Game.UIManager.messageLog.Add("The " + this.Name + " crit the " + target.Name);
                 return;
@@ -102,7 +103,29 @@ namespace ResidentSurvivor {
         }
 
         //when the entitie is hit
-        public void hit(int damage){
+        public void hit(int damage, damageModifier[] mods = null){
+            if (mods != null)
+            for (int i = 0; i < mods.Length; i++){
+                switch (mods[i]){
+                    case damageModifier.critical:
+                        damage *= 2;
+                        break;
+                    case damageModifier.fire:
+                        break;
+                    case damageModifier.ice:
+                        break;
+                    case damageModifier.poison:
+                        break;
+                    case damageModifier.acid:
+                        break;
+                    case damageModifier.lightning:
+                        break;
+                    case damageModifier.holy:
+                        break;
+                    case damageModifier.unholy:
+                        break;
+                }
+            }
             this.GetSadComponent<IComponent_Entity>().currHP -= damage;
 
             this.setFramesColor(SadRogue.Primitives.Color.Red);
@@ -122,6 +145,17 @@ namespace ResidentSurvivor {
                 frame.Foreground = c;
             }
         }
+    }
+    public enum damageModifier{
+        none,
+        critical,
+        fire,
+        ice,
+        poison,
+        acid,
+        lightning,
+        holy,
+        unholy
     }
 }
 
