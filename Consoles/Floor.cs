@@ -367,7 +367,7 @@ namespace ResidentSurvivor{
                     } else {
                         int randomX = Random.Next(-1,1);
                         int randomY = Random.Next(-1,1);
-                        System.Console.WriteLine(randomX + " " + randomY);
+                        //System.Console.WriteLine(randomX + " " + randomY);
                         if (GetDungeonMap().IsWalkable(x+randomX, y+randomY))
                             tileMetadata[x+randomX, y+randomY].amountOfBlood += 1;
                     }

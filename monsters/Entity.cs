@@ -15,7 +15,7 @@ namespace ResidentSurvivor {
         public SadRogue.Primitives.Color color;
         public SadConsole.ColoredString.ColoredGlyphEffect[] frames = new SadConsole.ColoredString.ColoredGlyphEffect[4];
         public TimeSpan timer = TimeSpan.FromMilliseconds(101);
-        private Random rand = new Random();
+        public Random rand = new Random();
 
         public GameObject(SadRogue.Primitives.Color c1,SadRogue.Primitives.Color c2, int SetGlyph, int zIndex):
             base(c1, c2, SetGlyph, zIndex){
@@ -84,6 +84,16 @@ namespace ResidentSurvivor {
         }
 
         public void Attack(GameObject target){
+            entityState targetState = target.GetSadComponent<IComponent_Entity>().state;
+            if (targetState == entityState.sleeping || targetState == entityState.wandering){
+                target.hit(this.GetSadComponent<IComponent_Entity>().damage, 
+                    new damageModifier[]{damageModifier.critical});
+                System.Console.WriteLine("The " + this.Name + " crit the " + target.Name);
+                target.GetSadComponent<IComponent_Entity>().state = entityState.hostile;
+                return;
+            }
+            target.GetSadComponent<IComponent_Entity>().state = entityState.hostile;
+            
             int roll = (int)rand.Next(1,20);
             if (roll == 20){
                 target.hit(this.GetSadComponent<IComponent_Entity>().damage, 

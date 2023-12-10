@@ -6,6 +6,8 @@ namespace ResidentSurvivor{
     class IComponent_Entity : SadConsole.Components.UpdateComponent{
         SadConsole.Entities.Entity parent;
 
+        public entityState state = entityState.wandering;
+
         public int maxHP;
         public int currHP{get; set;}
         int speed;
@@ -38,5 +40,11 @@ namespace ResidentSurvivor{
             }
             */
         }
+    }
+    public enum entityState{
+        wandering,
+        sleeping,
+        hostile,
+        friendly
     }
 }

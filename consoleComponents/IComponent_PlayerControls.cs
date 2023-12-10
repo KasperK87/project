@@ -88,14 +88,14 @@ namespace ResidentSurvivor{
                 try {
                     //_cells.TryStepForward();
                     _cells.StepForward();
-                    System.Console.WriteLine(_cells.CurrentStep.X +"," + _cells.CurrentStep.Y);
+                    //System.Console.WriteLine(_cells.CurrentStep.X +"," + _cells.CurrentStep.Y);
                     GameObject obj = (GameObject)console.GetMonsterAt(_cells.CurrentStep.X, _cells.CurrentStep.Y);
                     if (obj != null && obj.Walkable){
                         obj.Pickup((Player)parent);
                         parent.Position = new SadRogue.Primitives.Point(_cells.CurrentStep.X, _cells.CurrentStep.Y); 
                     } else if(obj != null){ 
                         obj.Interact();
-                        System.Console.WriteLine("Player Attack");
+                        //System.Console.WriteLine("Player Attack");
                         if (obj.GetSadComponent<IComponent_Entity>() != null){
                             //parent.Attack(obj);
                             obj.GetSadComponent<IComponent_Entity>().currHP -= parent.GetSadComponent<IComponent_Entity>().damage;
@@ -142,7 +142,7 @@ namespace ResidentSurvivor{
                 return;
             }
             if (performAction){
-                System.Console.WriteLine("Ready");
+                //System.Console.WriteLine("Ready");
                 //perform action
                 Point newPositionAction = parent.Position;
                 if (info.KeysPressed.Count > 0)
@@ -185,7 +185,7 @@ namespace ResidentSurvivor{
                 }
                 
                 GameObject entity = (GameObject)Game.UIManager.currentFloor.GetMonsterAt(newPositionAction.X, newPositionAction.Y);
-                System.Console.WriteLine("Action on up");
+                //System.Console.WriteLine("Action on up");
 
                 if (entity != null){
                     if(entity.Interact()){
@@ -283,7 +283,7 @@ namespace ResidentSurvivor{
                         parent.Position = newPosition;
                         Game.UIManager.currentFloor.pathXtoY(mouseLoc.X, mouseLoc.Y);
                     } else {
-                        System.Console.WriteLine("Player Attack");
+                        //System.Console.WriteLine("Player Attack");
                         if (monster.GetSadComponent<IComponent_Entity>() != null){                
                             parent.Attack(monster);    
                         } else {
