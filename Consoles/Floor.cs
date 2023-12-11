@@ -153,7 +153,7 @@ namespace ResidentSurvivor{
                         var entity = new IComponent_Entity(rat, 1, 1, 1, 1);
 
                         rat.SadComponents.Add(entity);
-                        rat.SadComponents.Add(new IComponent_Hostile(rat, entity));
+                        rat.SadComponents.Add(new IComponent_Hostile(rat, entity, this));
                         entityManager.Add(rat);
                         isEmpty = false;
                         
@@ -312,6 +312,13 @@ namespace ResidentSurvivor{
 
         public Player getPlayer(){
             return (Player)GetSadComponent<IComponent_PlayerControls>().parent;
+        }
+
+        public int getDistanceToPlayer(int x, int y){
+            int distance = (int) Math.Sqrt(Math.Pow(x - GetSadComponent<IComponent_PlayerControls>().parent.Position.X, 2) + 
+                Math.Pow(y - GetSadComponent<IComponent_PlayerControls>().parent.Position.Y, 2));
+            System.Console.WriteLine(distance);
+            return distance;
         }
 
         public override void Update(TimeSpan delta){
