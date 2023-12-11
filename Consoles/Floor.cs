@@ -347,6 +347,21 @@ namespace ResidentSurvivor{
             }
         }
 
+        
+        public void updateHostilesGoalmap(){
+            List<Point> entitiesPos = new List<Point>();
+            foreach (SadConsole.Entities.Entity entity in entityManager.Entities){
+                if (entity.GetSadComponent<IComponent_Hostile>() != null){
+                    entitiesPos.Add(entity.Position);   
+                }
+            }
+            
+            IComponent_Hostile._goalMap.ClearObstacles();
+            foreach (Point pos in entitiesPos){
+                IComponent_Hostile._goalMap.AddObstacle(pos.X, pos.Y);
+            }
+        }
+
         public override void Render(TimeSpan delta){
             base.Render(delta);
 

@@ -1,3 +1,5 @@
+using RogueSharp;
+
 namespace ResidentSurvivor{
 
     //IComponent_Entity is a component that can be added to any entity
@@ -6,7 +8,9 @@ namespace ResidentSurvivor{
     class IComponent_Hostile : SadConsole.Components.UpdateComponent {
         GameObject parent;
         private RogueSharp.Path? _cells;
-        private RogueSharp.GoalMap _goalMap;
+        public static RogueSharp.GoalMap _goalMap;
+
+        private Point[] _goals; 
         //private bool followingPath;
         private UInt64 turn;
         private IComponent_Entity entity;
@@ -23,14 +27,16 @@ namespace ResidentSurvivor{
         public IComponent_Hostile(SadConsole.Entities.Entity setParent, IComponent_Entity setEntity, Floor dungeon)
             : this(setParent, setEntity){
             _goalMap = new RogueSharp.GoalMap(dungeon.GetDungeonMap(), true);
+
+            _goals = new Point[3];
             
             //set some random goals
             int goals = 1;
             while (goals > 0){
-                int x = parent.rand.Next(1,dungeon.GetDungeonMap().Width);
-                int y = parent.rand.Next(1,dungeon.GetDungeonMap().Height);
+                int x = parent.rand.Next(2,dungeon.GetDungeonMap().Width-1);
+                int y = parent.rand.Next(2,dungeon.GetDungeonMap().Height-1);
                 if (dungeon.GetDungeonMap().IsWalkable(x,y)){
-                    _goalMap.AddGoal(x, y, 10);
+                    _goals[goals-1] = new Point(x,y);
                     goals--;
                 }
             }
@@ -54,23 +60,30 @@ namespace ResidentSurvivor{
                                 parent.GetSadComponent<IComponent_Entity>().state = entityState.hostile;
                     }
                 }
-                
-                this.turn = Game.UIManager.currentFloor.turn;
-            }
 
-            if (!Game.UIManager.currentFloor.GetDungeonMap().IsInFov(parent.Position.X, parent.Position.Y)){
-                parent.Appearance.Foreground = SadRogue.Primitives.Color.Transparent;
-            } else if (parent.GetSadComponent<IComponent_Entity>().state == entityState.wandering &&
-                _goalMap != null){
+                if (parent.GetSadComponent<IComponent_Entity>().state == entityState.wandering &&
+                _goalMap != null && _goals != null){
                 //set _cells to goalmap
                 //System.Console.WriteLine("GoalMap");
                 try {
+                    Game.UIManager.currentFloor.updateHostilesGoalmap();
+                    _goalMap.ClearGoals();
+                    foreach (Point goal in _goals){
+                        _goalMap.AddGoal(goal.X, goal.Y, 1);
+                    }
                     _cells = _goalMap.FindPath(parent.Position.X, parent.Position.Y);
                 } catch (RogueSharp.NoMoreStepsException) {
                     _cells = null;
                 } catch (RogueSharp.PathNotFoundException) {
                     _cells = null;
                 }
+            }
+                
+                this.turn = Game.UIManager.currentFloor.turn;
+            }
+
+            if (!Game.UIManager.currentFloor.GetDungeonMap().IsInFov(parent.Position.X, parent.Position.Y)){
+                parent.Appearance.Foreground = SadRogue.Primitives.Color.Transparent;
             } else {
                 //parent.Appearance.Foreground = SadRogue.Primitives.Color.White;
                 _cells = Game.UIManager.currentFloor.pathToPlayerFrom(parent.Position.X, parent.Position.Y);
