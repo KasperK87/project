@@ -12,6 +12,7 @@ namespace ResidentSurvivor
             base(c1, c2, SetGlyph, zIndex){
                 this.Name = "Stairs";
                 this.Walkable = false;
+                this.type = "Stairs";
 
                 IsUp = setIsUp;
 

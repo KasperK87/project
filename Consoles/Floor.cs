@@ -171,7 +171,7 @@ namespace ResidentSurvivor{
                         var entity = new IComponent_Entity(kobold, 2, 2, 1, 2);
 
                         kobold.SadComponents.Add(entity);
-                        kobold.SadComponents.Add(new IComponent_Hostile(kobold, entity));
+                        kobold.SadComponents.Add(new IComponent_Hostile(kobold, entity, this));
                         entityManager.Add(kobold);
                         isEmpty = false;
                         
@@ -189,7 +189,7 @@ namespace ResidentSurvivor{
                         var entity = new IComponent_Entity(goblin, 3, 3, 1, 2);
 
                         goblin.SadComponents.Add(entity);
-                        goblin.SadComponents.Add(new IComponent_Hostile(goblin, entity));
+                        goblin.SadComponents.Add(new IComponent_Hostile(goblin, entity, this));
                         entityManager.Add(goblin);
                         isEmpty = false;
                         
@@ -350,11 +350,18 @@ namespace ResidentSurvivor{
         
         public void updateHostilesGoalmap(){
             List<Point> entitiesPos = new List<Point>();
-            foreach (SadConsole.Entities.Entity entity in entityManager.Entities){
+            foreach (GameObject entity in entityManager.Entities){
+                /*
                 if (entity.GetSadComponent<IComponent_Hostile>() != null){
                     entitiesPos.Add(entity.Position);   
                 }
+                */
+                if (entity.type == "Stairs"){
+                    entitiesPos.Add(entity.Position);   
+                }
             }
+
+            IComponent_Hostile._goalMap = new RogueSharp.GoalMap(DungeonMap, true);
             
             IComponent_Hostile._goalMap.ClearObstacles();
             foreach (Point pos in entitiesPos){
@@ -423,9 +430,9 @@ namespace ResidentSurvivor{
               
             RogueSharp.PathFinder _pathFinder;
             _pathFinder = new RogueSharp.PathFinder( DungeonMap,1.1);
-            
+
             try{
-            _cells = _pathFinder.ShortestPath( DungeonMap.GetCell
+            _cells = _pathFinder.TryFindShortestPath( DungeonMap.GetCell
                 (GetSadComponent<IComponent_PlayerControls>().parent.Position.X, 
                     GetSadComponent<IComponent_PlayerControls>().parent.Position.Y),
                 DungeonMap.GetCell( destX, destY ));

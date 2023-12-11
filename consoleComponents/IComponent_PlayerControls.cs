@@ -73,12 +73,17 @@ namespace ResidentSurvivor{
                 }
             }
 
-            if (followingPath) followPath(console._cells);
-
-            //DEBUG
             if (Game.UIManager.currentFloor != null)
+            {
                 if (Game.UIManager.currentFloor.GetEntitiesAt(info.CellPosition.X, info.CellPosition.Y) != null)
-                    System.Console.WriteLine(Game.UIManager.currentFloor.GetEntitiesAt(info.CellPosition.X, info.CellPosition.Y)[0].Name);
+                {
+                    var entity = Game.UIManager.currentFloor.GetEntitiesAt(info.CellPosition.X, info.CellPosition.Y)[0];
+                    if (entity.HasSadComponent<IComponent_Entity>(out var component))
+                    {
+                        System.Console.WriteLine(entity.Name + ": " + component.state);
+                    }
+                }
+            }
         }
 
         private void followPath(RogueSharp.Path? _cells){

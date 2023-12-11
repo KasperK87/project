@@ -9,6 +9,10 @@ namespace ResidentSurvivor{
         GameObject parent;
         private RogueSharp.Path? _cells;
         public static RogueSharp.GoalMap _goalMap;
+        private Point mapSize;
+        private Floor _dungeon;
+
+        private  SadRogue.Primitives.Point previousPosition;
 
         private Point[] _goals; 
         //private bool followingPath;
@@ -22,13 +26,19 @@ namespace ResidentSurvivor{
 
             this.parent = (GameObject)setParent;
             this.entity = setEntity;
+
+            previousPosition = parent.Position;
         }
 
         public IComponent_Hostile(SadConsole.Entities.Entity setParent, IComponent_Entity setEntity, Floor dungeon)
             : this(setParent, setEntity){
             _goalMap = new RogueSharp.GoalMap(dungeon.GetDungeonMap(), true);
 
-            _goals = new Point[3];
+            mapSize = new Point(dungeon.GetDungeonMap().Width, dungeon.GetDungeonMap().Height);
+
+            _dungeon = dungeon;
+
+            _goals = new Point[1];
             
             //set some random goals
             int goals = 1;
@@ -54,45 +64,72 @@ namespace ResidentSurvivor{
                         followPath();                  
                     } else if (Game.UIManager.currentFloor.GetDungeonMap().IsInFov(parent.Position.X, parent.Position.Y)){
                         
-                        if (_cells != null)
+                        //if (_cells != null)
                             //need to check distance to player in another way then _cells.length
-                            if (parent.rand.Next(1,20) > 15 && 1 >= Game.UIManager.currentFloor.getDistanceToPlayer(parent.Position.X, parent.Position.Y))
+                            if (7 >= Game.UIManager.currentFloor.getDistanceToPlayer(parent.Position.X, parent.Position.Y) &&
+                                parent.rand.Next(1,20) > 15){
                                 parent.GetSadComponent<IComponent_Entity>().state = entityState.hostile;
+                                System.Console.WriteLine("HOSTILE!!!");
+                            }
                     }
                 }
 
                 if (parent.GetSadComponent<IComponent_Entity>().state == entityState.wandering &&
-                _goalMap != null && _goals != null){
+                _goalMap != null && _goals != null && previousPosition == parent.Position ){
                 //set _cells to goalmap
                 //System.Console.WriteLine("GoalMap");
+
+                for (int i = 0; i < _goals.Length; i++){
+                    //if (_goals[i].X == parent.Position.X && _goals[i].Y == parent.Position.Y){
+                        bool newGoal = false;
+                        
+                        while (!newGoal){
+                            int x = parent.rand.Next(2,mapSize.X-1);
+                            int y = parent.rand.Next(2,mapSize.Y-1);
+                            if (_dungeon.GetDungeonMap().IsWalkable(x,y)){
+                                _goals[i] = new Point(x,y);
+                                newGoal = true;
+                            }
+                        }
+                    //}
+                }
+
+                if (_cells == null || _cells.Length >= 1)
                 try {
                     Game.UIManager.currentFloor.updateHostilesGoalmap();
                     _goalMap.ClearGoals();
                     foreach (Point goal in _goals){
                         _goalMap.AddGoal(goal.X, goal.Y, 1);
                     }
-                    _cells = _goalMap.FindPath(parent.Position.X, parent.Position.Y);
+
+                    _goalMap.RemoveObstacle(parent.Position.X, parent.Position.Y);
+
+                    _cells = _goalMap.TryFindPath(parent.Position.X, parent.Position.Y);
                 } catch (RogueSharp.NoMoreStepsException) {
                     _cells = null;
                 } catch (RogueSharp.PathNotFoundException) {
                     _cells = null;
                 }
             }
-                
+                previousPosition = parent.Position;;
                 this.turn = Game.UIManager.currentFloor.turn;
             }
 
             if (!Game.UIManager.currentFloor.GetDungeonMap().IsInFov(parent.Position.X, parent.Position.Y)){
                 parent.Appearance.Foreground = SadRogue.Primitives.Color.Transparent;
-            } else {
+            } else if (parent.GetSadComponent<IComponent_Entity>().state == entityState.hostile){
                 //parent.Appearance.Foreground = SadRogue.Primitives.Color.White;
                 _cells = Game.UIManager.currentFloor.pathToPlayerFrom(parent.Position.X, parent.Position.Y);
             }
         }
 
         private void followPath(){
-            if ( _cells != null)
-            { 
+            if ( _cells != null && _cells.Length >= 1)
+            {   
+                if (!checkIfNextStepIsValid()){
+                    _cells = null;
+                    return;
+                }
                 try {
                     _cells.StepForward();
                     //check is there is a monster
@@ -115,6 +152,13 @@ namespace ResidentSurvivor{
                     //followingPath = false;
                 }
             }
+        }
+
+        private bool checkIfNextStepIsValid(){
+            if (parent.Position.X == _cells.End.X && parent.Position.Y == _cells.End.Y){
+                return false;
+            }
+            return true;
         }
 
         public void Attack(GameObject target){
