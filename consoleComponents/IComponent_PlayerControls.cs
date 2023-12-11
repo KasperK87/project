@@ -73,6 +73,9 @@ namespace ResidentSurvivor{
                 }
             }
 
+            if (followingPath) followPath(console._cells);
+
+            //DEBUG
             if (Game.UIManager.currentFloor != null)
             {
                 if (Game.UIManager.currentFloor.GetEntitiesAt(info.CellPosition.X, info.CellPosition.Y) != null)
