@@ -59,8 +59,12 @@ namespace ResidentSurvivor{
                 if (parent.GetSadComponent<IComponent_Entity>() != null){
                     if (parent.GetSadComponent<IComponent_Entity>().state == entityState.wandering && _goalMap != null){
                         followPath();
+                        //we only find a new path if the entity hasn't moved since last turn
+                        //therefore we check after followPath.
+                        checkFindWanderingPath();
                     }
                     if (parent.GetSadComponent<IComponent_Entity>().state == entityState.hostile){
+                        _cells = Game.UIManager.currentFloor.pathToPlayerFrom(parent.Position.X, parent.Position.Y);
                         followPath();                  
                     } else if (Game.UIManager.currentFloor.GetDungeonMap().IsInFov(parent.Position.X, parent.Position.Y)){
                         
@@ -73,8 +77,51 @@ namespace ResidentSurvivor{
                             }
                     }
                 }
+                
+                previousPosition = parent.Position;;
+                this.turn = Game.UIManager.currentFloor.turn;
+            }
 
-                if (parent.GetSadComponent<IComponent_Entity>().state == entityState.wandering &&
+            //quick fix to make sure the monster is not visible when not in fov
+            if (!Game.UIManager.currentFloor.GetDungeonMap().IsInFov(parent.Position.X, parent.Position.Y)){
+                parent.Appearance.Foreground = SadRogue.Primitives.Color.Transparent;
+                parent.setFramesColor(SadRogue.Primitives.Color.Transparent);
+            }
+        }
+
+        private void followPath(){
+            if ( _cells != null && _cells.Length >= 1)
+            {   
+                if (!checkIfNextStepIsValid()){
+                    _cells = null;
+                    return;
+                }
+                try {
+                    _cells.StepForward();
+                    //check is there is a monster
+                    var monster = (GameObject)Game.UIManager.currentFloor.GetMonsterAt(_cells.CurrentStep.X, _cells.CurrentStep.Y);
+                    if (monster == null){
+                        parent.Position = new SadRogue.Primitives.Point(_cells.CurrentStep.X, _cells.CurrentStep.Y);     
+                    } else {
+                        if (monster.Walkable){
+                            parent.Position = new SadRogue.Primitives.Point(_cells.CurrentStep.X, _cells.CurrentStep.Y);;
+                        } else if (monster.isPlayer){
+                            //System.Console.WriteLine("Monster Attack!!!");
+                            Attack(monster);
+                        } else {
+                            monster.Interact();
+                        }
+                        
+                    }             
+                } catch (RogueSharp.NoMoreStepsException) {
+                    _cells = null;
+                    //followingPath = false;
+                }
+            }
+        }
+
+        private void checkFindWanderingPath(){
+            if (parent.GetSadComponent<IComponent_Entity>().state == entityState.wandering &&
                 _goalMap != null && _goals != null && previousPosition == parent.Position ){
                 //set _cells to goalmap
                 //System.Console.WriteLine("GoalMap");
@@ -111,47 +158,6 @@ namespace ResidentSurvivor{
                     _cells = null;
                 }
             }
-                previousPosition = parent.Position;;
-                this.turn = Game.UIManager.currentFloor.turn;
-            }
-
-            if (!Game.UIManager.currentFloor.GetDungeonMap().IsInFov(parent.Position.X, parent.Position.Y)){
-                parent.Appearance.Foreground = SadRogue.Primitives.Color.Transparent;
-            } else if (parent.GetSadComponent<IComponent_Entity>().state == entityState.hostile){
-                //parent.Appearance.Foreground = SadRogue.Primitives.Color.White;
-                _cells = Game.UIManager.currentFloor.pathToPlayerFrom(parent.Position.X, parent.Position.Y);
-            }
-        }
-
-        private void followPath(){
-            if ( _cells != null && _cells.Length >= 1)
-            {   
-                if (!checkIfNextStepIsValid()){
-                    _cells = null;
-                    return;
-                }
-                try {
-                    _cells.StepForward();
-                    //check is there is a monster
-                    var monster = (GameObject)Game.UIManager.currentFloor.GetMonsterAt(_cells.CurrentStep.X, _cells.CurrentStep.Y);
-                    if (monster == null){
-                        parent.Position = new SadRogue.Primitives.Point(_cells.CurrentStep.X, _cells.CurrentStep.Y);     
-                    } else {
-                        if (monster.Walkable){
-                            parent.Position = new SadRogue.Primitives.Point(_cells.CurrentStep.X, _cells.CurrentStep.Y);;
-                        } else if (monster.isPlayer){
-                            //System.Console.WriteLine("Monster Attack!!!");
-                            Attack(monster);
-                        } else {
-                            monster.Interact();
-                        }
-                        
-                    }             
-                } catch (RogueSharp.NoMoreStepsException) {
-                    _cells = null;
-                    //followingPath = false;
-                }
-            }
         }
 
         private bool checkIfNextStepIsValid(){
@@ -167,7 +173,6 @@ namespace ResidentSurvivor{
             } else {
                 target.Interact();
             }
-            System.Console.WriteLine("Monster Attack!!!");
         }
     }
 }
