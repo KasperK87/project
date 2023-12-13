@@ -444,16 +444,29 @@ namespace ResidentSurvivor{
 
         }
 
-        //gives the path to the player from a point
+        //gives the path to the player from a point,
+        //used by hostiles to find the player, hostiles
+        //move past other hostiles.
          public RogueSharp.Path? pathToPlayerFrom(int origX, int origY){
-            RogueSharp.PathFinder _pathFinder;
-            _pathFinder = new RogueSharp.PathFinder( DungeonMap, 1.1);
+            //RogueSharp.PathFinder _pathFinder;
+            //_pathFinder = new RogueSharp.PathFinder( DungeonMap, 1.1);
+            RogueSharp.GoalMap goalMap = new RogueSharp.GoalMap(DungeonMap, true);
+            goalMap.AddGoal(player.Position.X, player.Position.Y,10);
+            //List<SadRogue.Primitives.Point> entitiesPos = new List<SadRogue.Primitives.Point>();
+            foreach (GameObject entity in entityManager.Entities){
+                //is in FOV
+                if (DungeonMap.IsInFov(entity.Position.X, entity.Position.Y)){
+                    if (entity.GetSadComponent<IComponent_Hostile>() != null){
+                        goalMap.AddObstacle(entity.Position.X, entity.Position.Y);  
+                    }
+                }
+            }
+
+            //removes the obstacle at the hostiles position
+            goalMap.RemoveObstacle(origX, origY);
 
             try {
-            return _pathFinder.ShortestPath( DungeonMap.GetCell
-                (origX, origY),
-                DungeonMap.GetCell( GetSadComponent<IComponent_PlayerControls>().parent.Position.X, 
-                    GetSadComponent<IComponent_PlayerControls>().parent.Position.Y) );
+                return goalMap.FindPath(origX, origY);
             } catch (RogueSharp.NoMoreStepsException) { 
                 return null;
             
