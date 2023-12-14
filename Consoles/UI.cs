@@ -15,7 +15,7 @@ namespace ResidentSurvivor
         public Floor currentFloor;
         public Console? menu;
         public Console statusScreen;
-        public Console massageScreen;
+        public MassageScreen massageScreen;
         public Pause pauseScreen; 
         public Inventory inventoryScreen;
 
@@ -49,10 +49,7 @@ namespace ResidentSurvivor
 
             this.Children.Add(statusScreen);
 
-            massageScreen = new Console(120, 10){
-                DefaultBackground = Color.AnsiRed,
-                Position = new Point(1,31),
-            };
+            massageScreen = new MassageScreen(120,10);
 
             this.Children.Add(massageScreen);
 
@@ -77,6 +74,8 @@ namespace ResidentSurvivor
         public override void Update(TimeSpan timeElapsed)
         {
             if (currentState == ProcessState.Active){
+
+                //massageScreen.Add("Current turn: " + currentFloor.turn.ToString());
                 
                 statusScreen.Clear();
                 
