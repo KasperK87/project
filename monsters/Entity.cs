@@ -5,6 +5,7 @@ using Microsoft.VisualBasic;
 
 namespace ResidentSurvivor {
     public class GameObject : SadConsole.Entities.Entity {
+        private static MassageScreen _log = Game.UIManager.massageScreen;
         public bool isPlayer = false;
         public string type = "GameObject";
         public int currHP = 1;
@@ -89,6 +90,7 @@ namespace ResidentSurvivor {
                 target.hit(this.GetSadComponent<IComponent_Entity>().damage, 
                     new damageModifier[]{damageModifier.critical});
                 System.Console.WriteLine("The " + this.Name + " crit the " + target.Name);
+                _log.Add("The " + this.Name + " crit the " + target.Name);
                 target.GetSadComponent<IComponent_Entity>().state = entityState.hostile;
                 return;
             }
@@ -99,6 +101,7 @@ namespace ResidentSurvivor {
                 target.hit(this.GetSadComponent<IComponent_Entity>().damage, 
                     new damageModifier[]{damageModifier.critical});
                 System.Console.WriteLine(roll + ": The " + this.Name + " crit the " + target.Name);
+                _log.Add("The " + this.Name + " crit the " + target.Name);
                 //Game.UIManager.messageLog.Add("The " + this.Name + " crit the " + target.Name);
                 return;
             }
@@ -106,8 +109,10 @@ namespace ResidentSurvivor {
             if (roll >= target.GetSadComponent<IComponent_Entity>().AC){
                 target.hit(this.GetSadComponent<IComponent_Entity>().damage);
                 System.Console.WriteLine(roll + ": The " + this.Name + " hit the " + target.Name);
+                _log.Add("The " + this.Name + " hit the " + target.Name);
             } else {
                 System.Console.WriteLine(roll+ ": The " + this.Name + " missed the " + target.Name);
+                _log.Add("The " + this.Name + " missed the " + target.Name);
                 //Game.UIManager.messageLog.Add("The " + this.Name + " missed the " + target.Name);
             }
         }

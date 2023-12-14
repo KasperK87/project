@@ -12,12 +12,12 @@ namespace ResidentSurvivor {
 
         public void Add(string message){
             messages.Add(message);
-            if (messages.Count > 5){
+            if (messages.Count > 9){
                 messages.RemoveAt(0);
             }
             this.Clear();
-            for (int i = 0; i < messages.Count; i++){
-                this.Print(1,i,messages[i]);
+            for (int i = messages.Count-1; i >= 0; i--){
+                this.Print(1,messages.Count-i-1,messages[i]);
             }
         }
     }
