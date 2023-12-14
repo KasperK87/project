@@ -29,16 +29,19 @@ namespace ResidentSurvivor {
                 if (_inventory[i] == null){
                     _inventory[i] = item;
                     System.Console.WriteLine("You picked up a " + item.Name);
+                    _log.Add("You picked up a " + item.Name);
                     if (item.type == "Weapon"){
                         if (_equippedWeapon == null){
                             _equippedWeapon = item;
                             System.Console.WriteLine("You equipped a " + item.Name);
+                            _log.Add("You equipped a " + item.Name);
                         }
                     }
                     return true;
                 }
             }
             System.Console.WriteLine("Your inventory is full!");
+            _log.Add("Your inventory is full!");
             return false;
         }
 

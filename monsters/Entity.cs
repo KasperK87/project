@@ -5,7 +5,7 @@ using Microsoft.VisualBasic;
 
 namespace ResidentSurvivor {
     public class GameObject : SadConsole.Entities.Entity {
-        private static MassageScreen _log = Game.UIManager.massageScreen;
+        protected static MassageScreen _log = Game.UIManager.massageScreen;
         public bool isPlayer = false;
         public string type = "GameObject";
         public int currHP = 1;
