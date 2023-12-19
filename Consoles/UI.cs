@@ -14,7 +14,7 @@ namespace ResidentSurvivor
         public Dungeon dungeon;
         public Floor currentFloor;
         public Console? menu;
-        public Console statusScreen;
+        public StatusScreen statusScreen;
         public MassageScreen massageScreen;
         public Pause pauseScreen; 
         public Inventory inventoryScreen;
@@ -42,10 +42,7 @@ namespace ResidentSurvivor
             //this is the main game screen
             this.Children.Add(currentFloor);
 
-            statusScreen = new Console(40, 29){
-                DefaultBackground = Color.AnsiCyan,
-                Position = new Point(1,1),
-            };
+            statusScreen = new StatusScreen(40, 29);
 
             this.Children.Add(statusScreen);
 
