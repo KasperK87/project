@@ -32,7 +32,7 @@ namespace ResidentSurvivor{
         }
 
         public void ProcessMouse(SadConsole.Input.MouseScreenObjectState info){
-            
+            Game.UIManager.statusScreen.sortGameObjects(); 
             //System.Console.WriteLine(info.Mouse.LeftClicked);
             //if mouse is hovering over an entity from the status screen
             //set that entity as the target
