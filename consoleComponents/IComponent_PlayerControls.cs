@@ -34,7 +34,13 @@ namespace ResidentSurvivor{
         public void ProcessMouse(SadConsole.Input.MouseScreenObjectState info){
             
             //System.Console.WriteLine(info.Mouse.LeftClicked);
-            mouseLoc = info.CellPosition;
+            //if mouse is hovering over an entity from the status screen
+            //set that entity as the target
+            if (Game.UIManager.statusScreen._selectedEntity >= 0){
+                    mouseLoc = Game.UIManager.statusScreen.gameObjects[Game.UIManager.statusScreen._selectedEntity-6].Position;     
+            } else {
+                mouseLoc = info.CellPosition;
+            }
 
             if (info.Mouse.LeftClicked){
                 followingPath = !followingPath;
