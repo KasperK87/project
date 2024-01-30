@@ -9,6 +9,10 @@ namespace ResidentSurvivor {
         //ordered by distance from the player
         public List<GameObject> gameObjects = new List<GameObject>();
         public int _selectedEntity = -1;
+
+        private bool _isDirty = true;
+        //always sort for every frame, when = -1
+        public ulong currentTurn = 0;
         public StatusScreen(int width, int height) : base(width, height) {
             this.DefaultBackground = SadRogue.Primitives.Color.AnsiCyan;
             this.Position = new SadRogue.Primitives.Point(1, 1);
@@ -25,8 +29,8 @@ namespace ResidentSurvivor {
         }
 
         public void addGameObject(GameObject obj){
-            gameObjects.Add(obj);
-            gameObjects.Sort((x,y) => x.DistanceFromPlayer().CompareTo(y.DistanceFromPlayer()));
+            if (currentTurn < Game.UIManager.currentFloor.turn)
+                gameObjects.Add(obj);
         }
 
         public void removeAllGameObjects(){
@@ -35,6 +39,9 @@ namespace ResidentSurvivor {
 
         public void drawEntityList(){
             //this.Clear();
+            if (currentTurn < Game.UIManager.currentFloor.turn)
+                gameObjects.Sort((x,y) => x.DistanceFromPlayer().CompareTo(y.DistanceFromPlayer()));
+            _isDirty = false;
             int i = 6;
             foreach(GameObject obj in gameObjects){
                 if (i == _selectedEntity)
@@ -47,6 +54,10 @@ namespace ResidentSurvivor {
                         SadRogue.Primitives.Color.AnsiCyan);
                 }
                 i++;
+            }
+            if (currentTurn < Game.UIManager.currentFloor.turn){
+                removeAllGameObjects();
+                //currentTurn = Game.UIManager.currentFloor.turn;
             }
         }
     }

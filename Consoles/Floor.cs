@@ -327,14 +327,14 @@ namespace ResidentSurvivor{
               
             DungeonMap.UpdatePlayerFieldOfView(GetSadComponent<IComponent_PlayerControls>().parent);
 
-            //we clear the list of seen entities
-            Game.UIManager.statusScreen.removeAllGameObjects();
-
             //removed as the level shouldn't know if the player is following a path
             //if (GetSadComponent<IComponent_PlayerControls>().followingPath) followPath();
 
             //updates all entities (GameObject player)
             entityManager.Update(this, delta);
+
+            //update the current turn for status screen
+            //Game.UIManager.statusScreen.currentTurn = Game.UIManager.currentFloor.turn;
 
             //View.WithCenter(player.Position);
             
