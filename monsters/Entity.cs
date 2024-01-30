@@ -53,6 +53,11 @@ namespace ResidentSurvivor {
                 if (frames[0] != null){
                     this.setFramesColor(this.color);
                 }
+
+                if (!this.isPlayer && this.Appearance.Foreground != SadRogue.Primitives.Color.Transparent)
+                    Game.UIManager.statusScreen.addGameObject(this);
+            
+
                 this.Appearance.Foreground = this.color;
             }
     
@@ -159,6 +164,9 @@ namespace ResidentSurvivor {
             foreach (SadConsole.ColoredString.ColoredGlyphEffect frame in frames){
                 frame.Foreground = c;
             }
+        }
+        public int DistanceFromPlayer(){
+            return Game.UIManager.currentFloor.getDistanceToPlayer(Position.X, Position.Y);
         }
     }
     public enum damageModifier{

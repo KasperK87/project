@@ -84,6 +84,8 @@ namespace ResidentSurvivor
 
                 statusScreen.Print(1,4, "Gold: " + currentFloor.getPlayer().getGold());
 
+                statusScreen.drawEntityList();
+
                 //basic test of components, this allows you to store attributes and
                 //use them at will
                 /*
