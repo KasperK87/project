@@ -410,7 +410,9 @@ namespace ResidentSurvivor{
             if (!IsFocused) return false;
 
             //only draw path if mouse is in use
-            if (_mouseLoc != info.WorldCellPosition){
+            //if cellposition is less than 20, it is in the UI
+            //and should draw the selected path no matter what
+            if (_mouseLoc != info.WorldCellPosition || info.CellPosition.X < 20){
                 _mouseLoc = info.WorldCellPosition;
                 _drawPath = true;
             }

@@ -32,7 +32,12 @@ namespace ResidentSurvivor{
         }
 
         public void ProcessMouse(SadConsole.Input.MouseScreenObjectState info){
+            
+            //sort the gameobjects in the status screen
+            //so that the index of the gameobject is the same
+            //as the index of the entity in the game
             Game.UIManager.statusScreen.sortGameObjects(); 
+            
             //System.Console.WriteLine(info.Mouse.LeftClicked);
             //if mouse is hovering over an entity from the status screen
             //set that entity as the target
@@ -263,6 +268,12 @@ namespace ResidentSurvivor{
             if (info.IsKeyDown(SadConsole.Input.Keys.NumPad5))
             {
                 keyHit = true;
+            }
+
+            //player will follow the path when we click enter
+            if (info.IsKeyDown(SadConsole.Input.Keys.Enter))
+            {
+                followingPath = true;
             }
 
             //DEBUG
