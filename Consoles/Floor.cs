@@ -317,7 +317,6 @@ namespace ResidentSurvivor{
         public int getDistanceToPlayer(int x, int y){
             int distance = (int) Math.Sqrt(Math.Pow(x - GetSadComponent<IComponent_PlayerControls>().parent.Position.X, 2) + 
                 Math.Pow(y - GetSadComponent<IComponent_PlayerControls>().parent.Position.Y, 2));
-            System.Console.WriteLine(distance);
             return distance;
         }
 

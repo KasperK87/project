@@ -29,7 +29,6 @@ namespace ResidentSurvivor{
                 Game.UIManager.currentFloor.entityManager.Remove(parent);
                 //add blood to floor (just a quick little mockup)
                 Game.UIManager.currentFloor.addBlood(parent.Position.X, parent.Position.Y,3);
-                System.Console.WriteLine(parent.Name + " dead");
             }
 
             /*

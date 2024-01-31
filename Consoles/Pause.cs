@@ -11,7 +11,6 @@ namespace   ResidentSurvivor {
 
         public Pause(int w, int h, uint highscore) : base( w, h){
             _score = highscore;
-            System.Console.WriteLine("Highscore: " + _score);
 
             fonts = SadConsole.Readers.TheDrawFont.ReadFonts("./fonts/TheDraw/ABBADON.TDF").ToArray();
             _selectedFont = fonts[0];

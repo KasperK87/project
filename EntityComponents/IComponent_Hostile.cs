@@ -73,7 +73,6 @@ namespace ResidentSurvivor{
                             if (7 >= Game.UIManager.currentFloor.getDistanceToPlayer(parent.Position.X, parent.Position.Y) &&
                                 parent.rand.Next(1,20) > 15){
                                 parent.GetSadComponent<IComponent_Entity>().state = entityState.hostile;
-                                System.Console.WriteLine("HOSTILE!!!");
                             }
                     }
                 }
