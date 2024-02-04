@@ -288,6 +288,11 @@ namespace ResidentSurvivor{
             //this.FontSize = new SadRogue.Primitives.Point(16,24);;
         }
 
+        public Floor(int w, int h, bool basic) : base(w,h){
+            entityManager = new SadConsole.Entities.Manager();
+            this.SadComponents.Add(entityManager);
+        }
+
         // Create a player using SadConsole's Entity class
         private static void CreatePlayer(int x, int y)
         {

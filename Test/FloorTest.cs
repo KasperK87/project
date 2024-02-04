@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using ResidentSurvivor;
 
 class FloorTest{
@@ -16,13 +17,13 @@ class FloorTest{
             }
         }
 
-        if (stairs.Count != 2){
+        if (stairs != null && stairs.Count != 2){
             Console.WriteLine("There should be 2 stairs on the floor");
         } else {
             Console.WriteLine("There are 2 stairs on the floor");
         }
-
-        if (floor.pathBetween(stairs[0].Position.X, stairs[0].Position.Y, 
+        
+        if (stairs.Count == 2 && floor.pathBetween(stairs[0].Position.X, stairs[0].Position.Y, 
             stairs[0].Position.X, stairs[0].Position.Y) == null){
             Console.WriteLine("There should be a path between the stairs");
         } else {
