@@ -26,6 +26,8 @@ namespace ResidentSurvivor
             DungeonTest.test2();
             DungeonTest.test3();
 
+            FloorTest.testStairs(new Floor(80,29));
+
             currentState = ProcessState.Active;
             
 

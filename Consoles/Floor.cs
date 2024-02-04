@@ -445,7 +445,20 @@ namespace ResidentSurvivor{
             }
             
             }
+        }
 
+        //find a valid path between two points
+        public RogueSharp.Path? pathBetween(int origX, int origY, int destX, int destY){
+            if (DungeonMap.GetCell(destX, destY).IsWalkable){
+                RogueSharp.PathFinder _pathFinder;
+                _pathFinder = new RogueSharp.PathFinder( DungeonMap, 1.1);
+                try{
+                    return _pathFinder.TryFindShortestPath( DungeonMap.GetCell(origX, origY), DungeonMap.GetCell(destX, destY));
+                } catch (RogueSharp.PathNotFoundException) { 
+                    return null;
+                }
+            }
+            return null;
         }
 
         //gives the path to the player from a point,
@@ -517,6 +530,11 @@ namespace ResidentSurvivor{
 
         public RogueSharpSadConsoleSamples.Core.DungeonMap GetDungeonMap(){
             return DungeonMap;
+        }
+
+        public IReadOnlyList<SadConsole.Entities.Entity> GetEntities(){
+            //System.Console.WriteLine("gets entities");
+            return entityManager.Entities;
         }
     }
 
