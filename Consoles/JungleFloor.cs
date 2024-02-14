@@ -1,6 +1,7 @@
 namespace ResidentSurvivor{
     class JungleFloor : Floor {
         //list of enemies on the floor
+        private RandomTable monsterTable;
         //list of items on the floor
         //list of special tiles on the floor
 
@@ -8,6 +9,8 @@ namespace ResidentSurvivor{
         public JungleFloor(int width, int height): base(width, height, true){
             //initializes the floors, basic properties
             initFloor();
+
+            monsterTable = RandomTable.jungle();
         }
 
         private void initFloor(){
