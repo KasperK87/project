@@ -39,10 +39,10 @@ namespace ResidentSurvivor{
             _drawPath = false;
             _turn = value;
         }}
-        private static Player player = new Player(
+        protected static Player player = new Player(
                 Color.White, Color.Blue, (int) TileType.Player, 100);
 
-        private RogueSharpSadConsoleSamples.Core.DungeonMap DungeonMap;
+        protected RogueSharpSadConsoleSamples.Core.DungeonMap DungeonMap;
         public TileMetadata[,] tileMetadata;
 
         //will be refactored away
@@ -139,7 +139,7 @@ namespace ResidentSurvivor{
                         }
                     }
 
-                    if (Random.Next(50) == 0 && isEmpty){
+                    if (Random.Next(500) == 0 && isEmpty){
                         GameObject rat = new GameObject(
                             Color.Gray, Color.Transparent, (int) TileType.Rat, 99);
                         
@@ -157,7 +157,7 @@ namespace ResidentSurvivor{
                         entityManager.Add(rat);
                         isEmpty = false;
                         
-                    } else if (Random.Next(100) == 0 && isEmpty){
+                    } else if (Random.Next(1000) == 0 && isEmpty){
                         GameObject kobold = new GameObject(
                             Color.AnsiMagenta, Color.Transparent, (int) TileType.Kobold, 99);
                         
@@ -175,7 +175,7 @@ namespace ResidentSurvivor{
                         entityManager.Add(kobold);
                         isEmpty = false;
                         
-                    } else if (Random.Next(200) == 0 && isEmpty){
+                    } else if (Random.Next(2000) == 0 && isEmpty){
                         GameObject goblin = new GameObject(
                             Color.LimeGreen, Color.Transparent, (int) TileType.Goblin, 99);
 
@@ -193,7 +193,7 @@ namespace ResidentSurvivor{
                         entityManager.Add(goblin);
                         isEmpty = false;
                         
-                    } else if (Random.Next(50) == 0 && isEmpty){
+                    } else if (Random.Next(500) == 0 && isEmpty){
                         Gold gold = new Gold(
                             Color.Yellow, Color.Transparent, (int) TileType.Gold, 98, 
                             Random.Next(10, 100));
@@ -294,7 +294,7 @@ namespace ResidentSurvivor{
         }
 
         // Create a player using SadConsole's Entity class
-        private static void CreatePlayer(int x, int y)
+        protected void CreatePlayer(int x, int y)
         {
             player = new Player(
                 Color.White, Color.Transparent, (int) TileType.Player, 100);

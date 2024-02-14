@@ -21,6 +21,14 @@ namespace ResidentSurvivor{
                 floors[i].DefaultBackground = Color.Black;
                 floors[i].View = new Rectangle(0, 0, 20, 15);
             }
+
+            //DEBUG set 2 floor to jungle
+            
+            floors[1] = new JungleFloor(80,29);
+            floors[1].Position = new Point(21,1);
+            floors[1].DefaultBackground = Color.Black;
+            floors[1].View = new Rectangle(0, 0, 20, 15);
+            
         }
 
         public void setLevel(int setLevel){
