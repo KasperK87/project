@@ -80,6 +80,8 @@ namespace ResidentSurvivor{
                             Color.White, Color.Transparent, (int) TileType.UpStairs, 98, true);
                         
                             stairs.Position = new Point(x, y);
+                            upStairsLocation.X = x;
+                            upStairsLocation.Y = y;
 
                             entityManager.Add(stairs);
 
@@ -91,6 +93,8 @@ namespace ResidentSurvivor{
                             Color.White, Color.Transparent, (int) TileType.DownStairs, 98, false);
                         
                             stairs.Position = new Point(x, y);
+                            downStairsLocation.X = x;
+                            downStairsLocation.Y = y;
 
                             entityManager.Add(stairs);
 

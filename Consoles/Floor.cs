@@ -56,8 +56,8 @@ namespace ResidentSurvivor{
             mapGenerator = new RogueSharpSadConsoleSamples.Systems.MapGenerator(
                 120,40, 10, 10, 5, 1);
         
-        RogueSharp.Point downStairsLocation;
-        RogueSharp.Point upStairsLocation;
+        protected RogueSharp.Point downStairsLocation;
+        protected RogueSharp.Point upStairsLocation;
 
 
         public SadConsole.Entities.Manager entityManager;
