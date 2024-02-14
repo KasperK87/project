@@ -156,7 +156,7 @@ namespace ResidentSurvivor{
             // 'A' key pressed to perform action
             if (info.IsKeyPressed(SadConsole.Input.Keys.A)){
                 performAction = true;
-                System.Console.WriteLine("Perform Action Where?");
+                Game.UIManager.massageScreen.Add("Perform Action Where?");
                 flag = true;
                 return;
             }
