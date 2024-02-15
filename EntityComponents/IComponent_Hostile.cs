@@ -15,15 +15,12 @@ namespace ResidentSurvivor{
         private  SadRogue.Primitives.Point previousPosition;
 
         private Point[] _goals; 
-        //private bool followingPath;
         private UInt64 turn;
         private IComponent_Entity entity;
 
 
 
         public IComponent_Hostile(SadConsole.Entities.Entity setParent, IComponent_Entity setEntity){
-            //followingPath = false;
-
             this.parent = (GameObject)setParent;
             this.entity = setEntity;
 
@@ -68,12 +65,10 @@ namespace ResidentSurvivor{
                         followPath();                  
                     } else if (Game.UIManager.currentFloor.GetDungeonMap().IsInFov(parent.Position.X, parent.Position.Y)){
                         
-                        //if (_cells != null)
-                            //need to check distance to player in another way then _cells.length
-                            if (7 >= Game.UIManager.currentFloor.getDistanceToPlayer(parent.Position.X, parent.Position.Y) &&
-                                parent.rand.Next(1,20) > 15){
-                                parent.GetSadComponent<IComponent_Entity>().state = entityState.hostile;
-                            }
+                        if (7 >= Game.UIManager.currentFloor.getDistanceToPlayer(parent.Position.X, parent.Position.Y) &&
+                            parent.rand.Next(1,20) > 15){
+                            parent.GetSadComponent<IComponent_Entity>().state = entityState.hostile;
+                        }
                     }
                 }
                 
@@ -123,21 +118,17 @@ namespace ResidentSurvivor{
             if (parent.GetSadComponent<IComponent_Entity>().state == entityState.wandering &&
                 _goalMap != null && _goals != null && previousPosition == parent.Position ){
                 //set _cells to goalmap
-                //System.Console.WriteLine("GoalMap");
-
                 for (int i = 0; i < _goals.Length; i++){
-                    //if (_goals[i].X == parent.Position.X && _goals[i].Y == parent.Position.Y){
-                        bool newGoal = false;
-                        
-                        while (!newGoal){
-                            int x = parent.rand.Next(2,mapSize.X-1);
-                            int y = parent.rand.Next(2,mapSize.Y-1);
-                            if (_dungeon.GetDungeonMap().IsWalkable(x,y)){
-                                _goals[i] = new Point(x,y);
-                                newGoal = true;
-                            }
+                    bool newGoal = false;
+                    
+                    while (!newGoal){
+                        int x = parent.rand.Next(2,mapSize.X-1);
+                        int y = parent.rand.Next(2,mapSize.Y-1);
+                        if (_dungeon.GetDungeonMap().IsWalkable(x,y)){
+                            _goals[i] = new Point(x,y);
+                            newGoal = true;
                         }
-                    //}
+                    }
                 }
 
                 if (_cells == null || _cells.Length >= 1)

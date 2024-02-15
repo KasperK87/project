@@ -30,14 +30,6 @@ namespace ResidentSurvivor{
                 //add blood to floor (just a quick little mockup)
                 Game.UIManager.currentFloor.addBlood(parent.Position.X, parent.Position.Y,3);
             }
-
-            /*
-            if (!Game.UIManager.currentFloor.GetDungeonMap().IsInFov(parent.Position.X, parent.Position.Y)){
-                parent.Appearance.Foreground = SadRogue.Primitives.Color.Transparent;
-            } else {
-                parent.Appearance.Foreground = SadRogue.Primitives.Color.White;
-            }
-            */
         }
     }
     public enum entityState{

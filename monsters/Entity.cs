@@ -27,18 +27,11 @@ namespace ResidentSurvivor {
               this.Walkable = true;
 
               this.color = c1;
-
-              //crashes many places?!
-              //this.SadComponents.Add(new SadConsole.Components.SmoothMove(new SadRogue.Primitives.Point(15,24)));
             }
         
         //Render override is not running, but glyph is still being rendered?
         //renderer appearnly does this behind the scenes
         public override void Render(TimeSpan delta){
-            //this.ComponentsRender[0].Render(this, delta);
-            //System.Console.WriteLine("pig!");
-            //this.Appearance.Glyph = 100;
-
             base.Render(delta);
         }
 
@@ -46,8 +39,6 @@ namespace ResidentSurvivor {
             timer += delta;
             if (!Game.UIManager.currentFloor.GetDungeonMap().IsInFov(this.Position.X, this.Position.Y) && 
                 !Game.UIManager.currentFloor.GetDungeonMap().IsExplored(this.Position.X, this.Position.Y)){
-                //this.Appearance.Glyph = 0;
-                //this.setFramesColor(SadRogue.Primitives.Color.Transparent);
                 this.Appearance.Foreground = SadRogue.Primitives.Color.Transparent;
             } else if (timer > TimeSpan.FromMilliseconds(100)) {
                 if (frames[0] != null){
@@ -61,16 +52,6 @@ namespace ResidentSurvivor {
                 this.Appearance.Foreground = this.color;
             }
     
-            //This allows us to use the render function,
-            //but it shouldn't be needed
-            //for some reason render component are not called.
-            /*
-            foreach (SadConsole.Components.IComponent obj in this.SadComponents){
-                obj.Update(this, delta);
-                //obj.Render(this, delta);
-            }
-            */
-
             if (currHP < 1){
                 this.Appearance.Foreground = SadRogue.Primitives.Color.Transparent;   
             }
@@ -118,7 +99,6 @@ namespace ResidentSurvivor {
             } else {
                 System.Console.WriteLine(roll+ ": The " + this.Name + " missed the " + target.Name);
                 _log.Add("The " + this.Name + " missed the " + target.Name);
-                //Game.UIManager.messageLog.Add("The " + this.Name + " missed the " + target.Name);
             }
         }
 

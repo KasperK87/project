@@ -11,7 +11,6 @@ namespace ResidentSurvivor {
             
             if(player.AddItemToInventory(this)) {
                 Game.UIManager.currentFloor.entityManager.Remove(this);
-                //this.currHP = 0;
             }
         }
 

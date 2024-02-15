@@ -9,7 +9,6 @@ namespace ResidentSurvivor{
         private List<GameObjectFactory> table = new List<GameObjectFactory>();
 
         private RandomTable(){
-            //table.Add(new gameObject());
         }
 
         public static RandomTable jungle(){

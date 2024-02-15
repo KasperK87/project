@@ -59,7 +59,6 @@ namespace ResidentSurvivor{
         protected RogueSharp.Point downStairsLocation;
         protected RogueSharp.Point upStairsLocation;
 
-
         public SadConsole.Entities.Manager entityManager;
 
         public Floor(int w, int h) : base( w, h){
@@ -76,8 +75,6 @@ namespace ResidentSurvivor{
             IsVisible = true;
             UseMouse = true;
 
-            //Create dungeon
-            //DungeonMap = mapGenerator.CreateMap();
             int seed = (int) DateTime.UtcNow.Ticks;
             Random = new RogueSharp.Random.DotNetRandom( seed );
 
@@ -274,18 +271,9 @@ namespace ResidentSurvivor{
             
             entityManager.Add(player);
 
-            //doesn't work, call from update loop instead 
-            //entityManager.DoEntityUpdate = true;
-
-            //followingPath = false;
-
             var fontMaster = SadConsole.Game.Instance.LoadFont("./fonts/_test.font");
-            //var normalSizedFont = fontMaster.GetFont(SadConsole.Font.FontSizes.One);
-            //var normalFont = fontMaster
 
             this.Font = fontMaster;
-
-            //this.FontSize = new SadRogue.Primitives.Point(16,24);;
         }
 
         public Floor(int w, int h, bool basic) : base(w,h){
@@ -331,17 +319,9 @@ namespace ResidentSurvivor{
               
             DungeonMap.UpdatePlayerFieldOfView(GetSadComponent<IComponent_PlayerControls>().parent);
 
-            //removed as the level shouldn't know if the player is following a path
-            //if (GetSadComponent<IComponent_PlayerControls>().followingPath) followPath();
-
             //updates all entities (GameObject player)
             entityManager.Update(this, delta);
 
-            //update the current turn for status screen
-            //Game.UIManager.statusScreen.currentTurn = Game.UIManager.currentFloor.turn;
-
-            //View.WithCenter(player.Position);
-            
             this.View = new Rectangle(GetSadComponent<IComponent_PlayerControls>().parent.Position.X-20, 
                 GetSadComponent<IComponent_PlayerControls>().parent.Position.Y-10, 40, 20);
             if (!GetSadComponent<IComponent_PlayerControls>().followingPath){
@@ -353,16 +333,10 @@ namespace ResidentSurvivor{
                 Game.UIManager.currentState = ProcessState.Terminated;
             }
         }
-
         
         public void updateHostilesGoalmap(){
             List<Point> entitiesPos = new List<Point>();
             foreach (GameObject entity in entityManager.Entities){
-                /*
-                if (entity.GetSadComponent<IComponent_Hostile>() != null){
-                    entitiesPos.Add(entity.Position);   
-                }
-                */
                 if (entity.type == "Stairs"){
                     entitiesPos.Add(entity.Position);   
                 }
@@ -403,7 +377,6 @@ namespace ResidentSurvivor{
                     } else {
                         int randomX = Random.Next(-1,1);
                         int randomY = Random.Next(-1,1);
-                        //System.Console.WriteLine(randomX + " " + randomY);
                         if (GetDungeonMap().IsWalkable(x+randomX, y+randomY))
                             tileMetadata[x+randomX, y+randomY].amountOfBlood += 1;
                     }
@@ -422,7 +395,6 @@ namespace ResidentSurvivor{
                 _drawPath = true;
             }
 
-            //if(mouseLoc != info.CellPosition) pathXtoY();
             GetSadComponent<IComponent_PlayerControls>().ProcessMouse(info);
 
             return false;
@@ -538,7 +510,6 @@ namespace ResidentSurvivor{
         }
 
         public IReadOnlyList<SadConsole.Entities.Entity> GetEntities(){
-            //System.Console.WriteLine("gets entities");
             return entityManager.Entities;
         }
     }

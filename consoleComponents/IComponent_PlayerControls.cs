@@ -22,7 +22,6 @@ namespace ResidentSurvivor{
         //used to determine if the player should be running
         private TimeSpan timeStampRun = TimeSpan.Zero;
         
-        //also get a reference to the dungeonconsole
         public IComponent_PlayerControls(SadConsole.Entities.Entity setParent, Floor setConsole){
             this.parent = (GameObject)setParent;
             this.parent.Name = "Player";
@@ -103,22 +102,16 @@ namespace ResidentSurvivor{
         private void followPath(RogueSharp.Path? _cells){
             if ( _cells != null)
             {
-                //timeStampRun = TimeSpan.Zero;
                 try {
-                    //_cells.TryStepForward();
                     _cells.StepForward();
-                    //System.Console.WriteLine(_cells.CurrentStep.X +"," + _cells.CurrentStep.Y);
                     GameObject obj = (GameObject)console.GetMonsterAt(_cells.CurrentStep.X, _cells.CurrentStep.Y);
                     if (obj != null && obj.Walkable){
                         obj.Pickup((Player)parent);
                         parent.Position = new SadRogue.Primitives.Point(_cells.CurrentStep.X, _cells.CurrentStep.Y); 
                     } else if(obj != null){ 
                         obj.Interact();
-                        //System.Console.WriteLine("Player Attack");
                         if (obj.GetSadComponent<IComponent_Entity>() != null){
-                            //parent.Attack(obj);
                             obj.GetSadComponent<IComponent_Entity>().currHP -= parent.GetSadComponent<IComponent_Entity>().damage;
-
                             Game.UIManager.currentFloor.addBlood(obj.Position.X, obj.Position.Y,1);
                         }
                         console.turn++;
@@ -161,7 +154,6 @@ namespace ResidentSurvivor{
                 return;
             }
             if (performAction){
-                //System.Console.WriteLine("Ready");
                 //perform action
                 Point newPositionAction = parent.Position;
                 if (info.KeysPressed.Count > 0)
@@ -204,7 +196,6 @@ namespace ResidentSurvivor{
                 }
                 
                 GameObject entity = (GameObject)Game.UIManager.currentFloor.GetMonsterAt(newPositionAction.X, newPositionAction.Y);
-                //System.Console.WriteLine("Action on up");
 
                 if (entity != null){
                     if(entity.Interact()){
@@ -276,25 +267,10 @@ namespace ResidentSurvivor{
                 followingPath = true;
             }
 
-            //DEBUG
-            /*
-            if (info.IsKeyPressed(SadConsole.Input.Keys.Q))
-            {
-                Game.Instance.Screen.Children.Remove(Game.UIManager.dungeon.getCurrentLevel());
-
-                //ternary operator, you can switch between levels
-                Game.UIManager.dungeon.setLevel(Game.UIManager.dungeon.currentLevel == 0 ? 1 : 0);
-                Game.UIManager.currentFloor = Game.UIManager.dungeon.getCurrentLevel();
-
-                Game.UIManager.Children.Add(Game.UIManager.currentFloor);
-            }
-            */
-            
             if(preKeyDown && keyHit && Game.UIManager.currentFloor.timer >= TimeSpan.FromMilliseconds(500)+timeStampRun){
                 run = true;
             } else if (!preKeyDown && !keyHit && !followingPath){
                 timeStampRun = Game.UIManager.currentFloor.timer;
-                //System.Console.WriteLine("RESET TIMER");
             } 
             
             // If a movement key was pressed
@@ -308,7 +284,6 @@ namespace ResidentSurvivor{
                         parent.Position = newPosition;
                         Game.UIManager.currentFloor.pathXtoY(mouseLoc.X, mouseLoc.Y);
                     } else {
-                        //System.Console.WriteLine("Player Attack");
                         if (monster.GetSadComponent<IComponent_Entity>() != null){                
                             parent.Attack(monster);    
                         } else {
@@ -330,13 +305,8 @@ namespace ResidentSurvivor{
 
             if (keyHit) {
                 followingPath = false;
-                //_cells should also be part of this instance
-                //should it really??? 
                 Game.UIManager.currentFloor._cells = null;
             }
-
-            // You could have multiple entities in the game for example, and change
-            // which entity gets keyboard commands.
 
             preKeyDown = keyHit;
             flag = false;

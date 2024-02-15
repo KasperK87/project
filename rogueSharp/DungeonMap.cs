@@ -100,7 +100,6 @@ namespace RogueSharpSadConsoleSamples.Core
                      map.SetGlyph(cell.X, cell.Y, (int) TileType.Solid);
                 else
                   map.SetGlyph(cell.X, cell.Y, (int) TileType.Solid);
-               //console.CellData.SetCharacter( cell.X, cell.Y, '#', Colors.Wall, Colors.WallBackground );
             }
          }
       }

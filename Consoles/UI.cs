@@ -74,9 +74,6 @@ namespace ResidentSurvivor
         public override void Update(TimeSpan timeElapsed)
         {
             if (currentState == ProcessState.Active){
-
-                //massageScreen.Add("Current turn: " + currentFloor.turn.ToString());
-                
                 statusScreen.Clear();
                 
                 statusScreen.Print(1,1, "Current turn: " + currentFloor.turn.ToString());
@@ -88,13 +85,6 @@ namespace ResidentSurvivor
                 statusScreen.Print(1,4, "Gold: " + currentFloor.getPlayer().getGold());
 
                 statusScreen.drawEntityList();
-
-                //basic test of components, this allows you to store attributes and
-                //use them at will
-                /*
-                IComponent_updater com = currentFloor.getPlayer().GetSadComponent<IComponent_updater>();
-                statusScreen.Print(1,3, "HP: " + com.HP + "/" + currentFloor.getPlayer().maxHP + "    ");
-                */
 
                 currentFloor.IsFocused = true;
 
@@ -117,7 +107,6 @@ namespace ResidentSurvivor
 
             } else if (currentState == ProcessState.Terminated){
                 //kill all screens, and show gameover screen
-                //this.Children.Add(new Menu(120,40));
                 this.Children.Add(new Gameover(120,40,currentFloor.getPlayer().getGold()));
 
                 this.Children.Remove(currentFloor);
@@ -195,7 +184,6 @@ namespace ResidentSurvivor
             fonts = SadConsole.Readers.TheDrawFont.ReadFonts("./fonts/TheDraw/ABBADON.TDF").ToArray();
             _selectedFont = fonts[0];
 
-            //this.View = new Rectangle(0, 0, 22, 22);
             //this.CanDrag = true;
             this.Title = "MAIN MENU";
 
@@ -214,15 +202,6 @@ namespace ResidentSurvivor
                 // World is created in UIManeger 
                 // and will appears when we hide 
                 // this menu;
-
-                // This code is needed if we change 
-                // how world is created
-                /*
-                World currentFloor = new World(80,29);
-                currentFloor.Position = new Point(1,1);
-                currentFloor.DefaultBackground = Color.Black;
-                Game.Instance.Screen.Children.Add(currentFloor);  
-                */
 
                 //hides the menu
                 this.Hide();
@@ -254,9 +233,6 @@ namespace ResidentSurvivor
                 }
 
             this.Show();
-
-            //AbsolutePosition = new Point(
-            //    500, 100);
         }
 
         public override void Render(TimeSpan delta)

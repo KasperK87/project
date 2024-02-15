@@ -39,7 +39,6 @@ namespace ResidentSurvivor
             Game.UIManager.currentFloor = Game.UIManager.dungeon.getCurrentFloor();
             Game.UIManager.Children.Add(Game.UIManager.currentFloor);
             return true;
-            //base.Interact();
         }
     }
 }

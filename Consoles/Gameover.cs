@@ -71,11 +71,6 @@ namespace ResidentSurvivor{
 
             public override void Render(TimeSpan delta)
             {
-                
-                //this.Clear();
-                //timer += delta;
-
-                
                 int offcenteringX = 50;
                 int offcenteringY = (int)(timer.TotalMilliseconds/300)+6;
                 Surface.PrintTheDraw(2+offcenteringX-20, this.Height/2-10-offcenteringY, "GAME", _selectedFont);
@@ -84,7 +79,6 @@ namespace ResidentSurvivor{
                 this.Print(this.Width/2-4, this.Height/2+offcenteringY*2-7,"SCORE: " + _score.ToString(), Color.White, Color.Black);
 
                 base.Render(delta);
-                
             }
     }
 }

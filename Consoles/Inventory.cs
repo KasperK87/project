@@ -22,8 +22,6 @@ namespace ResidentSurvivor {
 
         public override void Render(TimeSpan delta)
         {
-            //this.Clear();
-
             //show inventory
             for (int i = 0; i < player.getInventory().Length; i++)
             {

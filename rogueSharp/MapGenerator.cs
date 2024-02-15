@@ -17,7 +17,6 @@ namespace RogueSharpSadConsoleSamples.Systems
       private readonly int _roomMinSize;
       private readonly int _level;
       private readonly DungeonMap _map;
-      //private readonly EquipmentGenerator _equipmentGenerator;
 
       public static IRandom? Random { get; private set; }
 
@@ -33,13 +32,10 @@ namespace RogueSharpSadConsoleSamples.Systems
         int seed = (int) DateTime.UtcNow.Ticks;
         Random = new DotNetRandom( seed );
          _map = new DungeonMap();
-         //_equipmentGenerator = new EquipmentGenerator( level );
       }
 
       public DungeonMap CreateMap()
       {
-        
-
          _map.Initialize( _width, _height );
 
          for ( int r = 0; r < _maxRooms; r++ )
@@ -92,20 +88,6 @@ namespace RogueSharpSadConsoleSamples.Systems
          {
             CreateDoors( room );
          }
-         
-         /*
-         CreateStairs();
-
-         PlacePlayer();
-
-         PlaceMonsters();
-
-         PlaceEquipment();
-
-         PlaceItems();
-
-         PlaceAbility();
-        */
 
          return _map;
       }
@@ -137,184 +119,12 @@ namespace RogueSharpSadConsoleSamples.Systems
          }
       }
       
-      
       private void CreateDoors( Rectangle room )
       {
          int xMin = room.Left;
          int xMax = room.Right;
          int yMin = room.Top;
          int yMax = room.Bottom;
-
-         //_map.Doors.Add(new ResidentSurvivor.Door())
-
-         /*
-         List<Cell> borderCells = _map.GetCellsAlongLine( xMin, yMin, xMax, yMin ).ToList();
-         borderCells.AddRange( _map.GetCellsAlongLine( xMin, yMin, xMin, yMax ) );
-         borderCells.AddRange( _map.GetCellsAlongLine( xMin, yMax, xMax, yMax ) );
-         borderCells.AddRange( _map.GetCellsAlongLine( xMax, yMin, xMax, yMax ) );
-
-         foreach ( Cell cell in borderCells )
-         {
-            if ( IsPotentialDoor( cell ) )
-            {
-               _map.SetCellProperties( cell.X, cell.Y, false, true );
-               _map.Doors.Add( new ResidentSurvivor.Door {
-                  X = cell.X,
-                  Y = cell.Y,
-                  IsOpen = false
-               } );
-            }
-         }
-         */
-      }
-
-      /*
-      private bool IsPotentialDoor( Cell cell )
-      {
-         if ( !cell.IsWalkable )
-         {
-            return false;
-         }
-
-         Cell right = _map.GetCell( cell.X + 1, cell.Y );
-         Cell left = _map.GetCell( cell.X - 1, cell.Y );
-         Cell top = _map.GetCell( cell.X, cell.Y - 1 );
-         Cell bottom = _map.GetCell( cell.X, cell.Y + 1 );
-
-         if ( _map.GetDoor( cell.X, cell.Y ) != null ||
-              _map.GetDoor( right.X, right.Y ) != null ||
-              _map.GetDoor( left.X, left.Y ) != null ||
-              _map.GetDoor( top.X, top.Y ) != null ||
-              _map.GetDoor( bottom.X, bottom.Y ) != null )
-         {
-            return false;
-         }
-
-         if ( right.IsWalkable && left.IsWalkable && !top.IsWalkable && !bottom.IsWalkable )
-         {
-            return true;
-         }
-         if ( !right.IsWalkable && !left.IsWalkable && top.IsWalkable && bottom.IsWalkable )
-         {
-            return true;
-         }
-         return false;
-      }
-      /*
-      private void CreateStairs()
-      {
-         _map.StairsUp = new Stairs {
-            X = _map.Rooms.First().Center.X + 1,
-            Y = _map.Rooms.First().Center.Y,
-            IsUp = true
-         };
-         _map.StairsDown = new Stairs {
-            X = _map.Rooms.Last().Center.X,
-            Y = _map.Rooms.Last().Center.Y,
-            IsUp = false
-         };
-      }
-
-      private void PlaceMonsters()
-      {
-         foreach ( var room in _map.Rooms )
-         {
-            if ( Dice.Roll( "1D10" ) < 7 )
-            {
-               var numberOfMonsters = Dice.Roll( "1D4" );
-               for ( int i = 0; i < numberOfMonsters; i++ )
-               {
-                  if ( _map.DoesRoomHaveWalkableSpace( room ) )
-                  {
-                     Point randomRoomLocation = _map.GetRandomLocationInRoom( room );
-                     if ( randomRoomLocation != null )
-                     {
-                        _map.AddMonster( ActorGenerator.CreateMonster( _level, _map.GetRandomLocationInRoom( room ) ) );
-                     }
-                  }
-               }
-            }
-         }
-      }
-
-      private void PlaceEquipment()
-      {
-         foreach ( var room in _map.Rooms )
-         {
-            if ( Dice.Roll( "1D10" ) < 3 )
-            {
-               if ( _map.DoesRoomHaveWalkableSpace( room ) )
-               {
-                  Point randomRoomLocation = _map.GetRandomLocationInRoom( room );
-                  if ( randomRoomLocation != null )
-                  {
-                     Core.Equipment equipment;
-                     try
-                     {
-                        equipment = _equipmentGenerator.CreateEquipment();
-                     }
-                     catch ( InvalidOperationException )
-                     {
-                        // no more equipment to generate so just quit adding to this level
-                        return;
-                     }
-                     Point location = _map.GetRandomLocationInRoom( room );
-                     _map.AddTreasure( location.X, location.Y, equipment );
-                  }
-               }
-            }
-         }
-      }
-
-      private void PlaceItems()
-      {
-         foreach ( var room in _map.Rooms )
-         {
-            if ( Dice.Roll( "1D10" ) < 3 )
-            {
-               if ( _map.DoesRoomHaveWalkableSpace( room ) )
-               {
-                  Point randomRoomLocation = _map.GetRandomLocationInRoom( room );
-                  if ( randomRoomLocation != null )
-                  {
-                     Item item = ItemGenerator.CreateItem();
-                     Point location = _map.GetRandomLocationInRoom( room );
-                     _map.AddTreasure( location.X, location.Y, item );
-                  }
-               }
-            }
-         }
-      }
-      */
-    /*
-      private void PlacePlayer()
-      {
-         Player player = ActorGenerator.CreatePlayer();
-
-         player.X = _map.Rooms[0].Center.X;
-         player.Y = _map.Rooms[0].Center.Y;
-
-         _map.AddPlayer( player );
-      }
-    */
-
-    /*
-      private void PlaceAbility()
-      {
-         if ( _level == 1 || _level % 3 == 0 )
-         {
-            try
-            {
-               var ability = AbilityGenerator.CreateAbility();
-               int roomIndex = RogueGame.Random.Next( 0, _map.Rooms.Count - 1 );
-               Point location = _map.GetRandomLocationInRoom( _map.Rooms[roomIndex] );
-               _map.AddTreasure( location.X, location.Y, ability );
-            }
-            catch ( InvalidOperationException )
-            {
-            }
-         }
-      }
-    */
+     }
    }
 }

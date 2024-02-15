@@ -116,12 +116,6 @@ namespace ResidentSurvivor{
                         } else if (Floor.Random.Next(10) == 0) {
 
                         }
-                        /*
-                        GameObject obj = monsterTable.roll(this, new Point(x,y));
-                        if(obj != null){
-                            entityManager.Entities.Add(obj);
-                        }
-                        */
                     }
                 }
             }
