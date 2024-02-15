@@ -12,21 +12,17 @@ namespace RogueSharpSadConsoleSamples.Core
         public List<Rectangle> Rooms;
         public List<ResidentSurvivor.Door> Doors;
 
+        //creates a boring map of solid stone 
+        public DungeonMap(int width, int height) : base (width, height){
+            Rooms = new List<Rectangle>();
+            Doors = new List<ResidentSurvivor.Door>();
+        }
+
         public DungeonMap(){
             Rooms = new List<Rectangle>();
             Doors = new List<ResidentSurvivor.Door>();
         }
 
-        /*
-        public void AddPlayer( Player player ){
-            RogueGame.Player = player;
-            SetIsWalkable( player.X, player.Y, false );
-            UpdatePlayerFieldOfView();
-            RogueGame.SchedulingSystem.Add( player );
-        }
-        */
-
-        
         public void UpdatePlayerFieldOfView(SadConsole.Entities.Entity? player){
          if (player != null){
             ComputeFov(player.Position.X, player.Position.Y, 10, true );
@@ -39,15 +35,6 @@ namespace RogueSharpSadConsoleSamples.Core
             }
          }
         }
-      
-
-        /*
-      public void SetIsWalkable( int x, int y, bool isWalkable )
-      {
-         Cell cell = GetCell( x, y );
-         SetCellProperties( cell.X, cell.Y, cell.IsTransparent, isWalkable, cell.IsExplored );
-      }
-      */
 
       public void Draw( Console mapConsole)
       {

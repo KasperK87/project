@@ -1,3 +1,4 @@
+using RogueSharp;
 using SadConsole;
 using SadConsole.UI;
 using SadRogue.Primitives;
@@ -64,6 +65,16 @@ namespace ResidentSurvivor{
             }
         }
 
+        private Boolean validPlacementForStairs(int x, int y){
+            //check if placement is valid
+            Boolean validPlacementForStairs = true;
+            foreach (Cell cell in DungeonMap.GetCellsInSquare(x,y,2)){
+                if (cell.IsWalkable == false){
+                    validPlacementForStairs = false;
+                }
+            }
+            return validPlacementForStairs;
+        }
         private void decorateDungeon(){
             //decorates the dungeon with enemies, items, and special tiles
             bool placedDownstairs = false;
@@ -73,26 +84,29 @@ namespace ResidentSurvivor{
                 for (int y = 0; y < 29; y++){
                     if(DungeonMap.IsWalkable(x,y)){
 
-                        if (Floor.Random.Next(10)==0 && !placedUpstairs){
-                            DungeonMap.SetCellProperties(x, y, true, true, false);
+                        if (Floor.Random.Next(20)==0 && !placedUpstairs){
+                            if (validPlacementForStairs(x, y)){
+                                DungeonMap.SetCellProperties(x, y, true, true, false);
+                                
+                                Stairs stairs = new Stairs(
+                                Color.White, Color.Transparent, (int) TileType.UpStairs, 98, true);
                             
-                            Stairs stairs = new Stairs(
-                            Color.White, Color.Transparent, (int) TileType.UpStairs, 98, true);
-                        
-                            stairs.Position = new Point(x, y);
-                            upStairsLocation.X = x;
-                            upStairsLocation.Y = y;
+                                stairs.Position = new SadRogue.Primitives.Point(x, y);
+                                upStairsLocation.X = x;
+                                upStairsLocation.Y = y;
 
-                            entityManager.Add(stairs);
+                                entityManager.Add(stairs);
 
-                            placedUpstairs = true;
-                        } else if (Floor.Random.Next(10)==0 && !placedDownstairs){
+                                placedUpstairs = true;
+                            }
+                        } else if (Floor.Random.Next(10)==0 && !placedDownstairs &&
+                            validPlacementForStairs(x,y)){
                             DungeonMap.SetCellProperties(x, y, true, true, false);
                             
                             Stairs stairs = new Stairs(
                             Color.White, Color.Transparent, (int) TileType.DownStairs, 98, false);
                         
-                            stairs.Position = new Point(x, y);
+                            stairs.Position = new SadRogue.Primitives.Point(x, y);
                             downStairsLocation.X = x;
                             downStairsLocation.Y = y;
 
