@@ -84,21 +84,20 @@ namespace ResidentSurvivor{
                 for (int y = 0; y < 29; y++){
                     if(DungeonMap.IsWalkable(x,y)){
 
-                        if (Floor.Random.Next(20)==0 && !placedUpstairs){
-                            if (validPlacementForStairs(x, y)){
-                                DungeonMap.SetCellProperties(x, y, true, true, false);
-                                
-                                Stairs stairs = new Stairs(
-                                Color.White, Color.Transparent, (int) TileType.UpStairs, 98, true);
+                        if (Floor.Random.Next(20)==0 && !placedUpstairs &&
+                            validPlacementForStairs(x, y)){
+                            DungeonMap.SetCellProperties(x, y, true, true, false);
                             
-                                stairs.Position = new SadRogue.Primitives.Point(x, y);
-                                upStairsLocation.X = x;
-                                upStairsLocation.Y = y;
+                            Stairs stairs = new Stairs(
+                            Color.White, Color.Transparent, (int) TileType.UpStairs, 98, true);
+                        
+                            stairs.Position = new SadRogue.Primitives.Point(x, y);
+                            upStairsLocation.X = x;
+                            upStairsLocation.Y = y;
 
-                                entityManager.Add(stairs);
+                            entityManager.Add(stairs);
 
-                                placedUpstairs = true;
-                            }
+                            placedUpstairs = true;
                         } else if (Floor.Random.Next(10)==0 && !placedDownstairs &&
                             validPlacementForStairs(x,y)){
                             DungeonMap.SetCellProperties(x, y, true, true, false);
@@ -113,8 +112,6 @@ namespace ResidentSurvivor{
                             entityManager.Add(stairs);
 
                             placedDownstairs = true;
-                        } else if (Floor.Random.Next(10) == 0) {
-
                         }
                     }
                 }
