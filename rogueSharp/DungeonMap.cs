@@ -47,10 +47,7 @@ namespace RogueSharpSadConsoleSamples.Core
 
       private void SetConsoleSymbolForCell(SadConsole.Console map, Cell cell)
       {
-         if ( !cell.IsExplored )
-         {
-            return;
-         }
+         if ( !cell.IsExplored ){return;}
 
          if (IsInFov( cell.X, cell.Y ) )
          {
@@ -84,11 +81,8 @@ namespace RogueSharpSadConsoleSamples.Core
             if ( cell.IsWalkable )
             {
                map.SetGlyph(cell.X, cell.Y, (int) TileType.Floor);
-                
-               map.SetBackground(cell.X, cell.Y, SadRogue.Primitives.Color.Gray);
-               
-            }
-            else
+               map.SetBackground(cell.X, cell.Y, SadRogue.Primitives.Color.Gray);  
+            }else
             {
                 map.SetBackground(cell.X, cell.Y, SadRogue.Primitives.Color.Gray);
                 //TODO: should be done in generate map
@@ -102,6 +96,5 @@ namespace RogueSharpSadConsoleSamples.Core
             }
          }
       }
-
-    }
+   }
 }
