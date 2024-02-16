@@ -57,14 +57,13 @@ namespace RogueSharpSadConsoleSamples.Core
             if ( cell.IsWalkable )
             {
                //TODO: should be done in generate map
-               if (GetCell(cell.X, cell.Y).IsWalkable && !GetCell(cell.X, cell.Y-1).IsWalkable)
+               if (GetCell(cell.X, cell.Y).IsWalkable && !GetCell(cell.X, cell.Y-1).IsWalkable){
                   map.SetGlyph(cell.X, cell.Y-1, (int) TileType.Wall);
-               
-                map.SetGlyph(cell.X, cell.Y, (int) TileType.Floor);
-               
-                map.SetBackground(cell.X, cell.Y, SadRogue.Primitives.Color.Blue);  
-              
-                //console.CellData.SetCharacter( cell.X, cell.Y, '.', Colors.FloorFov, Colors.FloorBackgroundFov );
+                  map.SetBackground(cell.X,cell.Y-1, SadRogue.Primitives.Color.Red);
+               }
+
+               map.SetGlyph(cell.X, cell.Y, (int) TileType.Floor);
+               map.SetBackground(cell.X, cell.Y, SadRogue.Primitives.Color.Blue);  
             }
             else
             {
