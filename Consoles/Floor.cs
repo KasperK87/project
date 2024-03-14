@@ -482,7 +482,7 @@ namespace ResidentSurvivor{
                             this.SetBackground(cell.X, cell.Y, Color.LightYellow.SetAlpha(180));
                         }
                     }
-                    this.SetBackground(_cells.Start.X, _cells.Start.Y, Color.Blue);
+                    this.SetBackground(_cells.Start.X, _cells.Start.Y, DungeonMap.cFloor);
                 }
             this.SetBackground(GetSadComponent<IComponent_PlayerControls>().mouseLoc.X,GetSadComponent<IComponent_PlayerControls>().mouseLoc.Y, Color.Yellow);
             }

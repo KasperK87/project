@@ -8,6 +8,10 @@ namespace ResidentSurvivor{
 
             jungle = generateFloorLayout(80,29);
 
+            //set color theme
+            jungle.cWall = SadRogue.Primitives.Color.DarkGreen;
+            //jungle.cFloor = SadRogue.Primitives.Color.DarkGreen;
+
             return jungle;
         }
 

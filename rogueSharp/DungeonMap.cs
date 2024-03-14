@@ -9,6 +9,11 @@ using TileType = ResidentSurvivor.TileType;
 namespace RogueSharpSadConsoleSamples.Core
 {
     public class DungeonMap : Map{
+
+      //dungeon color theme
+        public SadRogue.Primitives.Color cWall = SadRogue.Primitives.Color.DarkBlue;
+        public SadRogue.Primitives.Color cFloor = SadRogue.Primitives.Color.Black;
+        
         public List<Rectangle> Rooms;
         public List<ResidentSurvivor.Door> Doors;
 
@@ -56,16 +61,16 @@ namespace RogueSharpSadConsoleSamples.Core
                //TODO: should be done in generate map
                if (GetCell(cell.X, cell.Y).IsWalkable && !GetCell(cell.X, cell.Y-1).IsWalkable){
                   map.SetGlyph(cell.X, cell.Y-1, (int) TileType.Wall);
-                  map.SetBackground(cell.X,cell.Y-1, SadRogue.Primitives.Color.Red);
+                  map.SetBackground(cell.X,cell.Y-1, cWall);
                }
 
                map.SetGlyph(cell.X, cell.Y, (int) TileType.Floor);
-               map.SetBackground(cell.X, cell.Y, SadRogue.Primitives.Color.Blue);  
+               map.SetBackground(cell.X, cell.Y, cFloor);  
             }
             else
             {
                //TODO: should be done in generate map
-               map.SetBackground(cell.X, cell.Y, SadRogue.Primitives.Color.Red);
+               map.SetBackground(cell.X, cell.Y, cWall);
                if (cell.Y+1 < map.Height)
                   if (GetCell(cell.X, cell.Y+1).IsWalkable && !GetCell(cell.X, cell.Y).IsWalkable)
                      map.SetGlyph(cell.X, cell.Y, (int) TileType.Wall);
