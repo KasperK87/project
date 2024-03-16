@@ -22,10 +22,6 @@ namespace ResidentSurvivor
         public UIManager()
         {
              //run tests && should be static
-            DungeonTest.test1();
-            DungeonTest.test2();
-            DungeonTest.test3();
-
             FloorTest.testStairs(new Floor(80,29));
             FloorTest.testStairs(new JungleFloor(80,29));
 
