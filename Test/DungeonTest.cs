@@ -2,11 +2,47 @@ using SadConsole;
 using SadConsole.UI;
 using SadRogue.Primitives;
 using Console = SadConsole.Console;
+using Xunit;
 
 namespace ResidentSurvivor
 {
-    class DungeonTest
+    public class DungeonTest
     {
+        [Fact]
+        public void DungeonInit()
+        {
+            ResidentSurvivor.Game.Setup(120, 40);
+            
+            ResidentSurvivor.Game.Instance.OnStart = () => {
+                Dungeon dungeon = new Dungeon(16);
+                Assert.True(dungeon != null);
+                SadConsole.Game.Instance.MonoGameInstance.Exit();
+            };
+            ResidentSurvivor.Game.Instance.Run();
+        }
+
+        [Fact]
+        public void DungeonSetLevel()
+        {
+            ResidentSurvivor.Game.Setup(120, 40);
+            
+            ResidentSurvivor.Game.Instance.OnStart = () => {
+                Dungeon dungeon = new Dungeon(16);
+
+                // arrange
+                dungeon.setLevel(3);
+                int expected = 3;
+
+                // act
+                int actual = dungeon.getCurrentLevel();
+
+                // assert
+                Assert.True(expected == actual);
+                
+                SadConsole.Game.Instance.MonoGameInstance.Exit();
+            };
+            ResidentSurvivor.Game.Instance.Run();
+        }
         public static void test1()
         {
             Dungeon dungeon = new Dungeon(16);
