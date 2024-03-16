@@ -8,15 +8,12 @@ namespace ResidentSurvivorTest
         [Fact]
         public void ConsoleInit()
         {
-            ResidentSurvivor.Game.Setup(120, 40);
-            
-            ResidentSurvivor.Game.Instance.OnStart = () => {
-                SadConsole.Console console = new SadConsole.Console(120, 40);
-                Assert.True(console != null);
-                SadConsole.Game.Instance.MonoGameInstance.Exit();
-            };
+            ResidentSurvivor.Game.Setup(120, 40);  
+            ResidentSurvivor.Game.Instance.MonoGameInstance.RunOneFrame();
 
-            ResidentSurvivor.Game.Instance.Run();
+            SadConsole.Console console = new SadConsole.Console(120, 40);
+
+            Assert.NotNull(console);
         }
     }
 }
