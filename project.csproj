@@ -1,5 +1,4 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net6.0</TargetFramework>
@@ -7,21 +6,30 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="SadConsole" Version="9.2.2" />
-    <PackageReference Include="SadConsole.Host.MonoGame" Version="9.2.2" />
-    <PackageReference Include="RogueSharp" Version="4.2.0" />
-    <FilesToMove Include="fonts\*.*" />
-    <SubfolderFilesToMove Include="fonts\TheDraw\*.*" />
-    <PackageReference Include="SadConsole.Extended" Version="9.2.1" />
-    <DLLToMove Include="dll\*.*" />
+    <PackageReference Include="SadConsole" Version="9.2.2"/>
+    <PackageReference Include="SadConsole.Host.MonoGame" Version="9.2.2"/>
+    <PackageReference Include="RogueSharp" Version="4.2.0"/>
+    <PackageReference Include="SadConsole.Extended" Version="9.2.1"/>
+    <PackageReference Include="xunit" Version="2.4.2" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="coverlet.collector" Version="3.2.0">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <FilesToMove Include="fonts\*.*"/>
+    <SubfolderFilesToMove Include="fonts\TheDraw\*.*"/>
+    <DLLToMove Include="dll\*.*"/>
   </ItemGroup>
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-      <Message Importance="High" Text="Moving fonts" />
-      <Copy SourceFiles="@(FilesToMove)" DestinationFolder="bin\Debug\net6.0\fonts" />
+    <Message Importance="High" Text="Moving fonts"/>
+    <Copy SourceFiles="@(FilesToMove)" DestinationFolder="bin\Debug\net6.0\fonts"/>
   </Target>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-      <Message Importance="High" Text="Moving dlls" />
-      <Copy SourceFiles="@(DLLToMove)" DestinationFolder="bin\Debug\net6.0" />
-      <Copy SourceFiles="@(SubfolderFilesToMove)" DestinationFolder="bin\Debug\net6.0\fonts\TheDraw" /> 
+    <Message Importance="High" Text="Moving dlls"/>
+    <Copy SourceFiles="@(DLLToMove)" DestinationFolder="bin\Debug\net6.0"/>
+    <Copy SourceFiles="@(SubfolderFilesToMove)" DestinationFolder="bin\Debug\net6.0\fonts\TheDraw"/>
   </Target>
 </Project>
