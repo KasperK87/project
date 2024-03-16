@@ -88,7 +88,7 @@ namespace ResidentSurvivor {
             if (state.CellPosition.X >= 1 && state.CellPosition.X <= 10 &&
                 state.CellPosition.Y >= 1 && state.CellPosition.Y <= 16){
                     _selectedItem = state.CellPosition.Y-1;
-                    if (state.Mouse.LeftClicked){
+                    if (state.Mouse.LeftClicked && player.getInventory().Length > _selectedItem){
                         if (player.getInventory()[_selectedItem] != null){
                             player.equipItem(_selectedItem);
                             //should this take a turn?
