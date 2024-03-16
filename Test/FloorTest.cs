@@ -3,30 +3,28 @@ using ResidentSurvivor;
 using Xunit;
 using Xunit.Sdk;
 
+[Collection("Sequential")]
 public class FloorTest{
+    public FloorTest(){
+        if (ResidentSurvivor.Game.Instance == null){
+            ResidentSurvivor.Game.Setup(120, 40);
+            ResidentSurvivor.Game.Instance.MonoGameInstance.RunOneFrame();
+        }
+    }
     [Fact]
     public void TestFloor(){
-        ResidentSurvivor.Game.Setup(120, 40);
-        ResidentSurvivor.Game.Instance.MonoGameInstance.RunOneFrame();
-
         Floor floor = new Floor(80,29);
         Assert.True(floor != null);
     }
 
     [Fact]
     public void TestJungleStairs(){
-        ResidentSurvivor.Game.Setup(120, 40);
-        ResidentSurvivor.Game.Instance.MonoGameInstance.RunOneFrame();
-
         JungleFloor floor = new JungleFloor(80,29);
         Assert.True(testStairs(floor));
     }
 
     [Fact]
     public void TestDefaultStairs(){
-        ResidentSurvivor.Game.Setup(120, 40);
-        ResidentSurvivor.Game.Instance.MonoGameInstance.RunOneFrame();
-
         Floor floor = new Floor(80,29);
         Assert.True(testStairs(floor));
     }

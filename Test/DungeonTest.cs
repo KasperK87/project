@@ -6,13 +6,15 @@ using Xunit;
 
 namespace ResidentSurvivor
 {
+    [Collection("Sequential")]
     public class DungeonTest
     {
-        Game game;
         public DungeonTest()
         {
-            ResidentSurvivor.Game.Setup(120, 40);
-            ResidentSurvivor.Game.Instance.MonoGameInstance.RunOneFrame();
+            if (ResidentSurvivor.Game.Instance == null){
+                ResidentSurvivor.Game.Setup(120, 40);
+                ResidentSurvivor.Game.Instance.MonoGameInstance.RunOneFrame();
+            }
         }
 
         [Fact]
