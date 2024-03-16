@@ -21,10 +21,6 @@ namespace ResidentSurvivor
 
         public UIManager()
         {
-             //run tests && should be static
-            FloorTest.testStairs(new Floor(80,29));
-            FloorTest.testStairs(new JungleFloor(80,29));
-
             currentState = ProcessState.Active;
             
 

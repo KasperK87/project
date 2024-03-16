@@ -8,12 +8,16 @@ namespace ResidentSurvivor
 {
     public class DungeonTest
     {
-        [Fact]
-        public void DungeonInit()
+        Game game;
+        public DungeonTest()
         {
             ResidentSurvivor.Game.Setup(120, 40);
             ResidentSurvivor.Game.Instance.MonoGameInstance.RunOneFrame();
-          
+        }
+
+        [Fact]
+        public void DungeonInit()
+        {
             Dungeon dungeon = new Dungeon(16);
             Assert.True(dungeon != null);  
         }
@@ -21,9 +25,6 @@ namespace ResidentSurvivor
         [Fact]
         public void DungeonSetLevel()
         {
-            ResidentSurvivor.Game.Setup(120, 40);
-            ResidentSurvivor.Game.Instance.MonoGameInstance.RunOneFrame();
-            
             Dungeon dungeon = new Dungeon(16);
 
             // arrange
@@ -40,10 +41,6 @@ namespace ResidentSurvivor
         [Fact]
         public void DungeonSetNegativ()
         {
-            ResidentSurvivor.Game.Setup(120, 40);
-            ResidentSurvivor.Game.Instance.MonoGameInstance.RunOneFrame();
-            
-           
             Dungeon dungeon = new Dungeon(16);
 
             // arrange
@@ -61,9 +58,6 @@ namespace ResidentSurvivor
         [Fact]
         public void DungeonSetOutOfBounds()
         {
-            ResidentSurvivor.Game.Setup(120, 40);
-            ResidentSurvivor.Game.Instance.MonoGameInstance.RunOneFrame();
-            
             Dungeon dungeon = new Dungeon(16);
 
             // arrange
@@ -75,6 +69,11 @@ namespace ResidentSurvivor
 
             // assert
             Assert.True(expected == actual);
+        }
+
+        public void Dispose()
+        {
+            ResidentSurvivor.Game.Instance.MonoGameInstance.Exit();
         }
     }
 }

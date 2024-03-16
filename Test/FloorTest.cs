@@ -1,8 +1,36 @@
 using Newtonsoft.Json;
 using ResidentSurvivor;
+using Xunit;
+using Xunit.Sdk;
 
-class FloorTest{
-    public static void testStairs(Floor floor){
+public class FloorTest{
+    [Fact]
+    public void TestFloor(){
+        ResidentSurvivor.Game.Setup(120, 40);
+        ResidentSurvivor.Game.Instance.MonoGameInstance.RunOneFrame();
+
+        Floor floor = new Floor(80,29);
+        Assert.True(floor != null);
+    }
+
+    [Fact]
+    public void TestJungleStairs(){
+        ResidentSurvivor.Game.Setup(120, 40);
+        ResidentSurvivor.Game.Instance.MonoGameInstance.RunOneFrame();
+
+        JungleFloor floor = new JungleFloor(80,29);
+        Assert.True(testStairs(floor));
+    }
+
+    [Fact]
+    public void TestDefaultStairs(){
+        ResidentSurvivor.Game.Setup(120, 40);
+        ResidentSurvivor.Game.Instance.MonoGameInstance.RunOneFrame();
+
+        Floor floor = new Floor(80,29);
+        Assert.True(testStairs(floor));
+    }
+    public bool testStairs(Floor floor){
         //Floor floor = new Floor(80,29);
 
         // arrange
@@ -24,10 +52,10 @@ class FloorTest{
         }
         
         if (stairs.Count == 2 && floor.pathBetween(stairs[0].Position.X, stairs[0].Position.Y, 
-            stairs[0].Position.X, stairs[0].Position.Y) == null){
-            Console.WriteLine("There should be a path between the stairs");
+            stairs[1].Position.X, stairs[1].Position.Y) != null){
+            return true;
         } else {
-            Console.WriteLine("There is a path between the stairs");
+            return false;
         }
         
     }
