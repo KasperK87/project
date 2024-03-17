@@ -26,6 +26,7 @@ namespace ResidentSurvivor{
 
     public struct TileMetadata{
         public int amountOfBlood;
+        public bool floorVisible = true;
         
         public TileMetadata(int amountOfBlood){
             this.amountOfBlood = amountOfBlood;
@@ -328,9 +329,25 @@ namespace ResidentSurvivor{
                 pathXtoY(GetSadComponent<IComponent_PlayerControls>().mouseLoc.X,GetSadComponent<IComponent_PlayerControls>().mouseLoc.Y);
             }
 
+            setFloorVisability();
+
             //If player is dead, game over
             if (player.GetSadComponent<IComponent_Entity>().currHP < 1){
                 Game.UIManager.currentState = ProcessState.Terminated;
+            }
+        }
+
+        private void setFloorVisability(){
+            for (int x = 0; x < 80; x++){
+                for (int y = 0; y < 29; y++){
+                    tileMetadata[x,y].floorVisible = true;
+
+                    GameObject obj = (GameObject)entityManager.GetEntityAtPosition(new Point(x, y));
+
+                    if (obj != null && obj.type == "Stairs"){
+                        tileMetadata[x,y].floorVisible = false;
+                    }
+                }
             }
         }
         
@@ -357,12 +374,17 @@ namespace ResidentSurvivor{
 
             DungeonMap.Draw(this);
 
-            //draw blood
+            //draw blood and other special effects
             for (int x = 0; x < 80; x++){
                 for (int y = 0; y < 29; y++){
-                    if (tileMetadata[x,y].amountOfBlood > 0){
-                        this.SetGlyph(x, y, (int) TileType.Blood);
-                        this.SetForeground(x, y, Color.Red.SetAlpha(180));
+                    if (DungeonMap.IsInFov(x, y)){
+                        if (tileMetadata[x,y].amountOfBlood > 0){
+                            this.SetGlyph(x, y, (int) TileType.Blood);
+                            this.SetForeground(x, y, Color.Red.SetAlpha(180));
+                        }
+                    }
+                    if (!tileMetadata[x,y].floorVisible){
+                        this.SetGlyph(x, y, (int) TileType.Empty);
                     }
                 }
             }
