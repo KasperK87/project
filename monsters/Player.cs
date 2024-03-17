@@ -28,19 +28,16 @@ namespace ResidentSurvivor {
             for (int i = 0; i < _inventory.Length; i++){
                 if (_inventory[i] == null){
                     _inventory[i] = item;
-                    System.Console.WriteLine("You picked up a " + item.Name);
                     _log.Add("You picked up a " + item.Name);
                     if (item.type == "Weapon"){
                         if (_equippedWeapon == null){
                             _equippedWeapon = item;
-                            System.Console.WriteLine("You equipped a " + item.Name);
                             _log.Add("You equipped a " + item.Name);
                         }
                     }
                     return true;
                 }
             }
-            System.Console.WriteLine("Your inventory is full!");
             _log.Add("Your inventory is full!");
             return false;
         }
@@ -67,7 +64,7 @@ namespace ResidentSurvivor {
             if (_inventory[index] != null){
                 if (_inventory[index].type == "Weapon"){
                     _equippedWeapon = _inventory[index];
-                    System.Console.WriteLine("You equipped a " + _inventory[index].Name);
+                    _log.Add("You equipped a " + _inventory[index].Name);
                     return true;
                 }
             }
@@ -75,8 +72,8 @@ namespace ResidentSurvivor {
         }
         public bool dropItem(int index){
             if (_inventory[index] != null){
-                if (_inventory[index] == _equippedWeapon){
-                    System.Console.WriteLine("You can't drop your equipped weapon!"); 
+                if (_inventory[index] == _equippedWeapon){ 
+                    _log.Add("You can't drop your equipped weapon!");
                     return false;
                 }
                 _inventory[index].Position = this.Position;
