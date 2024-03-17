@@ -3,18 +3,17 @@ using SadConsole.UI;
 using SadRogue.Primitives;
 using Console = SadConsole.Console;
 using Xunit;
+using ResidentSurvivorTest;
 
 namespace ResidentSurvivor
 {
     [Collection("Sequential")]
     public class DungeonTest
     {
-        public DungeonTest()
+        MonoGameFixture fixture;
+        public DungeonTest(MonoGameFixture fixture)
         {
-            if (ResidentSurvivor.Game.Instance == null){
-                ResidentSurvivor.Game.Setup(120, 40);
-                ResidentSurvivor.Game.Instance.MonoGameInstance.RunOneFrame();
-            }
+            this.fixture = fixture;   
         }
 
         [Fact]
@@ -71,11 +70,6 @@ namespace ResidentSurvivor
 
             // assert
             Assert.True(expected == actual);
-        }
-
-        public void Dispose()
-        {
-            ResidentSurvivor.Game.Instance.MonoGameInstance.Exit();
         }
     }
 }
