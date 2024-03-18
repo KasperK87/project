@@ -262,7 +262,7 @@ namespace ResidentSurvivor{
             }
 
             //player will follow the path when we click enter
-            if (info.IsKeyDown(SadConsole.Input.Keys.Enter))
+            if (info.IsKeyPressed(SadConsole.Input.Keys.Enter))
             {
                 followingPath = true;
             }
